@@ -1,0 +1,21 @@
+# Archivos de caché y compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de datos local SQLite
+db.sqlite3
+
+# Configuración de entorno y credenciales
+.env
+
+# Dependencias y entorno virtual de Python
+venv/
+env/
+
+# Configuración específica del editor
+.vscode/
+.idea/
+
+# Logs y archivos de depuración
+*.log

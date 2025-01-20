@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="container mt-5">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Gestión Documental</a>
+            <button class="btn btn-danger" onclick="window.location.href='{% url 'logout' %}'">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <h2 class="text-center mb-4">Selecciona un Documento</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Proyectos</h4>
+            <select id="proyecto" class="form-control">
+                <option value="">Selecciona un proyecto</option>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <h4>Subproyectos</h4>
+            <select id="subproyecto" class="form-control" disabled>
+                <option value="">Selecciona un subproyecto</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <h4>Documentos</h4>
+            <select id="documento" class="form-control" disabled>
+                <option value="">Selecciona un documento</option>
+            </select>
+            <a id="evento-link" href="#" class="btn btn-success mt-3 d-none">Registrar Evento</a>
+        </div>
+    </div>
+
+    <!-- Sección para mostrar el estado actual del documento -->
+    <div id="documento-detalle" class="mt-4 d-none">
+        <h3>Detalles del Documento</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Estado Actual</th>
+                <td id="estado_actual"></td>
+            </tr>
+            <tr>
+                <th>Etapa Actual</th>
+                <td id="etapa_actual"></td>
+            </tr>
+            <tr>
+                <th>Versión Actual</th>
+                <td id="version_actual"></td>
+            </tr>
+            <tr>
+                <th>Número de Versión</th>
+                <td id="numero_version"></td>
+            </tr>
+            <tr>
+                <th>Estado de la Versión</th>
+                <td id="estado_version"></td>
+            </tr>
+            <tr>
+                <th>Ruta del Documento</th>
+                <td><a id="ruta_actual" href="#" target="_blank">Ver Documento</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Scripts para manejar selección -->
+    <script>
+        $(document).ready(function() {
+            $("#proyecto").change(function() {
+                var proyecto_id = $(this).val();
+                if (proyecto_id) {
+                    $.get("/api/subproyectos/" + proyecto_id + "/", function(data) {
+                        $("#subproyecto").empty().append('<option value="">Selecciona un subproyecto</option>');
+                        $.each(data, function(index, item) {
+                            $("#subproyecto").append(new Option(item.nombre, item.id));
+                        });
+                        $("#subproyecto").prop("disabled", false);
+                    });
+                } else {
+                    $("#subproyecto").empty().append('<option value="">Selecciona un subproyecto</option>').prop("disabled", true);
+                    $("#documento").empty().append('<option value="">Selecciona un documento</option>').prop("disabled", true);
+                    $("#documento-detalle").addClass("d-none");
+                    $("#evento-link").addClass("d-none");
+                }
+            });
+
+            $("#subproyecto").change(function() {
+                var subproyecto_id = $(this).val();
+                if (subproyecto_id) {
+                    $.get("/api/documentos/" + subproyecto_id + "/", function(data) {
+                        $("#documento").empty().append('<option value="">Selecciona un documento</option>');
+                        $.each(data, function(index, item) {
+                            $("#documento").append(new Option(item.nombre, item.id));
+                        });
+                        $("#documento").prop("disabled", false);
+                    });
+                } else {
+                    $("#documento").empty().append('<option value="">Selecciona un documento</option>').prop("disabled", true);
+                    $("#documento-detalle").addClass("d-none");
+                    $("#evento-link").addClass("d-none");
+                }
+            });
+
+            $("#documento").change(function() {
+                var documento_id = $(this).val();
+                if (documento_id) {
+                    $("#evento-link").removeClass("d-none").attr("href", "/documento/" + documento_id + "/evento/");
+                    
+                    // Obtener los detalles del documento seleccionado
+                    $.get("/api/documento/" + documento_id + "/detalle/", function(data) {
+                        $("#estado_actual").text(data.estado_actual || "N/A");
+                        $("#etapa_actual").text(data.etapa_actual || "N/A");
+                        $("#version_actual").text(data.version_actual || "N/A");
+                        $("#numero_version").text(data.numero_version || "N/A");
+                        $("#estado_version").text(data.estado_version || "N/A");
+                        $("#ruta_actual").attr("href", data.ruta_actual).text("Ver Documento");
+                        
+                        $("#documento-detalle").removeClass("d-none");
+                    });
+                } else {
+                    $("#documento-detalle").addClass("d-none");
+                    $("#evento-link").addClass("d-none");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
