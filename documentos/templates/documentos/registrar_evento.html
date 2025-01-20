@@ -63,6 +63,21 @@
                 {{ form.estado_version }}
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Revisado</label>
+                <input type="text" class="form-control" value="{% if documento.revisado %}Sí{% else %}No{% endif %}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Aprobado</label>
+                <input type="text" class="form-control" value="{% if documento.aprobado %}Sí{% else %}No{% endif %}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ruta Actual del Documento</label>
+                <input type="text" class="form-control" value="{{ documento.ruta_actual }}" readonly>
+            </div>
+
             <h4>Información del Evento (Editable)</h4>
 
             <div class="mb-3">
@@ -86,11 +101,9 @@
             </div>
              
             <div class="mb-3">
-                <label class="form-label">Actualizar ruta del documento Actual</label>
+                <label class="form-label">Actualizar Ruta del Documento</label>
                 {{ form.ruta_actual }}
             </div>
-
-           
 
             <button type="submit" class="btn btn-primary w-100">Registrar Evento</button>
         </form>

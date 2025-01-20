@@ -29,6 +29,11 @@ class Documento(models.Model):
     estado_version = models.CharField(max_length=50, null=True, blank=True)  # Estado de la versión
     ruta_actual = models.CharField(max_length=255, null=True, blank=True)  # Ruta actual del documento
 
+        # Nuevas columnas booleanas
+    revisado = models.BooleanField(default=False)  # Indica si el documento ha sido revisado
+    aprobado = models.BooleanField(default=False)  # Indica si el documento ha sido aprobado
+
+
     def __str__(self):
         return f"{self.codigo} - {self.nombre}"
     

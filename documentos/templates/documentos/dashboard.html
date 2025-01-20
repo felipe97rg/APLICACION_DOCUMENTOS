@@ -69,6 +69,14 @@
                 <td id="estado_version"></td>
             </tr>
             <tr>
+                <th>Revisado</th>
+                <td id="revisado"></td>
+            </tr>
+            <tr>
+                <th>Aprobado</th>
+                <td id="aprobado"></td>
+            </tr>
+            <tr>
                 <th>Ruta del Documento</th>
                 <td><a id="ruta_actual" href="#" target="_blank">Ver Documento</a></td>
             </tr>
@@ -137,5 +145,115 @@
         });
     </script>
 
+
+    <div id="eventos-documento" class="mt-4 d-none">
+        <h3 class="text-center">Historial de Eventos</h3>
+        <div class="timeline">
+            <div class="timeline-line"></div> <!-- Línea de la línea de tiempo -->
+            <div id="timeline-container"></div> <!-- Aquí se agregan los eventos dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#documento").change(function() {
+                var documento_id = $(this).val();
+                if (documento_id) {
+                    $("#evento-link").removeClass("d-none").attr("href", "/documento/" + documento_id + "/evento/");
+                    
+                    // Obtener los eventos del documento
+                    $.get("/api/documento/" + documento_id + "/eventos/", function(eventos) {
+                        var timelineContainer = $("#timeline-container");
+                        timelineContainer.empty();
+    
+                        if (eventos.length === 0) {
+                            timelineContainer.append('<p class="text-center">No hay eventos registrados.</p>');
+                        } else {
+                            $.each(eventos, function(index, evento) {
+                                var lado = index % 2 === 0 ? "left" : "right"; // Alterna eventos a la izquierda y derecha
+    
+                                var tarjeta = `
+                                    <div class="timeline-item ${lado}">
+                                        <div class="timeline-content">
+                                            <h5>${evento.tipo_evento}</h5>
+                                            <p><strong>Usuario:</strong> ${evento.usuario}</p>
+                                            <p><strong>Fecha:</strong> ${evento.fecha}</p>
+                                            <p><strong>Estado:</strong> ${evento.estado_actual}</p>
+                                            <p><strong>Versión:</strong> ${evento.version_actual}</p>
+                                            <a href="${evento.ruta_actual}" target="_blank">📄 Ver Documento</a>
+                                        </div>
+                                    </div>
+                                `;
+    
+                                timelineContainer.append(tarjeta);
+                            });
+                        }
+                        
+                        $("#eventos-documento").removeClass("d-none");
+                    });
+                } else {
+                    $("#eventos-documento").addClass("d-none");
+                    $("#evento-link").addClass("d-none");
+                }
+            });
+        });
+    </script>
+    <style>
+    .timeline {
+        position: relative;
+        padding: 20px 0;
+        max-width: 800px;
+        margin: auto;
+    }
+    
+    .timeline-line {
+        position: absolute;
+        width: 4px;
+        background-color: #ccc;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .timeline-item {
+        position: relative;
+        width: 45%;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .timeline-item.left {
+        left: 0;
+        text-align: right;
+    }
+
+    .timeline-item.right {
+        left: 55%;
+    }
+
+    .timeline-content h5 {
+        margin: 0 0 10px;
+        font-weight: bold;
+        color: #6a1b9a;
+    }
+
+    .timeline-content p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .timeline-content a {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #007bff;
+    }
+</style>
+
+    
 </body>
 </html>

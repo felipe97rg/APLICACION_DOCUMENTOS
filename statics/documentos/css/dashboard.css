@@ -1,0 +1,54 @@
+/* Línea de tiempo */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+    max-width: 800px;
+    margin: auto;
+}
+
+.timeline-line {
+    position: absolute;
+    width: 4px;
+    background-color: #ccc;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 45%;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item.right {
+    left: 55%;
+}
+
+.timeline-content h5 {
+    margin: 0 0 10px;
+    font-weight: bold;
+    color: #6a1b9a;
+}
+
+.timeline-content p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.timeline-content a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+}

@@ -91,8 +91,31 @@ def get_documento_detalle(request, documento_id):
         "version_actual": documento.version_actual,
         "numero_version": documento.numero_version,
         "estado_version": documento.estado_version,
-        "ruta_actual": documento.ruta_actual
+        "ruta_actual": documento.ruta_actual,
+        "revisado": documento.revisado,  # Nuevo campo
+        "aprobado": documento.aprobado   # Nuevo campo
     }
     return JsonResponse(data)
 
-print
+@login_required
+def get_eventos_documento(request, documento_id):
+    """ Devuelve los eventos asociados a un documento en formato JSON """
+    documento = get_object_or_404(Documento, id=documento_id)
+    eventos = Evento.objects.filter(documento=documento).order_by("fecha_creacion_evento")
+
+    data = [
+        {
+            "id": evento.id,
+            "usuario": evento.usuario.username,
+            "tipo_evento": evento.tipo_evento,
+            "fecha": evento.fecha_creacion_evento.strftime("%Y-%m-%d %H:%M"),
+            "estado_actual": evento.estado_actual,
+            "version_actual": evento.version_actual,
+            "ruta_actual": evento.ruta_actual,
+
+
+        }
+        for evento in eventos
+    ]
+
+    return JsonResponse(data, safe=False)
