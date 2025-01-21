@@ -172,14 +172,24 @@
                             $.each(eventos, function(index, evento) {
                                 var lado = index % 2 === 0 ? "left" : "right"; // Alterna eventos a la izquierda y derecha
     
+                                // Manejar destinatarios vacíos
+                                var destinatario1 = evento.usuario_interesado_1 ? evento.usuario_interesado_1 : "No asignado";
+                                var destinatario2 = evento.usuario_interesado_2 ? evento.usuario_interesado_2 : "No asignado";
+                                var destinatario3 = evento.usuario_interesado_3 ? evento.usuario_interesado_3 : "No asignado";
+    
                                 var tarjeta = `
                                     <div class="timeline-item ${lado}">
                                         <div class="timeline-content">
-                                            <h5>${evento.tipo_evento}</h5>
-                                            <p><strong>Usuario:</strong> ${evento.usuario}</p>
+                                            <h5>📌 ${evento.tipo_evento}</h5>
                                             <p><strong>Fecha:</strong> ${evento.fecha}</p>
+                                            <p><strong>Remitente:</strong> ${evento.usuario}</p>
+                                            <p><strong>Destinatario 1:</strong> ${destinatario1}</p>
+                                            <p><strong>Destinatario 2:</strong> ${destinatario2}</p>
+                                            <p><strong>Destinatario 3:</strong> ${destinatario3}</p>
                                             <p><strong>Estado:</strong> ${evento.estado_actual}</p>
                                             <p><strong>Versión:</strong> ${evento.version_actual}</p>
+                                            <p><strong>Descripción:</strong> ${evento.descripcion}</p>
+                                            <p><strong>Comentarios:</strong> ${evento.comentarios ? evento.comentarios : "Sin comentarios"}</p>
                                             <a href="${evento.ruta_actual}" target="_blank">📄 Ver Documento</a>
                                         </div>
                                     </div>
@@ -198,6 +208,7 @@
             });
         });
     </script>
+    
     <style>
     .timeline {
         position: relative;

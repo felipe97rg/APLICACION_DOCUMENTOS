@@ -140,18 +140,22 @@ def get_eventos_documento(request, documento_id):
         {
             "id": evento.id,
             "usuario": evento.usuario.username,
-            "tipo_evento": evento.tipo_evento,
+            "usuario_interesado_1": evento.usuario_interesado_1.username if evento.usuario_interesado_1 else None,
+            "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
+            "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
             "fecha": evento.fecha_creacion_evento.strftime("%Y-%m-%d %H:%M"),
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
             "ruta_actual": evento.ruta_actual,
-
-
+            "tipo_evento": evento.tipo_evento,
+            "descripcion": evento.descripcion,
+            "comentarios": evento.comentarios,
         }
         for evento in eventos
     ]
 
     return JsonResponse(data, safe=False)
+
 
 @login_required
 def registrar_evento(request, documento_id):
