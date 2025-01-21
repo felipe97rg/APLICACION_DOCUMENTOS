@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -84,28 +84,37 @@
                 <label class="form-label">Tipo de Evento</label>
                 {{ form.tipo_evento }}
             </div>
-
+            
+            
             <div class="mb-3">
-                <label class="form-label">Usuario Interesado 1</label>
-                {{ form.usuario_interesado_1 }}
+                <label class="form-label">Comentarios (Obligatorio)</label>
+                {{ form.comentarios }}
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Usuario Interesado 2</label>
-                {{ form.usuario_interesado_2 }}
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Usuario Interesado 3</label>
-                {{ form.usuario_interesado_3 }}
-            </div>
-             
+            
             <div class="mb-3">
                 <label class="form-label">Actualizar Ruta del Documento</label>
                 {{ form.ruta_actual }}
             </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 1</label>
+                {{ form.usuario_interesado_1 }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 2</label>
+                {{ form.usuario_interesado_2 }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 3</label>
+                {{ form.usuario_interesado_3 }}
+            </div>
 
+
+            
             <button type="submit" class="btn btn-primary w-100">Registrar Evento</button>
+            
         </form>
 
         <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Volver al Dashboard</a>

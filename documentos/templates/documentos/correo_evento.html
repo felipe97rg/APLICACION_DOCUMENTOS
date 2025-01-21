@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Evento Registrado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+        .container {
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .footer {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📄 Nuevo Evento Registrado</h2>
+        
+        <p><span class="highlight">Proyecto:</span> {{ documento.subproyecto.proyecto.nombre }}</p>
+        <p><span class="highlight">Subproyecto:</span> {{ documento.subproyecto.nombre }}</p>
+        <p><span class="highlight">Código del Documento:</span> {{ documento.codigo }}</p>
+        <p><span class="highlight">Nombre del Documento:</span> {{ documento.nombre }}</p>
+
+        <h3>📌 Detalles del Evento</h3>
+        <p><span class="highlight">Tipo de Evento:</span> {{ evento.tipo_evento }}</p>
+        <p><span class="highlight">Descripción del Evento:</span> {{ evento.descripcion }}</p>
+        <p><span class="highlight">Comentarios:</span> {{ evento.comentarios }}</p>
+        
+        <p><span class="highlight">Registrado por:</span> {{ evento.usuario.get_full_name }} ({{ evento.usuario.email }})</p>
+        <p><span class="highlight">Estado Actual:</span> {{ evento.estado_actual }}</p>
+        <p><span class="highlight">Etapa Actual:</span> {{ evento.etapa_actual }}</p>
+        <p><span class="highlight">Versión:</span> {{ evento.version_actual }}</p>
+        <p><span class="highlight">Número de Versión:</span> {{ evento.numero_version }}</p>
+        <p><span class="highlight">Estado de la Versión:</span> {{ evento.estado_version }}</p>
+        <p><span class="highlight">Ruta del Documento:</span> <a href="{{ evento.ruta_actual }}" target="_blank">📂 Ver Documento</a></p>
+
+        <h3>✉ Destinatarios</h3>
+        <ul>
+            {% if evento.usuario_interesado_1 %}<li>{{ evento.usuario_interesado_1.get_full_name }} ({{ evento.usuario_interesado_1.email }})</li>{% endif %}
+            {% if evento.usuario_interesado_2 %}<li>{{ evento.usuario_interesado_2.get_full_name }} ({{ evento.usuario_interesado_2.email }})</li>{% endif %}
+            {% if evento.usuario_interesado_3 %}<li>{{ evento.usuario_interesado_3.get_full_name }} ({{ evento.usuario_interesado_3.email }})</li>{% endif %}
+        </ul>
+
+        <div class="footer">
+            <p>Este es un mensaje automático generado por el sistema de gestión documental.</p>
+        </div>
+    </div>
+</body>
+</html>

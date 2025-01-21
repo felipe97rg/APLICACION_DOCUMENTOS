@@ -14,6 +14,26 @@ class LoginForm(AuthenticationForm):
 
 
 class EventoForm(forms.ModelForm):
+    TIPO_EVENTO_CHOICES = [
+        ("SOLICITUD DE REVISIÓN PRELIMINAR", "Solicitud de Revisión Preliminar"),
+        ("APROBACIÓN FINAL", "Aprobación Final"),
+        ("RECHAZO DEL DOCUMENTO", "Rechazo del Documento"),
+        ("ACTUALIZACIÓN DE VERSIÓN", "Actualización de Versión"),
+        ("REVISION INTERNA", "Revisión Interna"),
+    ]
+
+    tipo_evento = forms.ChoiceField(
+        choices=TIPO_EVENTO_CHOICES,
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Tipo de Evento"
+    )
+
+    comentarios = forms.CharField(
+        widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Añadir comentarios..."}),
+        required=True,  # Ahora es obligatorio
+        label="Comentarios"
+    )
+
     class Meta:
         model = Evento
         fields = [
@@ -22,11 +42,13 @@ class EventoForm(forms.ModelForm):
             "version_actual",
             "numero_version",
             "estado_version",
-            "ruta_actual",  # Editable
-            "tipo_evento",  # Editable
-            "usuario_interesado_1",  # Editable
-            "usuario_interesado_2",  # Editable
-            "usuario_interesado_3",  # Editable
+            "ruta_actual",
+            "tipo_evento",
+            "descripcion",  # Este campo sigue siendo de solo lectura
+            "comentarios",  # Ahora es obligatorio
+            "usuario_interesado_1",
+            "usuario_interesado_2",
+            "usuario_interesado_3",
         ]
         widgets = {
             "estado_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
@@ -34,10 +56,11 @@ class EventoForm(forms.ModelForm):
             "version_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "numero_version": forms.NumberInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "estado_version": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
-
-            "ruta_actual": forms.TextInput(attrs={"class": "form-control"}),  # Editable
-            "tipo_evento": forms.TextInput(attrs={"class": "form-control"}),  # Editable
-            "usuario_interesado_1": forms.Select(attrs={"class": "form-control"}),  # Editable
-            "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),  # Editable
-            "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),  # Editable
+            "ruta_actual": forms.TextInput(attrs={"class": "form-control"}),
+            "descripcion": forms.Textarea(attrs={"class": "form-control", "readonly": "readonly"}),  # No editable
+            "usuario_interesado_1": forms.Select(attrs={"class": "form-control"}),
+            "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
+            "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
         }
+
+

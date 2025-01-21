@@ -5,6 +5,70 @@ from django.contrib import messages
 from .forms import LoginForm, EventoForm
 from .models import Proyecto, Subproyecto, Documento, Evento
 from django.http import JsonResponse
+from django.conf import settings
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+@login_required
+def registrar_evento(request, documento_id):
+    """ Vista para registrar un evento en un documento """
+    documento = get_object_or_404(Documento, id=documento_id)
+
+    if request.method == "POST":
+        form = EventoForm(request.POST)
+        if form.is_valid():
+            evento = form.save(commit=False)
+            evento.documento = documento
+            evento.usuario = request.user
+            evento.estado_actual = documento.estado_actual
+            evento.etapa_actual = documento.etapa_actual
+            evento.version_actual = documento.version_actual
+            evento.numero_version = documento.numero_version
+            evento.estado_version = documento.estado_version
+            evento.save()
+
+            if evento.tipo_evento == "SOLICITUD DE REVISIÓN PRELIMINAR":
+                documento.version_actual = "A"
+                documento.numero_version = 1
+                documento.save()
+
+            # Definir destinatarios
+            destinatarios = [
+                evento.usuario_interesado_1.email if evento.usuario_interesado_1 else None,
+                evento.usuario_interesado_2.email if evento.usuario_interesado_2 else None,
+                evento.usuario_interesado_3.email if evento.usuario_interesado_3 else None,
+            ]
+            destinatarios = [email for email in destinatarios if email]  # Eliminar valores None
+
+            # Enviar correo solo si hay destinatarios
+            if destinatarios:
+                subject = f"📄 Nuevo Evento Registrado: {evento.tipo_evento}"
+                html_message = render_to_string("documentos/correo_evento.html", {
+                    "documento": documento,
+                    "evento": evento,
+                })
+                plain_message = strip_tags(html_message)  # Convertir HTML a texto sin formato
+                from_email = settings.DEFAULT_FROM_EMAIL
+
+                email = EmailMultiAlternatives(subject, plain_message, from_email, destinatarios)
+                email.attach_alternative(html_message, "text/html")  # Adjuntar versión HTML
+                email.send()
+
+            messages.success(request, "✅ Evento registrado con éxito y correo enviado.")
+            return redirect("dashboard")
+
+    else:
+        form = EventoForm(initial={
+            "estado_actual": documento.estado_actual,
+            "etapa_actual": documento.etapa_actual,
+            "version_actual": documento.version_actual,
+            "numero_version": documento.numero_version,
+            "estado_version": documento.estado_version,
+            "ruta_actual": documento.ruta_actual,
+        })
+
+    return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})
 
 
 
@@ -43,37 +107,6 @@ def logout_view(request):
     messages.success(request, "Has cerrado sesión exitosamente.")
     return redirect('login')  # Redirige a la página de inicio de sesión
 
-@login_required
-def registrar_evento(request, documento_id):
-    """ Vista para registrar un evento en un documento """
-    documento = get_object_or_404(Documento, id=documento_id)
-
-    if request.method == "POST":
-        form = EventoForm(request.POST)
-        if form.is_valid():
-            evento = form.save(commit=False)
-            evento.documento = documento
-            evento.usuario = request.user  # Usuario autenticado
-            evento.estado_actual = documento.estado_actual
-            evento.etapa_actual = documento.etapa_actual
-            evento.version_actual = documento.version_actual
-            evento.numero_version = documento.numero_version
-            evento.estado_version = documento.estado_version
-            evento.save()
-            messages.success(request, "✅ Evento registrado con éxito.")
-            return redirect("dashboard")  # Redirigir al dashboard
-    else:
-        # Prellenar el formulario con los datos del documento
-        form = EventoForm(initial={
-            "estado_actual": documento.estado_actual,
-            "etapa_actual": documento.etapa_actual,
-            "version_actual": documento.version_actual,
-            "numero_version": documento.numero_version,
-            "estado_version": documento.estado_version,
-            "ruta_actual": documento.ruta_actual,  # Editable
-        })
-
-    return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})
 
 @login_required
 def dashboard_view(request):
@@ -119,3 +152,76 @@ def get_eventos_documento(request, documento_id):
     ]
 
     return JsonResponse(data, safe=False)
+
+@login_required
+def registrar_evento(request, documento_id):
+    """Vista para registrar un evento en un documento"""
+    documento = get_object_or_404(Documento, id=documento_id)
+
+    # Mensajes predeterminados según el tipo de evento
+    descripciones_eventos = {
+        "SOLICITUD DE REVISIÓN PRELIMINAR": "Se ha creado la versión A del documento y se solicita la revisión preliminar de este para su primera evaluación.",
+        "APROBACIÓN FINAL": "El documento ha sido aprobado y finalizado.",
+        "RECHAZO DEL DOCUMENTO": "El documento ha sido rechazado y requiere ajustes.",
+        "ACTUALIZACIÓN DE VERSIÓN": "Se ha actualizado la versión del documento con cambios importantes.",
+        "REVISION INTERNA": "Se ha solicitado una revisión interna antes del envío final.",
+    }
+
+    if request.method == "POST":
+        form = EventoForm(request.POST)
+        if form.is_valid():
+            evento = form.save(commit=False)
+            evento.documento = documento
+            evento.usuario = request.user
+            evento.estado_actual = documento.estado_actual
+            evento.etapa_actual = documento.etapa_actual
+            evento.version_actual = documento.version_actual
+            evento.numero_version = documento.numero_version
+            evento.estado_version = documento.estado_version
+            evento.descripcion = descripciones_eventos.get(evento.tipo_evento, "Descripción no disponible")
+            evento.comentarios = form.cleaned_data.get("comentarios", "")  # Guardar comentarios si existen
+            evento.save()
+
+            # Modificación de la versión para "SOLICITUD DE REVISIÓN PRELIMINAR"
+            if evento.tipo_evento == "SOLICITUD DE REVISIÓN PRELIMINAR":
+                documento.version_actual = "A"
+                documento.numero_version = 1
+                documento.save()
+
+            # Definir destinatarios
+            destinatarios = [
+                evento.usuario_interesado_1.email if evento.usuario_interesado_1 else None,
+                evento.usuario_interesado_2.email if evento.usuario_interesado_2 else None,
+                evento.usuario_interesado_3.email if evento.usuario_interesado_3 else None,
+            ]
+            destinatarios = [email for email in destinatarios if email]  # Filtrar emails no nulos
+
+            # Enviar correo solo si hay destinatarios
+            if destinatarios:
+                subject = f"📄 Nuevo Evento Registrado: {evento.tipo_evento}"
+                html_message = render_to_string("documentos/correo_evento.html", {
+                    "documento": documento,
+                    "evento": evento,
+                })
+                plain_message = strip_tags(html_message)  # Convertir HTML a texto sin formato
+                from_email = settings.DEFAULT_FROM_EMAIL
+
+                email = EmailMultiAlternatives(subject, plain_message, from_email, destinatarios)
+                email.attach_alternative(html_message, "text/html")  # Adjuntar versión HTML
+                email.send()
+
+            messages.success(request, "✅ Evento registrado con éxito y correo enviado.")
+            return redirect("dashboard")
+
+    else:
+        form = EventoForm(initial={
+            "estado_actual": documento.estado_actual,
+            "etapa_actual": documento.etapa_actual,
+            "version_actual": documento.version_actual,
+            "numero_version": documento.numero_version,
+            "estado_version": documento.estado_version,
+            "ruta_actual": documento.ruta_actual,
+            "descripcion": descripciones_eventos.get("SOLICITUD DE REVISIÓN PRELIMINAR", "Descripción no disponible"),
+        })
+
+    return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})
