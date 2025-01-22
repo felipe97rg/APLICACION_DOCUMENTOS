@@ -15,12 +15,14 @@ class LoginForm(AuthenticationForm):
 
 class EventoForm(forms.ModelForm):
     TIPO_EVENTO_CHOICES = [
-        ("SOLICITUD DE REVISIÓN PRELIMINAR", "Solicitud de Revisión Preliminar"),
-        ("APROBACIÓN FINAL", "Aprobación Final"),
-        ("RECHAZO DEL DOCUMENTO", "Rechazo del Documento"),
-        ("ACTUALIZACIÓN DE VERSIÓN", "Actualización de Versión"),
-        ("REVISION INTERNA", "Revisión Interna"),
-    ]
+    ("SOLICITUD DE REVISIÓN PRELIMINAR", "Solicitud de Revisión Preliminar"),
+    ("SOLICITUD DE CORRECCIÓN PRELIMINAR", "Solicitud de Corrección Preliminar"),
+    ("APROBACIÓN FINAL", "Aprobación Final"),
+    ("RECHAZO DEL DOCUMENTO", "Rechazo del Documento"),
+    ("ACTUALIZACIÓN DE VERSIÓN", "Actualización de Versión"),
+    ("REVISION INTERNA", "Revisión Interna"),
+]
+
 
     tipo_evento = forms.ChoiceField(
         choices=TIPO_EVENTO_CHOICES,
@@ -62,5 +64,4 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
         }
-
 
