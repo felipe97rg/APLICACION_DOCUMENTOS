@@ -92,12 +92,11 @@ def get_eventos_documento(request, documento_id):
             "tipo_evento": evento.tipo_evento,
             "descripcion": evento.descripcion,
             "comentarios": evento.comentarios,
-        }
+                    }
         for evento in eventos
     ]
 
     return JsonResponse(data, safe=False)
-
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
@@ -107,11 +106,9 @@ def registrar_evento(request, documento_id):
     descripciones_eventos = {
         "SOLICITUD DE REVISIÓN PRELIMINAR": "Se ha creado la versión A del documento y se solicita la revisión preliminar de este para su primera evaluación.",
         "SOLICITUD DE CORRECCIÓN PRELIMINAR": "Se ha solicitado la corrección preliminar del documento.",
-        "APROBACIÓN FINAL": "El documento ha sido aprobado y finalizado.",
-        "RECHAZO DEL DOCUMENTO": "El documento ha sido rechazado y requiere ajustes.",
-        "ACTUALIZACIÓN DE VERSIÓN": "Se ha actualizado la versión del documento con cambios importantes.",
-        "REVISION INTERNA": "Se ha solicitado una revisión interna antes del envío final.",
-    }
+        "DOCUMENTO REVISADO": "El documento ha sido revisado por ingeniería.",
+        "DOCUMENTO APROBADO": "El documento ha sido aprobado por calidad.",
+        }
 
     if request.method == "POST":
         form = EventoForm(request.POST)
@@ -126,18 +123,25 @@ def registrar_evento(request, documento_id):
             evento.estado_version = documento.estado_version
             evento.descripcion = descripciones_eventos.get(evento.tipo_evento, "Descripción no disponible")
 
-            # **Si es SOLICITUD DE REVISIÓN PRELIMINAR**
+            # **Evento 1: SOLICITUD DE REVISIÓN PRELIMINAR**
             if evento.tipo_evento == "SOLICITUD DE REVISIÓN PRELIMINAR":
                 documento.version_actual = "A"
                 documento.numero_version = 1
-                documento.save()
 
-            # **Si es SOLICITUD DE CORRECCIÓN PRELIMINAR**
+            # **Evento 2: SOLICITUD DE CORRECCIÓN PRELIMINAR**
             elif evento.tipo_evento == "SOLICITUD DE CORRECCIÓN PRELIMINAR":
                 documento.estado_version = "CORRECCIÓN"
-                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)  # Permitir actualización de ruta
-                documento.save()
+                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
+            # **Evento 3: DOCUMENTO REVISADO**
+            elif evento.tipo_evento == "DOCUMENTO REVISADO":
+                documento.revisado = True  # Se marca como revisado
+
+            # **Evento 4: DOCUMENTO APROBADO**
+            elif evento.tipo_evento == "DOCUMENTO APROBADO":
+                documento.aprobado = True  # Se marca como aprobado
+
+            documento.save()
             evento.save()
 
             # **Enviar correo si hay destinatarios**
@@ -172,7 +176,7 @@ def registrar_evento(request, documento_id):
             "numero_version": documento.numero_version,
             "estado_version": documento.estado_version,
             "ruta_actual": documento.ruta_actual,
-            "descripcion": descripciones_eventos.get("SOLICITUD DE CORRECCIÓN PRELIMINAR", "Descripción no disponible"),
+            "descripcion": descripciones_eventos.get("SOLICITUD DE REVISIÓN PRELIMINAR", "Descripción no disponible"),
         })
 
     return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})

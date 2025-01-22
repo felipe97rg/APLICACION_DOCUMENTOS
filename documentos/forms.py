@@ -17,10 +17,8 @@ class EventoForm(forms.ModelForm):
     TIPO_EVENTO_CHOICES = [
     ("SOLICITUD DE REVISIÓN PRELIMINAR", "Solicitud de Revisión Preliminar"),
     ("SOLICITUD DE CORRECCIÓN PRELIMINAR", "Solicitud de Corrección Preliminar"),
-    ("APROBACIÓN FINAL", "Aprobación Final"),
-    ("RECHAZO DEL DOCUMENTO", "Rechazo del Documento"),
-    ("ACTUALIZACIÓN DE VERSIÓN", "Actualización de Versión"),
-    ("REVISION INTERNA", "Revisión Interna"),
+    ("DOCUMENTO REVISADO", "Documento Revisado por Ingeniería"),
+    ("DOCUMENTO APROBADO", "Documento aprobado por Calidad"),
 ]
 
 

@@ -134,6 +134,8 @@
                         $("#numero_version").text(data.numero_version || "N/A");
                         $("#estado_version").text(data.estado_version || "N/A");
                         $("#ruta_actual").text(data.ruta_actual|| "N/A");
+                        $("#revisado").text(data.revisado ? "Sí" : "No");
+                        $("#aprobado").text(data.aprobado ? "Sí" : "No");
                         
                         $("#documento-detalle").removeClass("d-none");
                     });

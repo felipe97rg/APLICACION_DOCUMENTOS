@@ -1,64 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuevo Evento Registrado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
         }
         .container {
-            padding: 20px;
             background: white;
-            border-radius: 5px;
+            border-radius: 8px;
             max-width: 600px;
             margin: auto;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            color: #333;
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 15px 0;
+        }
+
+        h3 {
             text-align: center;
         }
+
         p {
             font-size: 14px;
-            color: #555;
+            margin: 5px 0;
         }
         .highlight {
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 600;
+            color: #34495e;
+        }
+        ul {
+            padding-left: 18px;
         }
         .footer {
             font-size: 12px;
-            color: #777;
             text-align: center;
+            color: #777;
             margin-top: 20px;
-            padding-top: 10px;
+            padding-top: 15px;
             border-top: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>📄 Nuevo Evento Registrado</h2>
-        
+        <h2>Nuevo Evento Registrado</h2>
+
         <p><span class="highlight">Proyecto:</span> {{ documento.subproyecto.proyecto.nombre }}</p>
         <p><span class="highlight">Subproyecto:</span> {{ documento.subproyecto.nombre }}</p>
         <p><span class="highlight">Código del Documento:</span> {{ documento.codigo }}</p>
         <p><span class="highlight">Nombre del Documento:</span> {{ documento.nombre }}</p>
 
-        <h3>📌 Detalles del Evento</h3>
+        <div class="divider"></div>
+
+        <h3>Detalles del Evento</h3>
         <p><span class="highlight">Tipo de Evento:</span> {{ evento.tipo_evento }}</p>
-        <p><span class="highlight">Descripción del Evento:</span> {{ evento.descripcion }}</p>
+        <p><span class="highlight">Descripción:</span> {{ evento.descripcion }}</p>
         <p><span class="highlight">Comentarios:</span> {{ evento.comentarios }}</p>
         
-        <p><span class="highlight">Registrado por:</span> {{ evento.usuario.get_full_name }} ({{ evento.usuario.email }})</p>
-        <p><span class="highlight">Estado Actual:</span> {{ evento.estado_actual }}</p>
-        <p><span class="highlight">Etapa Actual:</span> {{ evento.etapa_actual }}</p>
+        <div class="divider"></div>
+
+        <p><span class="highlight">Estado:</span> {{ evento.estado_actual }}</p>
+        <p><span class="highlight">Etapa:</span> {{ evento.etapa_actual }}</p>
         <p><span class="highlight">Versión:</span> {{ evento.version_actual }}</p>
         <p><span class="highlight">Número de Versión:</span> {{ evento.numero_version }}</p>
         <p><span class="highlight">Estado de la Versión:</span> {{ evento.estado_version }}</p>
-        <p><strong>Ruta del Documento:</strong> {{ evento.ruta_actual }}</p>
+        
+        <div class="divider"></div>
+
+        <p><span class="highlight">Ruta del Documento:</span> {{ evento.ruta_actual }}</p>
+
+        <div class="divider"></div>
+
+        <p><span class="highlight">Registrado por:</span> {{ evento.usuario.get_full_name }} ({{ evento.usuario.email }})</p>
+        <p><span class="highlight">Fecha de Registro:</span> {{ evento.fecha }}</p>
 
         <h3>✉ Destinatarios</h3>
         <ul>
