@@ -77,8 +77,8 @@
                 <td id="aprobado"></td>
             </tr>
             <tr>
-                <th>Ruta del Documento</th>
-                <td><a id="ruta_actual" href="#" target="_blank">Ver Documento</a></td>
+                <th>Ruta Actual del Documento</th>
+                <td><a id="ruta_actual"></td>
             </tr>
         </table>
     </div>
@@ -133,7 +133,7 @@
                         $("#version_actual").text(data.version_actual || "N/A");
                         $("#numero_version").text(data.numero_version || "N/A");
                         $("#estado_version").text(data.estado_version || "N/A");
-                        $("#ruta_actual").attr("href", data.ruta_actual).text("Ver Documento");
+                        $("#ruta_actual").text(data.ruta_actual|| "N/A");
                         
                         $("#documento-detalle").removeClass("d-none");
                     });
@@ -183,14 +183,15 @@
                                             <h5>📌 ${evento.tipo_evento}</h5>
                                             <p><strong>Fecha:</strong> ${evento.fecha}</p>
                                             <p><strong>Remitente:</strong> ${evento.usuario}</p>
-                                            <p><strong>Destinatario 1:</strong> ${destinatario1}</p>
-                                            <p><strong>Destinatario 2:</strong> ${destinatario2}</p>
-                                            <p><strong>Destinatario 3:</strong> ${destinatario3}</p>
+                                            <p><strong>Destinatario 1:</strong> ${evento.usuario_interesado_1}</p>
+                                            <p><strong>Destinatario 2:</strong> ${evento.usuario_interesado_2}</p>
+                                            <p><strong>Destinatario 3:</strong> ${evento.usuario_interesado_3}</p>
                                             <p><strong>Estado:</strong> ${evento.estado_actual}</p>
                                             <p><strong>Versión:</strong> ${evento.version_actual}</p>
                                             <p><strong>Descripción:</strong> ${evento.descripcion}</p>
                                             <p><strong>Comentarios:</strong> ${evento.comentarios ? evento.comentarios : "Sin comentarios"}</p>
-                                            <a href="${evento.ruta_actual}" target="_blank">📄 Ver Documento</a>
+                                            <p><strong>Ruta del Documento:</strong> <span id="ruta_actual"></span></p>
+                                            <p><strong>Ruta del Documento:</strong> ${evento.ruta_actual}</p>
                                         </div>
                                     </div>
                                 `;
