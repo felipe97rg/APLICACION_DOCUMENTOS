@@ -97,6 +97,7 @@ def get_eventos_documento(request, documento_id):
     ]
 
     return JsonResponse(data, safe=False)
+
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
@@ -108,7 +109,9 @@ def registrar_evento(request, documento_id):
         "SOLICITUD DE CORRECCIÓN PRELIMINAR": "Se ha solicitado la corrección preliminar del documento.",
         "DOCUMENTO REVISADO": "El documento ha sido revisado por ingeniería.",
         "DOCUMENTO APROBADO": "El documento ha sido aprobado por calidad.",
-        }
+        "SOLICITUD DE SUBIR VERSIÓN INTERNA": "Se ha solicitado subir el número de versión interna del documento.",
+        "SOLICITUD DE REVISIÓN EN SUPERACIÓN DE VERSIÓN INTERNA": "Se ha creado la versión nueva del documento y se solicita la revisión de este para su  evaluación.",
+    }
 
     if request.method == "POST":
         form = EventoForm(request.POST)
@@ -140,6 +143,16 @@ def registrar_evento(request, documento_id):
             # **Evento 4: DOCUMENTO APROBADO**
             elif evento.tipo_evento == "DOCUMENTO APROBADO":
                 documento.aprobado = True  # Se marca como aprobado
+
+            # **Evento 5: SOLICITUD DE SUBIR VERSIÓN INTERNA**
+            elif evento.tipo_evento == "SOLICITUD DE SUBIR VERSIÓN INTERNA":
+                documento.revisado = False  # Reiniciar variable de revisado
+                documento.aprobado = False  # Reiniciar variable de aprobado
+
+            # **Evento 6: SOLICITUD DE REVISIÓN EN SUPERACIÓN DE VERSIÓN INTERNA**
+            elif evento.tipo_evento == "SOLICITUD DE REVISIÓN EN SUPERACIÓN DE VERSIÓN INTERNA":
+                documento.version_actual = "A"  # Mantiene la versión en "A"
+                documento.numero_version = (documento.numero_version or 0) + 1  # Incrementa el número de versión
 
             documento.save()
             evento.save()

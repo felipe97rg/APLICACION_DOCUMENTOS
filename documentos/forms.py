@@ -19,6 +19,8 @@ class EventoForm(forms.ModelForm):
     ("SOLICITUD DE CORRECCIÓN PRELIMINAR", "Solicitud de Corrección Preliminar"),
     ("DOCUMENTO REVISADO", "Documento Revisado por Ingeniería"),
     ("DOCUMENTO APROBADO", "Documento aprobado por Calidad"),
+    ("SOLICITUD DE SUBIR VERSIÓN INTERNA", "Solicitud de Subir Versión Interna"),
+    ("SOLICITUD DE REVISIÓN EN SUPERACIÓN DE VERSIÓN INTERNA", "Solicitud de Revisión en Superación de Versión Interna"),
 ]
 
 
