@@ -113,3 +113,49 @@ $(document).ready(function() {
         }
     });
 });
+
+$(document).ready(function() {
+    $(".btn-close").click(function() {
+        $(this).closest(".alert").fadeOut(300, function() {
+            $(this).remove();
+        });
+    });
+});
+
+
+$(document).ready(function() {
+    // Ocultar automáticamente las alertas después de 5 segundos
+    setTimeout(function() {
+        $(".alert").fadeOut(500, function() {
+            $(this).remove();
+        });
+    }, 5000);
+});
+
+$(document).ready(function () {
+    $("#toggleUploadForm").click(function (e) {
+        e.preventDefault();
+        $("#uploadFormContainer").toggle();
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("El script de mostrar formulario está cargado.");
+
+    const toggleButton = document.getElementById("toggleUploadForm");
+    const uploadForm = document.getElementById("uploadFormContainer");
+
+    if (toggleButton && uploadForm) {
+        toggleButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (uploadForm.style.display === "none" || uploadForm.style.display === "") {
+                uploadForm.style.display = "block";
+            } else {
+                uploadForm.style.display = "none";
+            }
+        });
+    } else {
+        console.log("Error: No se encontraron los elementos necesarios.");
+    }
+});

@@ -36,3 +36,11 @@ button[type="submit"] {
     font-size: 16px;
     font-weight: bold;
 }
+
+.alert-danger {
+    background-color: #ffdddd;
+    border-left: 5px solid #d9534f;
+    color: #a94442;
+    font-weight: bold;
+    padding: 15px;
+}

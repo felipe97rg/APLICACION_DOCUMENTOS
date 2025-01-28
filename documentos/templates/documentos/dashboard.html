@@ -51,6 +51,24 @@
         </div>
     </div>
 
+    <!-- Sección para mostrar el Mensaje de exito cuando se ha creado un evento nuevo -->
+    {% if messages %}
+        <div class="mt-3">
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show text-center shadow-sm" role="alert">
+                    <strong>{% if message.tags == 'success' %}✔{% else %}⚠{% endif %}</strong>
+                    {{ message }}
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!----div class="text-center mt-4">
+        <a href="{% url 'upload_proyecto' %}" class="btn btn-primary btn-lg">Ir a Subir Proyecto</a>
+    </div>
+    > > -->
+    
     <!-- Sección para mostrar el estado actual del documento -->
     <div id="documento-detalle" class="mt-4 d-none">
         <h3>Detalles del Documento</h3>
