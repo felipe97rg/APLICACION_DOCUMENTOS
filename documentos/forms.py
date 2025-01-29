@@ -15,13 +15,34 @@ class LoginForm(AuthenticationForm):
 
 class EventoForm(forms.ModelForm):
     TIPO_EVENTO_CHOICES = [
-        ("Solicitud de de Creación de Versión Preliminar", "Solicitud de Creación de Versión Preliminar"),
+
+        # Eventos de Creación de Documento
+
+        ("Creación de Versión Preliminar", "Creación de Versión Preliminar"),
+        ("Creación de Versión Interna Superada", "Creación de Versión Interna Superada"),
+
+        ("Creación de Versión Interdisciplinaria", "Creación de Versión Interdisciplinaria"),
+        ("Creación de Versión Interdisciplinaria Superada", "Creación de Versión Interdisciplinaria Superada"),
+
+        ("Creación de Versión Final", "Creación de Versión Final"),
+        ("Creación de Versión Final Superada", "Creación de Versión Final Superada"),
+
+        # Eventos de Solicitudes de Documento
         ("Solicitud de Revisión", "Solicitud de Revisión"),
-        ("Solicitud de Corrección Preliminar", "Solicitud de Corrección Preliminar"),
+        ("Solicitud de Corrección", "Solicitud de Corrección"),
+
+        ("Solicitud de Superación de Numero de Versión Interna", "Solicitud de Superación de Numero de Versión Interna"),
+
+        ("Solicitud de Superación a Versión Interdisciplinaria", "Solicitud de Superación de Versión Interdisciplinaria"),
+        ("Solicitud de Superación de Numero de Versión Interdisciplinaria", "Solicitud de Superación de Numero de Versión Interdisciplinaria"),
+
+        ("Solicitud de Superación a Versión Final", "Solicitud de Superación a Versión Final"),
+        ("Solicitud de Superación de Numero de Versión Final", "Solicitud de Superación de Numero de Versión Final"),
+
+
+        # Eventos de Revisión y Aprobación de Documento
         ("Documento Revisado por Ingeniería", "Documento Revisado por Ingeniería"),
         ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
-        ("Solicitud de Superación Versión Interna", "Solicitud de Superación de Versión Interna"),
-        ("Solicitud de Creación de Versión Interna Superada", "Solicitud de Creación de Versión Interna Superada"),
     ]
 
 
