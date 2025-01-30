@@ -22,7 +22,7 @@ class Documento(models.Model):
     nombre = models.CharField(max_length=200)  # Nombre del documento
     subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE)  # Relación con un proyecto
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha de creación automática
-    estado_actual = models.CharField(max_length=50, default="VIGENTE")  # Estado actual por defecto
+    estado_actual = models.CharField(max_length=50, default="NUEVO")  # Estado actual por defecto
     etapa_actual = models.CharField(max_length=50, null=True, blank=True)  # Etapa actual
     version_actual = models.CharField(max_length=50, null=True, blank=True)  # Versión actual
     numero_version = models.IntegerField(null=True, blank=True)  # Número de la versión

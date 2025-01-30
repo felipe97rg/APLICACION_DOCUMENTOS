@@ -39,10 +39,14 @@ class EventoForm(forms.ModelForm):
         ("Solicitud de Superación a Versión Final", "Solicitud de Superación a Versión Final"),
         ("Solicitud de Superación de Numero de Versión Final", "Solicitud de Superación de Numero de Versión Final"),
 
-
         # Eventos de Revisión y Aprobación de Documento
         ("Documento Revisado por Ingeniería", "Documento Revisado por Ingeniería"),
         ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
+
+        # Eventos de Modificacion de estado del Documento
+        ("Actualización del documento", "Actualización del documento"),
+        ("Suspención del documento", "Suspención del documento"),
+        ("Eliminación del documento", "Eliminación del documento"),
     ]
 
 

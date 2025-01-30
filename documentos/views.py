@@ -156,27 +156,57 @@ def upload_proyecto(request):
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
 
+def validar_evento_permitido(documento, tipo_evento):
+    """
+    Verifica si el evento es válido para ser registrado en base a reglas de negocio.
+    Retorna un mensaje de error si no se permite, o None si es válido.
+    """
+
+    # 🚫 1. No se puede registrar ningún evento antes de la "Creación de Versión Preliminar"
+    if tipo_evento != "Creación de Versión Preliminar" and not Evento.objects.filter(documento=documento, tipo_evento="Creación de Versión Preliminar").exists():
+        return "❌ No puedes registrar este evento antes de realizar la 'Creación de Versión Preliminar'."
+
+    # 🚫 2. No permitir duplicación de "Creación de Versión Preliminar"
+    if tipo_evento == "Creación de Versión Preliminar" and Evento.objects.filter(documento=documento, tipo_evento="Creación de Versión Preliminar").exists():
+        return "⚠️ No se puede registrar otra 'Creación de Versión Preliminar' para este documento."
+
+    # 🚫 3. No permitir aprobar un documento ya aprobado
+    if tipo_evento == "Documento Aprobado por Calidad" and documento.aprobado:
+        return "⚠️ Este documento ya ha sido aprobado y no puede aprobarse nuevamente."
+
+    # 🚫 4. No permitir revisar un documento ya revisado
+    if tipo_evento == "Documento Revisado por Ingeniería" and documento.revisado:
+        return "⚠️ Este documento ya ha sido revisado y no puede revisarse nuevamente."
+
+    # 🚫 5. No permitir subir de versión si no ha sido revisado y aprobado 
+    if tipo_evento in ["Solicitud de Superación de Numero de Versión Interna", "Solicitud de Superación a Versión Interdisciplinaria"] and not documento.revisado and not documento.aprobado:
+        return "⚠️ No puedes superar la versión sin que el documento haya sido revisado previamente."
+
+    # 🚫 6. No permitir avanzar a "Versión Interdisciplinaria" sin haber estado en "Versión Interna"
+    if tipo_evento == "Creacion de Versión Interdisciplinaria" and documento.version_actual != "A":
+        return "⚠️ Solo puedes crear una 'Versión Interdisciplinaria' si no existe la versión interna."
+    
+    # 🚫 7. No permitir avanzar a "Versión Final" sin haber estado en "Versión Interdisciplinaria"
+    if tipo_evento == "Creación de Versión Final" and documento.version_actual != "B":
+        return "⚠️ Solo puedes crear una 'Versión Final' desde la 'Versión Interdisciplinaria'."
+    
+    # 🚫 8. No permitir avances en documentos eliminados o suspendidos
+    if documento.estado_actual in ["ELIMINADO", "SUSPENDIDO"]:
+        return f"⚠️ No puedes registrar eventos en un documento que está {documento.estado_actual.lower()}."
+
+    return None  # ✅ Si no hay errores, el evento es válido.
+
+
+
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
     documento = get_object_or_404(Documento, id=documento_id)
 
-    # Verificar si ya existe una "Creación de Versión Preliminar"
-    existe_evento_inicial = Evento.objects.filter(
-        documento=documento,
-        tipo_evento="Creación de Versión Preliminar"
-    ).exists()
-
-    # **Evitar eventos antes de la solicitud inicial**
-    if not existe_evento_inicial and request.method == "POST":
-        tipo_evento_solicitado = request.POST.get("tipo_evento")
-        if tipo_evento_solicitado != "Creación de Versión Preliminar":
-            messages.error(request, "❌ No puedes registrar este evento antes de realizar la 'Solicitud de Creación de Versión Preliminar'.")
-            return redirect("registrar_evento", documento_id=documento.id)
-
-
     # **Definir descripciones de eventos**
     descripciones_eventos = {
+
+        # Eventos de Creación de Documento
         "Creación de Versión Preliminar": "Se ha creado la versión A del documento y se solicita la revisión preliminar de este para su primera evaluación.",
         "Creación de Versión Interna Superada": "Se ha creado la versión nueva del documento y se solicita la revisión de este para su evaluación.",
 
@@ -186,6 +216,7 @@ def registrar_evento(request, documento_id):
         "Creación de Versión Final": "Se ha creado la versión final del documento y se solicita la revisión de este para su evaluación.",
         "Creación de Versión Final Superada": "Se ha creado la versión nueva del documento y se solicita la revisión de este para su evaluación.",
 
+        # Eventos de Solicitudes de Documento
         "Solicitud de Revisión": "Se ha solicitado la revisión del documento.",
         "Solicitud de Corrección": "Se ha solicitado del documento.",
 
@@ -197,9 +228,14 @@ def registrar_evento(request, documento_id):
         "Solicitud de Superación a Versión Final": "Se ha solicitado subir de versión interdisciplinaria (B) a Version final (0).",
         "Solicitud de Superación de Numero de Versión Final": "Se ha solicitado subir el número de versión final del documento.",
         
+        # Eventos de Revisión y Aprobación de Documento
         "Documento Revisado por Ingeniería": "El documento ha sido revisado por ingeniería.",
         "Documento Aprobado por Calidad": "El documento ha sido aprobado por calidad.",
         
+        # Eventos de Modificacion de estado del Documento
+        "Actualización del documento": "Se ha actualizado el documento.",
+        "Suspensión del documento": "Se ha suspendido el documento.",
+        "Eliminación del documento": "Se ha eliminado el documento.",
     }
 
     if request.method == "POST":
@@ -216,21 +252,13 @@ def registrar_evento(request, documento_id):
             evento.descripcion = descripciones_eventos.get(evento.tipo_evento, "Descripción no disponible")
 
 ###############################################     Validaciones de eventos      ################################################
-
-            # **📌 Bloquear eventos de Aprobación y Revisión si ya están aprobados/revisados**
-            if evento.tipo_evento == "Documento Aprobado por Calidad" and documento.aprobado:
-                messages.error(request, "⚠️ Este documento ya ha sido aprobado y no puede aprobarse nuevamente.")
+            # 🚨 Verificar si el evento está permitido
+            mensaje_error = validar_evento_permitido(documento, evento.tipo_evento)
+            if mensaje_error:
+                messages.error(request, mensaje_error)
                 return redirect("registrar_evento", documento_id=documento.id)
 
-            if evento.tipo_evento == "Documento Revisado por Ingeniería" and documento.revisado:
-                messages.error(request, "⚠️ Este documento ya ha sido revisado y no puede revisarse nuevamente.")
-                return redirect("registrar_evento", documento_id=documento.id)
 
-            # **📌 Bloquear duplicación de la "Solicitud de Creación de Versión Preliminar"**
-            if evento.tipo_evento == "Creación de Versión Preliminar" and existe_evento_inicial:
-                messages.error(request, "⚠️ No se puede registrar otra 'Creación de Versión Preliminar' para este documento.")
-                return redirect("registrar_evento", documento_id=documento.id)
-            
 ################################################ Fin de Validaciones de eventos ################################################
             
 ################################################       Lógica de eventos        ################################################
@@ -260,6 +288,7 @@ def registrar_evento(request, documento_id):
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
                 documento.revisado = False  # Reiniciar variable de revisado
                 documento.aprobado = False  # Reiniciar variable de aprobado
+            # **Evento 4: Creación de Versión Interdisciplinaria Superada**
             elif evento.tipo_evento == "Creación de Versión Interdisciplinaria Superada":
                 documento.version_actual = "B"  # Mantiene la versión en "B"
                 documento.numero_version = (documento.numero_version or 0) + 1  # Incrementa el número de versión
@@ -267,14 +296,14 @@ def registrar_evento(request, documento_id):
                 documento.revisado = False  # Reiniciar variable de revisado
                 documento.aprobado = False  # Reiniciar variable de aprobado
             
-            # **Evento 4: Creación de Versión Final**
+            # **Evento 5: Creación de Versión Final**
             elif evento.tipo_evento == "Creación de Versión Final":
                 documento.version_actual = "0" # Cambia la versión a "0"
                 documento.numero_version = None  # Reinicia el número de versión a null
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
                 documento.revisado = False  # Reiniciar variable de revisado
                 documento.aprobado = False  # Reiniciar variable de aprobado
-            # **Evento 5: Creación de Versión Final Superada**
+            # **Evento 6: Creación de Versión Final Superada**
             elif evento.tipo_evento == "Creación de Versión Final Superada":
                 documento.version_actual = (documento.version_actual or 0) + 1  # Incrementa el número de versión
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
@@ -282,50 +311,64 @@ def registrar_evento(request, documento_id):
                 documento.aprobado = False  # Reiniciar variable de aprobado
 
 
-
-
 ############## Solicitudes ##############
 
-            # **Evento 5: Solicitud de Revisión**
+            # **Evento 7: Solicitud de Revisión**
             elif evento.tipo_evento == "Solicitud de Revisión":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
-            # **Evento 6: Solicitud de Corrección Preliminar**
+            # **Evento 8: Solicitud de Corrección Preliminar**
             elif evento.tipo_evento == "Solicitud de Corrección Preliminar":
                 documento.estado_version = "CORRECCIÓN"
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
             
-            # **Evento 7: Solicitud de Superación Versión Interna**
+            # **Evento 9: Solicitud de Superación Versión Interna**
             elif evento.tipo_evento == "Solicitud de Superación de Numero de Versión Interna":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
 
-            # ** Evento 8: Solicitud de superación a Versión Interdisciplinaria**
+            # ** Evento 10: Solicitud de superación a Versión Interdisciplinaria**
             elif evento.tipo_evento == "Solicitud de Superación a Versión Interdisciplinaria":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
-            # **Evento 8: Solicitud de Superación de Numero de Versión Interdisciplinaria**
+            # **Evento 11: Solicitud de Superación de Numero de Versión Interdisciplinaria**
             elif evento.tipo_evento == "Solicitud de Superación de Numero de Versión Interdisciplinaria":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
 
-            # **Evento 9: Solicitud de superación a Versión Final**
+            # **Evento 12: Solicitud de superación a Versión Final**
             elif evento.tipo_evento == "Solicitud de Superación a Versión Final":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
-            # **Evento 9: Solicitud de Superación de Numero de Versión Final**
+            # **Evento 13: Solicitud de Superación de Numero de Versión Final**
             elif evento.tipo_evento == "Solicitud de Superación de Numero de Versión Final":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
             
 ############## Revisiones y Aprobaciones ##############
 
-            # **Evento 9: Documento Revisado**
+            # **Evento 14: Documento Revisado**
             elif evento.tipo_evento == "Documento Revisado por Ingeniería":
                 documento.revisado = True  # Se marca como revisado
 
-            # **Evento 10: Documento Aprobado**
+            # **Evento 15: Documento Aprobado**
             elif evento.tipo_evento == "Documento Aprobado por Calidad":
                 documento.aprobado = True  # Se marca como aprobado
+
+############## Modificaciones de estado ##############
+
+            # **Evento 16: Actualización del documento**
+            elif evento.tipo_evento == "Actualización del documento":
+                documento.estado_actual = "ACTUALIZADO"
+                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
+            # **Evento 17: Suspensión del documento**
+            elif evento.tipo_evento == "Suspensión del documento":
+                documento.estado_actual = "SUSPENDIDO"
+                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
+            # **Evento 18: Eliminación del documento**
+            elif evento.tipo_evento == "Eliminación del documento":
+                documento.estado_actual = "ELIMINADO"
+                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
+
            
             documento.save()
             evento.save()
