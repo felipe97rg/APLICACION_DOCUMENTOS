@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Proyecto, Subproyecto, Documento, Evento
+from .models import PerfilUsuario, Proyecto, Subproyecto, Documento, Evento
 
 class DocumentoAdmin(admin.ModelAdmin):
     list_display = ("codigo", "nombre", "estado_actual", "version_actual", "revisado", "aprobado")  # Mostrar estos campos en la lista
@@ -11,3 +11,4 @@ admin.site.register(Proyecto)
 admin.site.register(Subproyecto)
 admin.site.register(Documento, DocumentoAdmin)  # Usamos DocumentoAdmin para mejorar la vista
 admin.site.register(Evento)
+admin.site.register(PerfilUsuario)

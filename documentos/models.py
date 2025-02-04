@@ -1,7 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User  # Usamos el modelo de usuario de Django
 
+
 # Create your models here.
+
+class PerfilUsuario(models.Model):
+    ROLES = (
+        ('ADMIN', 'Administrador'),
+        ('EDITOR', 'Editor'),
+        ('USUARIO', 'Usuario Básico'),
+    )
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Relación uno a uno con User
+    rol = models.CharField(max_length=20, choices=ROLES, default='USUARIO')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_rol_display()}"
+
+    def is_admin(self):
+        return self.rol == 'ADMIN'
+
+    def is_editor(self):
+        return self.rol in ['ADMIN', 'EDITOR']  # Los editores y admins pueden acceder a más cosas
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
 

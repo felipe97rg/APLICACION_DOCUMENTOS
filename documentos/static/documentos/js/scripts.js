@@ -159,3 +159,43 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Error: No se encontraron los elementos necesarios.");
     }
 });
+
+$(document).ready(function() {
+    $("#documento").change(function() {
+        var documento_id = $(this).val();
+        if (documento_id) {
+            $("#evento-link").removeClass("d-none").attr("href", "/documento/" + documento_id + "/evento/");
+            
+            // Obtener los detalles del documento y restricciones de eventos
+            $.get("/api/documento/" + documento_id + "/detalle/", function(data) {
+                $("#estado_actual").text(data.estado_actual || "N/A");
+                $("#etapa_actual").text(data.etapa_actual || "N/A");
+                $("#version_actual").text(data.version_actual || "N/A");
+                $("#numero_version").text(data.numero_version || "N/A");
+                $("#estado_version").text(data.estado_version || "N/A");
+                $("#ruta_actual").text(data.ruta_actual || "N/A");
+                $("#revisado").text(data.revisado ? "Sí" : "No");
+                $("#aprobado").text(data.aprobado ? "Sí" : "No");
+
+                // Filtrar eventos en el select
+                var eventosRestringidos = data.eventos_restringidos || [];
+                $("#id_tipo_evento option").each(function() {
+                    var evento = $(this).val();
+                    if (eventosRestringidos.includes(evento)) {
+                        $(this).prop("disabled", true).css("color", "gray"); // Deshabilitar opción
+                    } else {
+                        $(this).prop("disabled", false).css("color", "black");
+                    }
+                });
+
+                // Guardar restricciones en el select para futura validación
+                $("#id_tipo_evento").data("eventos-restringidos", eventosRestringidos);
+
+                $("#documento-detalle").removeClass("d-none");
+            });
+        } else {
+            $("#documento-detalle").addClass("d-none");
+            $("#evento-link").addClass("d-none");
+        }
+    });
+});

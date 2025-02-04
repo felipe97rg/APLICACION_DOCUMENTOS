@@ -1,0 +1,40 @@
+.navbar {
+    padding: 10px;
+}
+
+.container {
+    max-width: 900px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 22px;
+    }
+
+    .navbar .btn-danger {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+    /* Ajuste de los select en móviles */
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    /* Centrar texto */
+    .text-center {
+        text-align: center;
+    }
+
+    /* Ajustar botones */
+    .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

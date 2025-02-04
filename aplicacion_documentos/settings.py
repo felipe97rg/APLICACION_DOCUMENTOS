@@ -74,9 +74,9 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'documentos/static'),  # Incluye la carpeta estática de tu app
+    os.path.join(BASE_DIR, 'documentos/static'),  # Incluye la carpeta estática de la app
 ]
+
 
 WSGI_APPLICATION = 'aplicacion_documentos.wsgi.application'
 
