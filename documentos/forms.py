@@ -17,46 +17,30 @@ class EventoForm(forms.ModelForm):
     TIPO_EVENTO_CHOICES = [
 
         # Eventos de Creación de Documento
-
-        ("Creación de Versión Preliminar", "Creación de Versión Preliminar"),
-        ("Creación de Versión Interna Superada", "Creación de Versión Interna Superada"),
-
-        ("Creación de Versión Interdisciplinaria", "Creación de Versión Interdisciplinaria"),
-        ("Creación de Versión Interdisciplinaria Superada", "Creación de Versión Interdisciplinaria Superada"),
-
-        ("Creación de Versión Final", "Creación de Versión Final"),
-        ("Creación de Versión Final Superada", "Creación de Versión Final Superada"),
-
-        # Eventos de Solicitudes de Documento
+        ("Solicitud de Creación de Versión Preliminar", "Solicitud de Creación de Versión Preliminar"),
         ("Solicitud de Revisión", "Solicitud de Revisión"),
-        ("Solicitud de Corrección", "Solicitud de Corrección"),
-        ("Solicitud de Envio de documento al cliente", "Solicitud de Envio de documento al cliente"),
-        ("Solicitud de Cancelación de Envio de documento al cliente", "Solicitud de Cancelación de Envio de documento al cliente"),
-
-        ("Solicitud de Superación de Numero de Versión Interna", "Solicitud de Superación de Numero de Versión Interna"),
-
-        ("Solicitud de Superación a Versión Interdisciplinaria", "Solicitud de Superación de Versión Interdisciplinaria"),
-        ("Solicitud de Superación de Numero de Versión Interdisciplinaria", "Solicitud de Superación de Numero de Versión Interdisciplinaria"),
-
-        ("Solicitud de Superación a Versión Final", "Solicitud de Superación a Versión Final"),
-        ("Solicitud de Superación de Numero de Versión Final", "Solicitud de Superación de Numero de Versión Final"),
-
-        # Eventos de creacion de Mediciones y Actividades
-        
+        ("Solicitud de Corrección por Ingeniería", "Solicitud de Corrección por Ingeniería"),
+        ("Documento Aprobado por Ingeniería", "Documento Aprobado por Ingeniería"),
+        ("Solicitud de Aprobación por Calidad y Coordinación", "Solicitud de Aprobación por Calidad y Coordinación"),
+        ("Solicitud de Corrección por Calidad", "Solicitud de Corrección por Calidad"),
+        ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
+        ("Solicitud de Corrección por Coordinación", "Solicitud de Corrección por Coordinación"),
+        ("Solicitud de Superación de Numero Versión", "Solicitud de Superación de Numero Versión"),
+        ("Solicitud de Creación de Versión Preliminar Superada", "Solicitud de Creación de Versión Preliminar Superada"),
+        ("Solicitud de Creación de Versión Interdisciplinaria Superada", "Solicitud de Creación de Versión Interdisciplinaria Superada"),
+        ("Solicitud de Superación de Versión", "Solicitud de Superación de Versión"),
+        ("Solicitud de Creación de Versión Interdisciplinaria", "Solicitud de Creación de Versión Interdisciplinaria"),
+        ("Solicitud de Creación de Versión Final", "Solicitud de Creación de Versión Final"),
+        ("Solicitud de Envió de Documento al Cliente", "Solicitud de Envió de Documento al Cliente"),
+        ("Solicitud de Cancelación de Envió de Documento al Cliente", "Solicitud de Cancelación de Envió de Documento al Cliente"),
+        ("Actualización del Documento", "Actualización del Documento"),
+        ("Suspensión del Documento", "Suspensión del Documento"),
+        ("Eliminación del Documento", "Eliminación del Documento"),
+        ("Reactivación del Documento", "Reactivación del Documento"),
         ("Solicitud de Creación de Medición o Actividad", "Solicitud de Creación de Medición o Actividad"),
         ("Solicitud de Revisión de Medición o Actividad", "Solicitud de Revisión de Medición o Actividad"),
         ("Creación de Informe de Medición o Actividad", "Creación de Informe de Medición o Actividad"),
-
-
-        # Eventos de Revisión y Aprobación de Documento
-        ("Documento Revisado por Ingeniería", "Documento Revisado por Ingeniería"),
-        ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
-
-        # Eventos de Modificacion de estado del Documento
-        ("Actualización del documento", "Actualización del documento"),
-        ("Suspensión del documento", "Suspensión del documento"),
-        ("Eliminación del documento", "Eliminación del documento"),
-        ("Reactivación del documento", "Reactivación del documento"),
+        
     ]
 
 

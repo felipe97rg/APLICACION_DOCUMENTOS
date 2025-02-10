@@ -81,7 +81,7 @@ $(document).ready(function() {
                         var destinatario2 = evento.usuario_interesado_2 ? evento.usuario_interesado_2 : "No asignado";
                         var destinatario3 = evento.usuario_interesado_3 ? evento.usuario_interesado_3 : "No asignado";
 
-                        var tarjeta = `
+                        var tarjeta = 
                             <div class="timeline-item ${lado}">
                                 <div class="timeline-content">
                                     <h5>${evento.tipo_evento}</h5>
@@ -99,7 +99,7 @@ $(document).ready(function() {
                                     <p><strong>Ruta del Documento:</strong> ${evento.ruta_actual}</p>
                                 </div>
                             </div>
-                        `;
+                        ;
 
                         timelineContainer.append(tarjeta);
                     });
@@ -198,4 +198,4 @@ $(document).ready(function() {
             $("#evento-link").addClass("d-none");
         }
     });
-});
+})

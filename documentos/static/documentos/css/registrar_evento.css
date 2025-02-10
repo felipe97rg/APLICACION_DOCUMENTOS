@@ -44,3 +44,9 @@ button[type="submit"] {
     font-weight: bold;
     padding: 15px;
 }
+
+/* Tonos de color para cada categoría */
+.opcion-solicitudes { background-color: #e0f7fa; color: #00796b; } /* Azul claro */
+.opcion-aprobaciones { background-color: #e8f5e9; color: #2e7d32; } /* Verde claro */
+.opcion-mediciones { background-color: #fff3e0; color: #e65100; } /* Naranja claro */
+.opcion-otras { background-color: #eeeeee; color: #424242; } /* Gris */
