@@ -29,13 +29,14 @@ class EventoForm(forms.ModelForm):
 
         # Eventos de Solicitudes de Documento
         ("Solicitud de Revisión", "Solicitud de Revisión"),
-        ("Solicitud de Corrección", "Solicitud de Corrección"),
+        ("Solicitud de Corrección por Calidad", "Solicitud de Corrección por Calidad"),
+        ("Solicitud de Corrección por Ingeniería", "Solicitud de Corrección por Ingeniería"),
         ("Solicitud de Envio de documento al cliente", "Solicitud de Envio de documento al cliente"),
         ("Solicitud de Cancelación de Envio de documento al cliente", "Solicitud de Cancelación de Envio de documento al cliente"),
 
         ("Solicitud de Superación de Numero de Versión Interna", "Solicitud de Superación de Numero de Versión Interna"),
 
-        ("Solicitud de Superación a Versión Interdisciplinaria", "Solicitud de Superación de Versión Interdisciplinaria"),
+        ("Solicitud de Superación a Versión Interdisciplinaria", "Solicitud de Superación a Versión Interdisciplinaria"),
         ("Solicitud de Superación de Numero de Versión Interdisciplinaria", "Solicitud de Superación de Numero de Versión Interdisciplinaria"),
 
         ("Solicitud de Superación a Versión Final", "Solicitud de Superación a Versión Final"),
@@ -49,7 +50,7 @@ class EventoForm(forms.ModelForm):
 
 
         # Eventos de Revisión y Aprobación de Documento
-        ("Documento Revisado por Ingeniería", "Documento Revisado por Ingeniería"),
+        ("Documento Aprobado por Ingeniería", "Documento Aprobado por Ingeniería"),
         ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
 
         # Eventos de Modificacion de estado del Documento

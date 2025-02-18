@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Solicitud de Superación de Numero de Versión Interdisciplinaria",
                 "Solicitud de Superación a Versión Final",
                 "Solicitud de Superación de Numero de Versión Final",
-                "Documento Revisado por Ingeniería",
+                "Documento Aprobado por Ingeniería",
                 "Documento Aprobado por Calidad",
                 "Actualización del documento",
                 "Suspensión del documento",
