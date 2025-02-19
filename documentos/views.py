@@ -15,6 +15,12 @@ import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
 
+def ejecutar_collectstatic(request):
+    try:
+        call_command('collectstatic', interactive=False, clear=True)
+        return HttpResponse("✅ Archivos estáticos recolectados exitosamente.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error ejecutando collectstatic: {str(e)}")
 def crear_superusuario(request):
     try:
         # Datos del superusuario (puedes cambiarlos)
