@@ -19,7 +19,7 @@
             <a href="{% url 'upload_proyecto' %}" class="btn btn-primary btn-lg">Ir a Subir Proyecto</a>
             <div class="ms-auto d-flex">
                 {% block navbar_extra %}{% endblock %}
-                <a class="navbar-brand fw-bold"> {{ user.first_name }} {{ user.last_name }}</a>
+                <a class="navbar-brand fw-bold">Usuario: {{ user.username }} </a>
                 <button class="btn btn-danger ms-2" onclick="window.location.href='{% url 'logout' %}'">Cerrar Sesión</button>
                 
             </div>

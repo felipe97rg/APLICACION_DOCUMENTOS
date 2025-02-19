@@ -58,6 +58,10 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'documentos/login.html', {'form': form})
 
+def get_users(request):
+    users = User.objects.all().values('id', 'username', 'email')
+    return JsonResponse(list(users), safe=False)
+
 @login_required
 def dashboard_view(request):
     proyectos = Proyecto.objects.all()  # Obtener todos los proyectos
