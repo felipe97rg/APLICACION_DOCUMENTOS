@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from documentos.decorators import restringir_eventos
 from django.contrib import messages
@@ -14,6 +15,22 @@ import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
 
+def crear_superusuario(request):
+    try:
+        # Datos del superusuario (puedes cambiarlos)
+        username = "juanfelipe.rodriguez@cenyt.com.co"
+        email = "juanfelipe.rodriguez@cenyt.com.co"
+        password = "frg123456"
+
+        # Verifica si el usuario ya existe
+        if User.objects.filter(username=username).exists():
+            return HttpResponse("⛔ El superusuario ya existe.")
+
+        # Crea el superusuario
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("✅ Superusuario creado con éxito.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error creando el superusuario: {str(e)}")
 
 def ejecutar_migraciones(request):
     try:
