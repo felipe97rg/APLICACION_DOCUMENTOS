@@ -38,3 +38,15 @@
         padding: 10px;
     }
 }
+
+.dropdown-toggle {
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.dropdown-menu .dropdown-item {
+    font-size: 14px;
+}

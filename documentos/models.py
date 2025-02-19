@@ -44,7 +44,7 @@ class Documento(models.Model):
     subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE)  # Relación con un proyecto
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha de creación automática
     estado_actual = models.CharField(max_length=50, default="NUEVO ")  # Estado actual por defecto
-    etapa_actual = models.CharField(max_length=50, null= True,default= "PRELIMINAR", blank=True)  # Etapa actual
+    etapa_actual = models.CharField(max_length=50, null= True,default= "NUEVO", blank=True)  # Etapa actual
     version_actual = models.CharField(max_length=50, null=True, default= "A", blank=True)  # Versión actual
     numero_version = models.IntegerField(null=True, blank=True, default= 1)  # Número de la versión
     estado_version = models.CharField(max_length=50, null=True, blank=True)  # Estado de la versión
