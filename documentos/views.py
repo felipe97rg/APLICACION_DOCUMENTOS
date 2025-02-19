@@ -5,15 +5,23 @@ from documentos.decorators import restringir_eventos
 from django.contrib import messages
 from .forms import LoginForm, EventoForm
 from .models import Proyecto, Subproyecto, Documento, Evento
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
+from django.core.management import call_command
 
 
+def ejecutar_migraciones(request):
+    try:
+        call_command('migrate')
+        return HttpResponse("✅ Migraciones ejecutadas con éxito.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error ejecutando migraciones: {str(e)}")
+    
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)

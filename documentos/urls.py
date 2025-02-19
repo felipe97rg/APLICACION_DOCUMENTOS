@@ -1,7 +1,9 @@
 from django.urls import path
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos
 from .views import upload_proyecto, registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento
+from .views import ejecutar_migraciones
 urlpatterns = [
+    path('migrar/', ejecutar_migraciones, name='ejecutar_migraciones'),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("dashboard/", dashboard_view, name="dashboard"),
