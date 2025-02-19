@@ -17,7 +17,7 @@ class EventoForm(forms.ModelForm):
     TIPO_EVENTO_CHOICES = [
 
         # Eventos de Creación de Documento
-
+        ("Selecciona el tipo de evento","Selecciona el tipo de evento"),
         ("Creación de Versión Preliminar", "Creación de Versión Preliminar"),
         ("Creación de Versión Interna Superada", "Creación de Versión Interna Superada"),
 

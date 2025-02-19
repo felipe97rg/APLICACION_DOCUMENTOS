@@ -158,7 +158,9 @@ def validar_evento_permitido(documento, tipo_evento):
 
     # 🚀 Cacheamos consultas para evitar múltiples búsquedas innecesarias en la base de datos
     eventos_previos = Evento.objects.filter(documento=documento).values_list("tipo_evento", flat=True)
-
+    if tipo_evento == "Selecciona el tipo de evento":
+        return "⚠️ Debes seleccionar un evento"
+    
     # 🔍 Si el documento no tiene eventos registrados, solo se permiten estos eventos iniciales
     EVENTOS_INICIALES = {
         "Creación de Versión Preliminar",
