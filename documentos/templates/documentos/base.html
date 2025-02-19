@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     {% load static %}
     <link rel="stylesheet" href="{% static 'documentos/css/base.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 <body>
 
@@ -16,12 +14,12 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">Gestión Documental</a>
-    
+
             <a href="{% url 'upload_proyecto' %}" class="btn btn-primary btn-lg">Ir a Subir Proyecto</a>
-            
+
             <div class="ms-auto d-flex align-items-center">
                 {% block navbar_extra %}{% endblock %}
-    
+
                 <!-- Cuadro de usuario logueado -->
                 {% if user.is_authenticated %}
                 <div class="dropdown ms-3">
@@ -36,15 +34,20 @@
                     </ul>
                 </div>
                 {% endif %}
+
+                <!-- Botón para cerrar sesión -->
+                <button class="btn btn-danger ms-2" onclick="window.location.href='{% url 'logout' %}'">Cerrar Sesión</button>
             </div>
         </div>
     </nav>
-    
 
     <!-- Contenido dinámico de cada página -->
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
 
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
