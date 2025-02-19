@@ -1,0 +1,88 @@
+.timeline {
+    position: relative;
+    padding: 20px 0;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Línea central de la línea de tiempo */
+.timeline-line {
+    position: absolute;
+    width: 3px;
+    background-color: #d3d3d3;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Tarjetas de los eventos */
+.timeline-item {
+    position: relative;
+    width: 60%;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: left; /* Se asegura que el texto esté alineado a la izquierda */
+    border-left: 5px solid #6a1b9a; /* Línea lateral para destacar */
+}
+
+/* Posicionamiento de las tarjetas alternadas */
+.timeline-item.left {
+    left: -15%;
+}
+
+.timeline-item.right {
+    left: 55%;
+}
+
+/* Título del evento */
+.timeline-content h5 {
+    margin: 0 0 15px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #1f1f1f;
+    text-align: center; /* Mantiene el título centrado */
+    text-transform: uppercase;
+}
+
+/* Párrafos del contenido */
+.timeline-content p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #424242;
+}
+
+/* Enlaces dentro de las tarjetas */
+.timeline-content a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #0056b3;
+    font-weight: bold;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 10px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        left: 0;
+        text-align: left;
+        padding-left: 30px;
+        margin-left: 10px;
+    }
+
+    .timeline-item::before {
+        left: 0;
+    }
+
+    .timeline-item.right {
+        left: 0;
+    }
+}

@@ -26,6 +26,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'documentos/static'),  # Incluye la carpeta estática de la app
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -64,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Agregar esta línea
+
 ]
 
 ROOT_URLCONF = 'aplicacion_documentos.urls'
