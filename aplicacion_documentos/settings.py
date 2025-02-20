@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ploty_dash',
     'documentos',  # Agrega tu aplicación aquí
 ]
 
@@ -74,8 +75,10 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'documentos/static'),  # Incluye la carpeta estática de la app
+    os.path.join(BASE_DIR, 'documentos', 'static'),  # Ajuste correcto para los archivos estáticos
 ]
+
+
 
 
 WSGI_APPLICATION = 'aplicacion_documentos.wsgi.application'
@@ -116,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = '/login/'  # URL de inicio de sesión
-LOGIN_REDIRECT_URL = '/dashboard/'  # Redirige aquí después del login
+LOGIN_REDIRECT_URL = '/inicio/'  # Redirige aquí después del login
 LOGOUT_REDIRECT_URL = '/login/'  # Redirige aquí después de cerrar sesión
 
 
@@ -146,6 +149,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'juanfelipe.rodriguez@cenyt.com.co'
-EMAIL_HOST_PASSWORD = 'Felipe1904@'
-DEFAULT_FROM_EMAIL = 'juanfelipe.rodriguez@cenyt.com.co'
+EMAIL_HOST_USER = 'documentos@cenyt.com.co'
+EMAIL_HOST_PASSWORD = 'Documentos123*'
+DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
