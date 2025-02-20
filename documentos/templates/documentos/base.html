@@ -18,8 +18,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
                 <div class="container-fluid">
                         {% block navbar_extra %}{% endblock %}
-                        <a class="navbar-brand fw-bold">Usuario: {{ user.username }} </a>                  
-                        <a href="{% url 'upload_proyecto' %}" class="btn btn-primary btn-lg">Nuevo Proyecto</a>      
+                        <a class="navbar-brand fw-bold">Usuario: {{ user.username }} </a>   
                         <a href="{% url 'upload_proyecto' %}" >Nuevo Proyecto</a>
                         <a href='{% url 'logout' %}'">Cerrar Sesión</a>
                 </div>
