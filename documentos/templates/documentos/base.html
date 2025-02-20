@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -12,24 +12,24 @@
 </head>
 
 <body>
-    <!-- Barra de navegacion-->
+    <!-- Barra de navegación principal -->
     <header class="header shadow">
         <div class="header-container">
             <a href="{% url 'dashboard' %}" class="logo">Gestión Documental</a>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-                <div class="container-fluid">
-                        {% block navbar_extra %}{% endblock %}
-                        <a class="navbar-brand fw-bold">Usuario: {{ user.username }} </a>   
-                        <a href="{% url 'upload_proyecto' %}" >Nuevo Proyecto</a>
-                        <a href="'{% url 'logout' %}'">Cerrar Sesión</a>
-                </div>
+            
+            <nav class="navbar">
+                {% block navbar_extra %}{% endblock %}
+                <span class="user-info">Usuario: {{ user.username }}</span>
+                <a href="{% url 'upload_proyecto' %}" class="nav-link">Nuevo Proyecto</a>
+                <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
             </nav>
         </div>
     </header>
+
     <!-- Contenido dinámico de cada página -->
     <div class="container mt-5">
         {% block content %}{% endblock %}
     </div>
-
 </body>
+
 </html>
