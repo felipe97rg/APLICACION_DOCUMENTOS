@@ -13,7 +13,7 @@
 
 <body>
     <!-- Barra de navegacion-->
-    <header class="header">
+    <header class="header shadow">
         <div class="header-container">
             <a href="{% url 'dashboard' %}" class="logo">Gestión Documental</a>
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
@@ -21,7 +21,7 @@
                         {% block navbar_extra %}{% endblock %}
                         <a class="navbar-brand fw-bold">Usuario: {{ user.username }} </a>   
                         <a href="{% url 'upload_proyecto' %}" >Nuevo Proyecto</a>
-                        <a href='{% url 'logout' %}'">Cerrar Sesión</a>
+                        <a href="'{% url 'logout' %}'">Cerrar Sesión</a>
                 </div>
             </nav>
         </div>
