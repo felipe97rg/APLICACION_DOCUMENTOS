@@ -1,52 +1,77 @@
+body {
+    min-height: 100vh;
+    background: url("") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 700;
+}
+
 .navbar {
-    padding: 10px;
+    display: flex;
+    gap: 20px; /* Agrega espacio entre los enlaces */
 }
 
-.container {
-    max-width: 900px;
+.navbar a {
+    position: relative;
+    font-size: 18px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 10px 15px;
+    overflow: hidden;
 }
 
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
-    h2 {
-        font-size: 22px;
-    }
-
-    .navbar .btn-danger {
-        font-size: 14px;
-        padding: 8px 12px;
-    }
-
-    .table {
-        font-size: 14px;
-    }
-
-    /* Ajuste de los select en móviles */
-    select {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    /* Centrar texto */
-    .text-center {
-        text-align: center;
-    }
-
-    /* Ajustar botones */
-    .btn {
-        font-size: 14px;
-        padding: 10px;
-    }
+.navbar a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(155, 104, 104, 0.144); /* Fondo negro inicialmente */
+    transition: all 0.4s ease-in-out;
+    z-index: -1;
 }
 
-.dropdown-toggle {
-    font-weight: bold;
+.navbar a:hover::before {
+    width: 100%;
+    left: 0;
 }
 
-.dropdown-menu {
-    min-width: 200px;
+.navbar a:hover {
+    color: rgba(0, 0, 0, 0.842); /* Cambia el texto a blanco al hacer hover */
 }
 
-.dropdown-menu .dropdown-item {
-    font-size: 14px;
+/* Espaciado entre navbar y contenido */
+.divider {
+    border: 10px;
+    height: 2px;
+    background-color: #000000;
+    margin: 10px 0 20px;
 }
