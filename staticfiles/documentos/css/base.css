@@ -1,77 +1,86 @@
+/* Fondo y altura de la página */
 body {
     min-height: 100vh;
-    background: url("") no-repeat;
+    background: url("") no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Barra de navegación */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    padding: 10px 20px;
-    background: rgb(255, 255, 255);
+    background: #ffffff;
+    padding: 15px 30px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important; /* Aplica sombra solo en la barra */
 }
 
+/* Contenedor de la barra de navegación */
 .header-container {
+    width: 100%;
     display: flex;
     align-items: center;
-    width: 100%;
     justify-content: space-between;
 }
 
+/* Estilo del logo */
 .logo {
     font-size: 24px;
-    color: rgb(0, 0, 0);
+    color: #000;
     text-decoration: none;
     font-weight: 700;
 }
 
+/* Menú de navegación */
 .navbar {
     display: flex;
-    gap: 20px; /* Agrega espacio entre los enlaces */
+    gap: 25px;
 }
 
-.navbar a {
-    position: relative;
+/* Enlaces del menú */
+.navbar .nav-link {
     font-size: 18px;
     color: black;
     font-weight: 500;
     text-decoration: none;
-    padding: 10px 15px;
-    overflow: hidden;
+    padding: 8px 15px;
+    border-radius: 0;
+    position: relative; /* Necesario para el efecto hover */
+    transition: color 0.3s ease-in-out;
 }
 
-.navbar a::before {
+/* Efecto hover con subrayado individual */
+.navbar .nav-link::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: -2px;
     width: 0;
-    height: 100%;
-    background-color: rgba(155, 104, 104, 0.144); /* Fondo negro inicialmente */
-    transition: all 0.4s ease-in-out;
-    z-index: -1;
+    height: 2px;
+    background: #007bff; /* Color azul para la línea */
+    transition: all 0.3s ease-in-out;
 }
 
-.navbar a:hover::before {
+/* Cuando el usuario pasa el mouse sobre el enlace */
+.navbar .nav-link:hover {
+    color: #007bff;
+}
+
+/* Expande la línea de subrayado al hacer hover */
+.navbar .nav-link:hover::after {
     width: 100%;
     left: 0;
 }
-
-.navbar a:hover {
-    color: rgba(0, 0, 0, 0.842); /* Cambia el texto a blanco al hacer hover */
-}
-
-/* Espaciado entre navbar y contenido */
-.divider {
-    border: 10px;
-    height: 2px;
-    background-color: #000000;
-    margin: 10px 0 20px;
+/* Información del usuario */
+.user-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    background: transparent !important;
+    padding: 8px 15px;
+    box-shadow: none !important;
 }
