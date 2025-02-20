@@ -647,7 +647,7 @@ def registrar_evento(request, documento_id):
             destinatarios = [email for email in destinatarios if email]
 
             if destinatarios:
-                subject = f"📄 Nuevo Evento Registrado: {evento.tipo_evento}"
+                subject = f"📄{evento.tipo_evento} - Nuevo Evento Registrado: "
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,

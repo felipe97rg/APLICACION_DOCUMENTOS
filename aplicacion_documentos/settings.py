@@ -89,6 +89,8 @@ TEMPLATES = [
     },
 ]
 
+TIME_ZONE = 'America/Bogota'
+USE_TZ = True  # Habilita el uso de zona horaria
 
 
 
