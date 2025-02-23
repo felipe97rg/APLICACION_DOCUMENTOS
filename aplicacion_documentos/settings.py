@@ -155,4 +155,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'juanfelipe.rodriguez@cenyt.com.co'
 EMAIL_HOST_PASSWORD = 'Felipe1904@'
-DEFAULT_FROM_EMAIL = 'juanfelipe.rodriguez@cenyt.com.co'
+DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'	# Dirección de correo electrónico que se usará como remitente
