@@ -4,6 +4,33 @@
 
 {% block content %}
 
+    <h2 class="text-center mb-4">Estado Actual</h2>
+    <div class="row">
+        <!-- Tarjeta: Total de Proyectos -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded text-center">
+                <h6 class="text-muted">Total de Proyectos</h6>
+                <h2 class="text-primary fw-bold">{{ total_proyectos }}</h2>
+            </div>
+        </div>
+        
+        <!-- Tarjeta: Total de Subproyectos -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded text-center">
+                <h6 class="text-muted">Total de Subproyectos</h6>
+                <h2 class="text-success fw-bold">{{ total_subproyectos }}</h2>
+            </div>
+        </div>
+        
+        <!-- Tarjeta: Total de Documentos -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded text-center">
+                <h6 class="text-muted">Total de Documentos</h6>
+                <h2 class="text-danger fw-bold">{{ total_documentos }}</h2>
+            </div>
+        </div>
+    </div>
+
     <h2 class="text-center mb-4">Selecciona un Documento</h2>
 
     <div class="row">

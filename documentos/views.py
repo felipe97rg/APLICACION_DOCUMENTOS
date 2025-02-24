@@ -64,8 +64,17 @@ def get_users(request):
 
 @login_required
 def dashboard_view(request):
-    proyectos = Proyecto.objects.all()  # Obtener todos los proyectos
-    return render(request, 'documentos/dashboard.html', {'proyectos': proyectos})
+    total_proyectos = Proyecto.objects.count()
+    total_subproyectos = Subproyecto.objects.count()
+    total_documentos = Documento.objects.count()
+
+    context = {
+        'total_proyectos': total_proyectos,
+        'total_subproyectos': total_subproyectos,
+        'total_documentos': total_documentos,
+        'proyectos': Proyecto.objects.all(),
+    }
+    return render(request, 'documentos/dashboard.html', context)
 
 @login_required
 def get_subproyectos(request, proyecto_id):
