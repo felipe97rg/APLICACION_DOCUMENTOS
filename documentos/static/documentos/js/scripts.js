@@ -73,6 +73,11 @@ $(document).ready(function() {
                 if (eventos.length === 0) {
                     timelineContainer.append('<p class="text-center">No hay eventos registrados.</p>');
                 } else {
+                    // Ordenar eventos por fecha de más reciente a más antiguo
+                    eventos.sort(function(a, b) {
+                        return new Date(b.fecha) - new Date(a.fecha); // Descendente
+                    });
+
                     $.each(eventos, function(index, evento) {
                         var lado = index % 2 === 0 ? "left" : "right"; // Alterna eventos a la izquierda y derecha
 
@@ -87,9 +92,9 @@ $(document).ready(function() {
                                     <h5>${evento.tipo_evento}</h5>
                                     <p><strong>Fecha:</strong> ${evento.fecha}</p>
                                     <p><strong>Remitente:</strong> ${evento.usuario}</p>
-                                    <p><strong>Destinatario 1:</strong> ${evento.usuario_interesado_1}</p>
-                                    <p><strong>Destinatario 2:</strong> ${evento.usuario_interesado_2}</p>
-                                    <p><strong>Destinatario 3:</strong> ${evento.usuario_interesado_3}</p>
+                                    <p><strong>Destinatario 1:</strong> ${destinatario1}</p>
+                                    <p><strong>Destinatario 2:</strong> ${destinatario2}</p>
+                                    <p><strong>Destinatario 3:</strong> ${destinatario3}</p>
                                     <p><strong>Estado:</strong> ${evento.estado_actual}</p>
                                     <p><strong>Versión:</strong> ${evento.version_actual}</p>
                                     <p><strong>Número de Versión:</strong> ${evento.numero_version || "No disponible"}</p>
