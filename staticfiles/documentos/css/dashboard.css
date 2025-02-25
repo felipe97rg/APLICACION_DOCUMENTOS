@@ -3,7 +3,8 @@
     padding: 20px 0;
     max-width: 800px;
     margin: auto;
-}
+    }
+
 
 /* Línea central de la línea de tiempo */
 .timeline-line {
@@ -64,6 +65,41 @@
     font-weight: bold;
 }
 
+
+
+/* Estilo general para las tarjetas */
+.card {
+    border-radius: 10px;  /* Bordes redondeados */
+    padding: 20px;
+    background: white;  /* Fondo blanco */
+    color: black; /* Texto negro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease-in-out; /* Animación suave */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Estilos para los títulos dentro de las tarjetas */
+.card h6 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Estilos para los números */
+.card h2 {
+    font-size: 32px;  /* Hacer los números más grandes */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Efecto Hover: cambia el fondo a negro y el texto a blanco */
+.card:hover {
+    background: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+}
+
+
 /* Responsivo para pantallas pequeñas */
 @media screen and (max-width: 768px) {
     .timeline::after {
@@ -84,5 +120,12 @@
 
     .timeline-item.right {
         left: 0;
+    }
+}
+
+/* Responsividad: en pantallas pequeñas, que las tarjetas ocupen todo el ancho */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px; /* Espacio entre tarjetas en móviles */
     }
 }

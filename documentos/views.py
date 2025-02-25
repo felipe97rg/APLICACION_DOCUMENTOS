@@ -67,12 +67,15 @@ def dashboard_view(request):
     total_proyectos = Proyecto.objects.count()
     total_subproyectos = Subproyecto.objects.count()
     total_documentos = Documento.objects.count()
+    total_eventos = Evento.objects.count()
 
     context = {
         'total_proyectos': total_proyectos,
         'total_subproyectos': total_subproyectos,
         'total_documentos': total_documentos,
         'proyectos': Proyecto.objects.all(),
+        'total_eventos': total_eventos,
+        'eventos': Evento.objects.all()
     }
     return render(request, 'documentos/dashboard.html', context)
 
