@@ -99,6 +99,64 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
 }
 
+/* Contenedor de las etapas */
+.etapa-container {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* Estilos base para las cajas de etapa */
+.etapa-box {
+    text-align: center;
+    position: relative;
+    width: 33%;
+}
+
+/* Círculos de las etapas */
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;  /* Color gris claro para las etapas inactivas */
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Texto de la etapa */
+.etapa-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+
+/* Línea de progreso */
+.progress-line {
+    position: absolute;
+    top: 25px;
+    left: 15%;
+    width: 70%;
+    height: 5px;
+    background-color: #ccc;
+    z-index: -1;
+}
+
+/* Estilo de la etapa activa */
+.etapa-box.active .circle {
+    background-color: black; /* La etapa actual se muestra en negro */
+    color: white;
+}
+
+.etapa-box.active .etapa-text {
+    color: black; /* Texto en negro */
+}
+
 
 /* Responsivo para pantallas pequeñas */
 @media screen and (max-width: 768px) {
@@ -122,6 +180,7 @@
         left: 0;
     }
 }
+
 
 /* Responsividad: en pantallas pequeñas, que las tarjetas ocupen todo el ancho */
 @media (max-width: 768px) {

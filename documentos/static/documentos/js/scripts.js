@@ -204,3 +204,26 @@ $(document).ready(function() {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let etapaActual = document.getElementById("etapa_actual").textContent.trim().toUpperCase();
+
+    let etapas = {
+        "PRELIMINAR": "etapa-preliminar",
+        "INTERDISCIPLINARIA": "etapa-interdisciplinaria",
+        "FINAL": "etapa-final"
+    };
+
+    // Muestra la barra de etapas si se selecciona un documento
+    document.getElementById("progreso-etapas").classList.remove("d-none");
+
+    // Asegurarse de que todas las etapas estén visibles
+    Object.values(etapas).forEach(etapa => {
+        document.getElementById(etapa).classList.remove("active");
+    });
+
+    // Resaltar la etapa actual en negro
+    if (etapaActual in etapas) {
+        document.getElementById(etapas[etapaActual]).classList.add("active");
+    }
+});

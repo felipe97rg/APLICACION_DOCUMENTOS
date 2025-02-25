@@ -89,6 +89,37 @@
                 <a href="{% url 'upload_proyecto' %}" class="btn btn-primary btn-lg">Ir a Subir Proyecto</a>
             </div>
             > > -->
+            <!-- Línea de Progreso de Etapas -->
+            <!-- Línea de Progreso de Etapas -->
+            <div id="progreso-etapas" class="container mt-4 d-none">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="d-flex justify-content-between align-items-center position-relative etapa-container">
+                            <!-- Etapa Preliminar -->
+                            <div class="etapa-box" id="etapa-preliminar">
+                                <div class="circle">1</div>
+                                <span class="etapa-text">Etapa Preliminar</span>
+                            </div>
+
+                            <!-- Etapa Interdisciplinaria -->
+                            <div class="etapa-box" id="etapa-interdisciplinaria">
+                                <div class="circle">2</div>
+                                <span class="etapa-text">Etapa Interdisciplinaria</span>
+                            </div>
+
+                            <!-- Etapa Final -->
+                            <div class="etapa-box" id="etapa-final">
+                                <div class="circle">3</div>
+                                <span class="etapa-text">Etapa Final</span>
+                            </div>
+
+                            <!-- Línea de progreso -->
+                            <div class="progress-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         <!-- Detalles del Documento -->
             <div id="documento-detalle" class="mt-4 d-none" >
                 <h3>Detalles del Documento</h3>
