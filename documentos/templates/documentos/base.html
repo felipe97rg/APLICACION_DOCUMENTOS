@@ -20,8 +20,8 @@
             <nav class="navbar">
 
                 <span class="user-info">Usuario: {{ user.username }}</span>
+                <a href="{% url 'upload_proyecto' %}" class="nav-link">Gestionar Poryectos</a>             
                 {% block navbar_extra %}{% endblock %}
-                <a href="{% url 'upload_proyecto' %}" class="nav-link">Nuevo Proyecto</a>
                 <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
             </nav>
         </div>
