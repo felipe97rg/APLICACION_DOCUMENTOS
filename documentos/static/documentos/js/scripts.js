@@ -206,7 +206,9 @@ $(document).ready(function() {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    let etapaActual = document.getElementById("etapa_actual").textContent.trim().toUpperCase();
+    let documentoSeleccionado = document.getElementById("documento"); // Select del documento
+    let etapaProgreso = document.getElementById("progreso-etapas"); // Contenedor de la barra de etapas
+    let etapaActualElemento = document.getElementById("etapa_actual"); // Celda de la tabla con la etapa
 
     let etapas = {
         "PRELIMINAR": "etapa-preliminar",
@@ -214,16 +216,35 @@ document.addEventListener("DOMContentLoaded", function () {
         "FINAL": "etapa-final"
     };
 
-    // Muestra la barra de etapas si se selecciona un documento
-    document.getElementById("progreso-etapas").classList.remove("d-none");
+    // Función para actualizar la barra de progreso según la etapa del documento seleccionado
+    function actualizarEtapa() {
+        if (documentoSeleccionado.value !== "" && etapaActualElemento) {
+            let etapaActual = etapaActualElemento.textContent.trim().toUpperCase();
 
-    // Asegurarse de que todas las etapas estén visibles
-    Object.values(etapas).forEach(etapa => {
-        document.getElementById(etapa).classList.remove("active");
+            // Mostrar la barra de progreso si hay documento seleccionado
+            etapaProgreso.classList.remove("d-none");
+
+            // Restablecer todas las etapas a estado inactivo
+            Object.values(etapas).forEach(etapa => {
+                document.getElementById(etapa).classList.remove("active");
+            });
+
+            // Resaltar la etapa actual en negro si es una de las permitidas
+            if (etapaActual in etapas) {
+                document.getElementById(etapas[etapaActual]).classList.add("active");
+            }
+        } else {
+            // Si no hay documento seleccionado, ocultar la barra de progreso
+            etapaProgreso.classList.add("d-none");
+        }
+    }
+
+    // Detectar cuando se selecciona un documento y actualizar la barra de progreso
+    documentoSeleccionado.addEventListener("change", function () {
+        // Simulación: obtener la etapa de la tabla de detalles
+        setTimeout(actualizarEtapa, 500); // Se da un pequeño tiempo de espera por si los datos tardan en cargarse
     });
 
-    // Resaltar la etapa actual en negro
-    if (etapaActual in etapas) {
-        document.getElementById(etapas[etapaActual]).classList.add("active");
-    }
+    // Ejecutar la función al cargar la página en caso de que ya haya un documento seleccionado
+    actualizarEtapa();
 });
