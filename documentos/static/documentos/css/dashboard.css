@@ -3,7 +3,8 @@
     padding: 20px 0;
     max-width: 800px;
     margin: auto;
-}
+    }
+
 
 /* Línea central de la línea de tiempo */
 .timeline-line {
@@ -64,6 +65,99 @@
     font-weight: bold;
 }
 
+
+
+/* Estilo general para las tarjetas */
+.card {
+    border-radius: 10px;  /* Bordes redondeados */
+    padding: 20px;
+    background: white;  /* Fondo blanco */
+    color: black; /* Texto negro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease-in-out; /* Animación suave */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Estilos para los títulos dentro de las tarjetas */
+.card h6 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Estilos para los números */
+.card h2 {
+    font-size: 32px;  /* Hacer los números más grandes */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Efecto Hover: cambia el fondo a negro y el texto a blanco */
+.card:hover {
+    background: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+}
+
+/* Contenedor de las etapas */
+.etapa-container {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* Estilos base para las cajas de etapa */
+.etapa-box {
+    text-align: center;
+    position: relative;
+    width: 33%;
+}
+
+/* Círculos de las etapas */
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;  /* Color gris claro para las etapas inactivas */
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Texto de la etapa */
+.etapa-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+
+/* Línea de progreso */
+.progress-line {
+    position: absolute;
+    top: 25px;
+    left: 15%;
+    width: 70%;
+    height: 5px;
+    background-color: #ccc;
+    z-index: -1;
+}
+
+/* Estilo de la etapa activa */
+.etapa-box.active .circle {
+    background-color: black; /* La etapa actual se muestra en negro */
+    color: white;
+}
+
+.etapa-box.active .etapa-text {
+    color: black; /* Texto en negro */
+}
+
+
 /* Responsivo para pantallas pequeñas */
 @media screen and (max-width: 768px) {
     .timeline::after {
@@ -84,5 +178,13 @@
 
     .timeline-item.right {
         left: 0;
+    }
+}
+
+
+/* Responsividad: en pantallas pequeñas, que las tarjetas ocupen todo el ancho */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px; /* Espacio entre tarjetas en móviles */
     }
 }

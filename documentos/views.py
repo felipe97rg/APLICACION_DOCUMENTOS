@@ -1,19 +1,50 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from documentos.decorators import restringir_eventos
 from django.contrib import messages
 from .forms import LoginForm, EventoForm
 from .models import Proyecto, Subproyecto, Documento, Evento
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
+from django.core.management import call_command
 
+def ejecutar_collectstatic(request):
+    try:
+        call_command('collectstatic', interactive=False, clear=True)
+        return HttpResponse("✅ Archivos estáticos recolectados exitosamente.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error ejecutando collectstatic: {str(e)}")
+def crear_superusuario(request):
+    try:
+        # Datos del superusuario (puedes cambiarlos)
+        username = "juanfelipe.rodriguez@cenyt.com.co"
+        email = "juanfelipe.rodriguez@cenyt.com.co"
+        password = "frg123456"
 
+        # Verifica si el usuario ya existe
+        if User.objects.filter(username=username).exists():
+            return HttpResponse("⛔ El superusuario ya existe.")
+
+        # Crea el superusuario
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("✅ Superusuario creado con éxito.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error creando el superusuario: {str(e)}")
+
+def ejecutar_migraciones(request):
+    try:
+        call_command('migrate')
+        return HttpResponse("✅ Migraciones ejecutadas con éxito.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error ejecutando migraciones: {str(e)}")
+    
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -27,10 +58,26 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'documentos/login.html', {'form': form})
 
+def get_users(request):
+    users = User.objects.all().values('id', 'username', 'email')
+    return JsonResponse(list(users), safe=False)
+
 @login_required
 def dashboard_view(request):
-    proyectos = Proyecto.objects.all()  # Obtener todos los proyectos
-    return render(request, 'documentos/dashboard.html', {'proyectos': proyectos})
+    total_proyectos = Proyecto.objects.count()
+    total_subproyectos = Subproyecto.objects.count()
+    total_documentos = Documento.objects.count()
+    total_eventos = Evento.objects.count()
+
+    context = {
+        'total_proyectos': total_proyectos,
+        'total_subproyectos': total_subproyectos,
+        'total_documentos': total_documentos,
+        'proyectos': Proyecto.objects.all(),
+        'total_eventos': total_eventos,
+        'eventos': Evento.objects.all()
+    }
+    return render(request, 'documentos/dashboard.html', context)
 
 @login_required
 def get_subproyectos(request, proyecto_id):
@@ -612,7 +659,7 @@ def registrar_evento(request, documento_id):
             destinatarios = [email for email in destinatarios if email]
 
             if destinatarios:
-                subject = f"📄 Nuevo Evento Registrado: {evento.tipo_evento}"
+                subject = f"📄{evento.tipo_evento} - Nuevo Evento Registrado: "
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,

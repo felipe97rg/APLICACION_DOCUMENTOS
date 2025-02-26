@@ -3,11 +3,11 @@
 {% block title %}Registrar Evento - Gestión Documental{% endblock %}
 
 {% block navbar_extra %}
-    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver al Inicio</a>
+    <a href="{% url 'dashboard' %}" class="nav-link">Volver al Inicio</a>
 {% endblock %}
 
 {% block content %}
-
+<div class="container mb-4 mt-4"> 
     <div class="text-center mb-4">
         <h2 class="fw-bold">Registrar Evento para el Documento</h2>
         <div class="document-info">
@@ -94,6 +94,7 @@
                 <div class="mb-3">
                     <label class="form-label">Tipo de Evento</label>
                     <input type="text" id="searchTipoEvento" class="form-control mb-2" placeholder="Filtrar evento...">
+                    
                     {{ form.tipo_evento }}
                 </div>
                 
@@ -153,5 +154,5 @@
             });
         });
     </script>
-    
+</div>    
 {% endblock %}

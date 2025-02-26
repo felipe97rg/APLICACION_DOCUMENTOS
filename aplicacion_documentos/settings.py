@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_ploty_dash',
+    'django_plotly_dash',
+
     'documentos',  # Agrega tu aplicación aquí
 ]
 
