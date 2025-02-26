@@ -45,7 +45,6 @@ $(document).ready(function() {
                 $("#etapa_actual").text(data.etapa_actual || "N/A");
                 $("#version_actual").text(data.version_actual || "N/A");
                 $("#numero_version").text(data.numero_version || "N/A");
-                $("#estado_version").text(data.estado_version || "N/A");
                 $("#ruta_actual").text(data.ruta_actual|| "N/A");
                 $("#revisado").text(data.revisado ? "Sí" : "No");
                 $("#aprobado").text(data.aprobado ? "Sí" : "No");
@@ -98,7 +97,6 @@ $(document).ready(function() {
                                     <p><strong>Estado:</strong> ${evento.estado_actual}</p>
                                     <p><strong>Versión:</strong> ${evento.version_actual}</p>
                                     <p><strong>Número de Versión:</strong> ${evento.numero_version || "No disponible"}</p>
-                                    <p><strong>Estado de la Versión:</strong> ${evento.estado_version || "No disponible"}</p>
                                     <p><strong>Descripción:</strong> ${evento.descripcion}</p>
                                     <p><strong>Comentarios:</strong> ${evento.comentarios ? evento.comentarios : "Sin comentarios"}</p>
                                     <p><strong>Ruta del Documento:</strong> ${evento.ruta_actual}</p>
@@ -177,7 +175,6 @@ $(document).ready(function() {
                 $("#etapa_actual").text(data.etapa_actual || "N/A");
                 $("#version_actual").text(data.version_actual || "N/A");
                 $("#numero_version").text(data.numero_version || "N/A");
-                $("#estado_version").text(data.estado_version || "N/A");
                 $("#ruta_actual").text(data.ruta_actual || "N/A");
                 $("#revisado").text(data.revisado ? "Sí" : "No");
                 $("#aprobado").text(data.aprobado ? "Sí" : "No");

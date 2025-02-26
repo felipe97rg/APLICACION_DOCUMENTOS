@@ -14,6 +14,8 @@ from django.utils.html import strip_tags
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
+from django.utils.timezone import localtime
+import pytz
 
 def ejecutar_collectstatic(request):
     try:
@@ -102,6 +104,8 @@ def get_documento_detalle(request, documento_id):
     """ Devuelve los detalles del documento seleccionado en formato JSON """
     documento = get_object_or_404(Documento, id=documento_id)
     data = {
+        "codigo": documento.codigo,
+        "nombre": documento.nombre,
         "estado_actual": documento.estado_actual,
         "etapa_actual": documento.etapa_actual,
         "version_actual": documento.version_actual,
@@ -119,6 +123,9 @@ def get_eventos_documento(request, documento_id):
     documento = get_object_or_404(Documento, id=documento_id)
     eventos = Evento.objects.filter(documento=documento).order_by("fecha_creacion_evento")
 
+        # Definir la zona horaria de Bogotá
+    bogota_tz = pytz.timezone("America/Bogota")
+
     data = [
         {
             "id": evento.id,
@@ -126,7 +133,7 @@ def get_eventos_documento(request, documento_id):
             "usuario_interesado_1": evento.usuario_interesado_1.username if evento.usuario_interesado_1 else None,
             "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
             "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
-            "fecha": evento.fecha_creacion_evento.strftime("%Y-%m-%d %H:%M"),
+            "fecha": localtime(evento.fecha_creacion_evento, bogota_tz).strftime("%Y-%m-%d %H:%M"),
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
             "numero_version": evento.numero_version,
