@@ -5,7 +5,7 @@
 {% block content %}
 <!-- Contenido dinámico de cada página -->
     <div>
-        <div class="container mt-4">
+        <div class="container mb-5 mt-5">
             <h2 class="text-center mb-4">Estado Actual</h2>
             <div class="row">
                 <!-- Tarjeta: Total de Proyectos -->
@@ -41,9 +41,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mb-5 mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="text-center">Subproyectos por Proyecto</h5>
+                        <canvas id="grafica1"></canvas>
+                    </div>
+                </div>
+        
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="text-center">Documentos por Subproyecto</h5>
+                        <canvas id="grafica2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
    
-        <div class="container mb-4 mt-4">
-            <h2 class="text-center mb-4">Selecciona un Documento</h2>
+        <div class="container mb-5 mt-5">
+            <h2 class="text-center mt-5 mb-5">Selecciona un Documento</h2>
 
             <div class="row">
                 <div class="col-md-4">
@@ -91,30 +110,28 @@
             > > -->
             <!-- Línea de Progreso de Etapas -->
             <!-- Línea de Progreso de Etapas -->
-            <div id="progreso-etapas" class="container mt-4 d-none">
+            <div id="progreso-etapas" class="container mb-5 mt-5 d-none">
                 <div class="row justify-content-center">
                     <div class="col-md-10">
                         <div class="d-flex justify-content-between align-items-center position-relative etapa-container">
                             <!-- Etapa Preliminar -->
                             <div class="etapa-box" id="etapa-preliminar">
-                                <div class="circle">1</div>
+                                <div class="circle">A</div>
                                 <span class="etapa-text">Etapa Preliminar</span>
                             </div>
 
                             <!-- Etapa Interdisciplinaria -->
                             <div class="etapa-box" id="etapa-interdisciplinaria">
-                                <div class="circle">2</div>
+                                <div class="circle">B</div>
                                 <span class="etapa-text">Etapa Interdisciplinaria</span>
                             </div>
 
                             <!-- Etapa Final -->
                             <div class="etapa-box" id="etapa-final">
-                                <div class="circle">3</div>
+                                <div class="circle">0</div>
                                 <span class="etapa-text">Etapa Final</span>
                             </div>
 
-                            <!-- Línea de progreso -->
-                            <div class="progress-line"></div>
                         </div>
                     </div>
                 </div>
@@ -150,8 +167,10 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'documentos/css/dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="{% static 'documentos/js/scripts.js' %}" defer></script>
+    <script src="{% static 'documentos/js/graficas.js' %}" defer></script>
 
 {% endblock %}
