@@ -115,6 +115,10 @@
     color: black; /* Texto en negro */
 }
 
+#evento-link {
+    background-color: #1f1f1f;
+    border-color: #000000;
+}
 
 /* Responsivo para pantallas pequeñas */
 @media screen and (max-width: 768px) {
@@ -138,7 +142,6 @@
         left: 0;
     }
 }
-
 
 /* Responsividad: en pantallas pequeñas, que las tarjetas ocupen todo el ancho */
 @media (max-width: 768px) {

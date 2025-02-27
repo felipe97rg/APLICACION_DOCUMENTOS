@@ -84,21 +84,31 @@
             </div>
             
         <!-- Detalles del Documento -->
-            <div id="documento-detalle" class="mt-4 d-none" >
-                <h3>Detalles del Documento</h3>
-                <table class="table table-bordered">
-                    <tr><th>Nombre del documento</th><td id="nombre"></td></tr>
-                    <tr><th>Codígo del cliente</th><td id="codigo"> </td></tr>
-                    <tr><th>Estado Actual</th><td id="estado_actual"></td></tr>
-                    <tr><th>Etapa Actual</th><td id="etapa_actual"></td></tr>
-                    <tr><th>Versión Actual</th><td id="version_actual"></td></tr>
-                    <tr><th>Número de Versión</th><td id="numero_version"></td></tr>
-                    <tr><th>Aprobado por Ingeniería</th><td id="revisado"></td></tr>
-                    <tr><th>Aprobado por Calidad</th><td id="aprobado"></td></tr>
-                    <tr><th>Ruta Actual del Documento</th><td><a id="ruta_actual"></a></td></tr>
+        <div id="documento-detalle" class="d-none">
+
+            <div class="table-container mt-5">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>Nombre del documento</th><td id="nombre"></td></tr>
+                        <tr><th>Código del cliente</th><td id="codigo"></td></tr>
+                        <tr><th>Estado Actual</th><td id="estado_actual"></td></tr>
+                        <tr><th>Etapa Actual</th><td id="etapa_actual"></td></tr>
+                        <tr><th>Versión Actual</th><td id="version_actual"></td></tr>
+                        <tr><th>Número de Versión</th><td id="numero_version"></td></tr>
+                        <tr><th>Aprobado por Ingeniería</th><td id="revisado"></td></tr>
+                        <tr><th>Aprobado por Calidad</th><td id="aprobado"></td></tr>
+                        <tr><th>Ruta Actual del Documento</th><td><a id="ruta_actual"></a></td></tr>
+                    </tbody>
                 </table>
-            </div>      
+            </div>
         </div>
+        
 
            <!-- Historial de Eventos -->
             <div id="eventos-documento" class="mt-4 d-none">
@@ -113,6 +123,7 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'documentos/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'documentos/css/Tabla_detalles.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     

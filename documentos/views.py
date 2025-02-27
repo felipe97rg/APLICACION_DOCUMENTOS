@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from documentos.decorators import restringir_eventos
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .forms import LoginForm, EventoForm
 from .models import Proyecto, Subproyecto, Documento, Evento
@@ -11,11 +12,11 @@ from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
 from django.db.models import Count
-
+import pandas as pd
+import json
 
 def ejecutar_collectstatic(request):
     try:
@@ -270,9 +271,59 @@ def upload_proyecto(request):
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')
+        
+
     
     return render(request, 'documentos/upload_proyecto.html')
 
+@login_required
+def get_subproyectos2(request):
+    """
+    Vista que devuelve los subproyectos de un proyecto en formato JSON.
+    """
+    proyecto_id = request.GET.get('proyecto_id')
+    subproyectos = Subproyecto.objects.filter(proyecto_id=proyecto_id).values('id', 'nombre')
+    return JsonResponse(list(subproyectos), safe=False)
+
+@login_required
+def upload_documento(request):
+    """
+    Vista para crear un documento a partir de un formulario de texto y asociarlo a un subproyecto.
+    """
+    proyectos = Proyecto.objects.all()  # Obtener todos los proyectos
+
+    if request.method == 'POST' and 'upload_document' in request.POST:
+        subproyecto_id = request.POST.get('subproyecto')  # ID del subproyecto seleccionado
+        documento_codigo = request.POST.get('documento_codigo').strip()  # Código ingresado
+        documento_nombre = request.POST.get('documento_nombre').strip()  # Nombre ingresado
+
+        if not subproyecto_id or not documento_codigo or not documento_nombre:
+            messages.error(request, "Debe seleccionar un subproyecto y escribir el código y nombre del documento.")
+            return redirect('upload_proyecto')
+
+        try:
+            subproyecto = Subproyecto.objects.get(id=subproyecto_id)  # Buscar el subproyecto en la BD
+
+            # Verificar si el documento ya existe antes de crearlo
+            if Documento.objects.filter(codigo=documento_codigo).exists():
+                messages.error(request, "El código del documento ya existe. Debe ser único.")
+                return redirect('upload_proyecto')
+
+            # Crear el documento asociado al subproyecto
+            documento = Documento.objects.create(
+                codigo=documento_codigo,
+                nombre=documento_nombre,
+                subproyecto=subproyecto
+            )
+
+            messages.success(request, f'Documento "{documento.nombre}" creado exitosamente en el subproyecto "{subproyecto.nombre}".')
+            return redirect('dashboard')  # Redirigir a la página principal después del éxito
+
+        except Subproyecto.DoesNotExist:
+            messages.error(request, "El subproyecto seleccionado no existe.")
+            return redirect('upload_proyecto')
+
+    return render(request, 'documentos/upload_proyecto.html', {'proyectos': proyectos})
 
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
