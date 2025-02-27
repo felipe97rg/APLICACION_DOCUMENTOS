@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = '/login/'  # URL de inicio de sesión
-LOGIN_REDIRECT_URL = '/dashboard/'  # Redirige aquí después del login
+LOGIN_REDIRECT_URL = '/inicio/'  # Redirige aquí después del login
 LOGOUT_REDIRECT_URL = '/login/'  # Redirige aquí después de cerrar sesión
 
 
