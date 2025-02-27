@@ -66,6 +66,44 @@ def login_view(request):
 def get_users(request):
     users = User.objects.all().values('id', 'username', 'email')
     return JsonResponse(list(users), safe=False)
+@login_required
+def inicio_view(request):
+    return render(request, 'documentos/inicio.html')
+
+@login_required
+def reporte_view(request):
+    total_proyectos = Proyecto.objects.count()
+    total_subproyectos = Subproyecto.objects.count()
+    total_documentos = Documento.objects.count()
+    total_eventos = Evento.objects.count()
+
+    # Datos para la primera gráfica: Cantidad de subproyectos por proyecto
+    subproyectos_por_proyecto = (
+        Subproyecto.objects.values('proyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Datos para la segunda gráfica: Cantidad de documentos por subproyecto
+    documentos_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    context = {
+        'total_proyectos': total_proyectos,
+        'total_subproyectos': total_subproyectos,
+        'total_documentos': total_documentos,
+        'proyectos': Proyecto.objects.all(),
+        'total_eventos': total_eventos,
+        'eventos': Evento.objects.all(),
+        'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
+        'documentos_por_subproyecto': list(documentos_por_subproyecto),
+    }
+    return render(request, 'documentos/reporte.html',context)
+
+
 
 @login_required
 def dashboard_view(request):
