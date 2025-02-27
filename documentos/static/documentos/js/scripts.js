@@ -41,6 +41,8 @@ $(document).ready(function() {
             
             // Obtener los detalles del documento seleccionado
             $.get("/api/documento/" + documento_id + "/detalle/", function(data) {
+                $("#nombre_documento").text(data.nombre || "N/A");
+                $("#codigo_documento").text(data.codigo || "N/A");
                 $("#estado_actual").text(data.estado_actual || "N/A");
                 $("#etapa_actual").text(data.etapa_actual || "N/A");
                 $("#version_actual").text(data.version_actual || "N/A");
