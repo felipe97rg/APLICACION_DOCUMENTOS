@@ -1,21 +1,28 @@
 from django.urls import path
-from .views import login_view, logout_view, dashboard_view, obtener_datos_graficas, get_subproyectos, get_documentos
-from .views import upload_proyecto, registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento
-from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
+from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
+from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
+from .views import upload_proyecto
 urlpatterns = [
-    path('collectstatic/', ejecutar_collectstatic, name='ejecutar_collectstatic'),
-    path('crear-superusuario/', crear_superusuario, name='crear_superusuario'),
-    path('migrar/', ejecutar_migraciones, name='ejecutar_migraciones'),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
 
+    path("reporte/", reporte_view, name="reporte"),
+    path('reporte/datos_graficas/', obtener_datos_graficas, name='datos_graficas'),
+
     path("dashboard/", dashboard_view, name="dashboard"),
-    path('dashboard/datos_graficas/', obtener_datos_graficas, name='datos_graficas'), 
-    
-    path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
+
     path("api/subproyectos/<int:proyecto_id>/", get_subproyectos, name="get_subproyectos"),
     path("api/documentos/<int:subproyecto_id>/", get_documentos, name="get_documentos"), 
-    path("documento/<int:documento_id>/evento/", registrar_evento, name="registrar_evento"),
     path("api/documento/<int:documento_id>/detalle/", get_documento_detalle, name="get_documento_detalle"),
     path("api/documento/<int:documento_id>/eventos/", get_eventos_documento, name="get_eventos_documento"),
+    
+    path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
+
+    
+    path("documento/<int:documento_id>/evento/", registrar_evento, name="registrar_evento"),
+
+    path('', inicio_view, name='inicio'),
+
+
 ]
+

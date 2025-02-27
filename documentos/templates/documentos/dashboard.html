@@ -5,63 +5,7 @@
 {% block content %}
 <!-- Contenido dinámico de cada página -->
     <div>
-        <div id = "reporte-container">
-            <div id = "tarjetas-container"class="container mb-5 mt-5">
 
-                <div class="row">
-                    <!-- Tarjeta: Total de Proyectos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Proyectos</h6>
-                            <h2>{{ total_proyectos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Subproyectos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Subproyectos</h6>
-                            <h2>{{ total_subproyectos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Documentos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Documentos</h6>
-                            <h2>{{ total_documentos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Eventos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Eventos</h6>
-                            <h2>{{ total_eventos }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="graficas-container" class="container mb-5 mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card p-4">
-                            <h5 class="text-center">Cantidad de Subproyectos por Proyecto</h5>
-                            <canvas id="grafica1"></canvas>
-                        </div>
-                    </div>
-            
-                    <div class="col-md-6">
-                        <div class="card p-4">
-                            <h5 class="text-center">Cantidad de Documentos por Subproyecto</h5>
-                            <canvas id="grafica2"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        </div>
         <div class="container mb-5 mt-5">
             <h2 class="text-center mt-5 mb-5">Selecciona un Documento</h2>
 
@@ -140,21 +84,31 @@
             </div>
             
         <!-- Detalles del Documento -->
-            <div id="documento-detalle" class="mt-4 d-none" >
-                <h3>Detalles del Documento</h3>
-                <table class="table table-bordered">
-                    <tr><th>Nombre del documento</th><td id="nombre"></td></tr>
-                    <tr><th>Codígo del cliente</th><td id="codigo"> </td></tr>
-                    <tr><th>Estado Actual</th><td id="estado_actual"></td></tr>
-                    <tr><th>Etapa Actual</th><td id="etapa_actual"></td></tr>
-                    <tr><th>Versión Actual</th><td id="version_actual"></td></tr>
-                    <tr><th>Número de Versión</th><td id="numero_version"></td></tr>
-                    <tr><th>Aprobado por Ingeniería</th><td id="revisado"></td></tr>
-                    <tr><th>Aprobado por Calidad</th><td id="aprobado"></td></tr>
-                    <tr><th>Ruta Actual del Documento</th><td><a id="ruta_actual"></a></td></tr>
+        <div id="documento-detalle" class="d-none">
+
+            <div class="table-container mt-5">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>Nombre del documento</th><td id="nombre"></td></tr>
+                        <tr><th>Código del cliente</th><td id="codigo"></td></tr>
+                        <tr><th>Estado Actual</th><td id="estado_actual"></td></tr>
+                        <tr><th>Etapa Actual</th><td id="etapa_actual"></td></tr>
+                        <tr><th>Versión Actual</th><td id="version_actual"></td></tr>
+                        <tr><th>Número de Versión</th><td id="numero_version"></td></tr>
+                        <tr><th>Aprobado por Ingeniería</th><td id="revisado"></td></tr>
+                        <tr><th>Aprobado por Calidad</th><td id="aprobado"></td></tr>
+                        <tr><th>Ruta Actual del Documento</th><td><a id="ruta_actual"></a></td></tr>
+                    </tbody>
                 </table>
-            </div>      
+            </div>
         </div>
+        
 
            <!-- Historial de Eventos -->
             <div id="eventos-documento" class="mt-4 d-none">
@@ -169,12 +123,11 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'documentos/css/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'documentos/css/graficas.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="{% static 'documentos/css/Tabla_detalles.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
     <script src="{% static 'documentos/js/scripts.js' %}" defer></script>
-    <script src="{% static 'documentos/js/graficas.js' %}" defer></script>
+
 
 {% endblock %}

@@ -11,12 +11,14 @@ from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-import pandas as pd
+
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
 from django.utils.timezone import localtime
 import pytz
 from django.db.models import Count
+import pandas as pd
+import json
 
 def ejecutar_collectstatic(request):
     try:

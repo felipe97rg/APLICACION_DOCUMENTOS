@@ -15,11 +15,13 @@
     <!-- Barra de navegación principal -->
     <header class="header shadow">
         <div class="header-container">
-            <a href="{% url 'dashboard' %}" class="logo">Gestión Documental</a>
+            <a href="{% url 'inicio' %}" class="logo">Gestión Documental</a>
             
             <nav class="navbar">
 
                 <span class="user-info">Usuario: {{ user.username }}</span>
+                <a href="{% url 'reporte' %}" class="nav-link">Reporte</a>
+                <a href="{% url 'dashboard' %}" class="nav-link">Documentos</a>   
                 <a href="{% url 'upload_proyecto' %}" class="nav-link">Gestionar Proyectos</a>             
                 {% block navbar_extra %}{% endblock %}
                 <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
