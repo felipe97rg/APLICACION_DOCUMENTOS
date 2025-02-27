@@ -53,7 +53,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')  # Redirige al dashboard después de iniciar sesión
+            return redirect('inicio')  # Redirige al dashboard después de iniciar sesión
         else:
             messages.error(request, "Credenciales incorrectas.")
     else:
@@ -63,6 +63,10 @@ def login_view(request):
 def get_users(request):
     users = User.objects.all().values('id', 'username', 'email')
     return JsonResponse(list(users), safe=False)
+
+@login_required
+def inicio_view(request):
+    return render(request, 'documentos/inicio.html')
 
 @login_required
 def dashboard_view(request):
