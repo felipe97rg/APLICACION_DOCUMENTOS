@@ -137,6 +137,7 @@
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+
 /* Texto de la etapa */
 .etapa-text {
     font-size: 14px;
@@ -150,6 +151,7 @@
     background-color: black; /* La etapa actual se muestra en negro */
     color: white;
 }
+
 
 .etapa-box.active .etapa-text {
     color: black; /* Texto en negro */
