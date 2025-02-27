@@ -16,6 +16,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
 from django.utils.timezone import localtime
 import pytz
+from django.db.models import Count
 
 def ejecutar_collectstatic(request):
     try:
@@ -71,15 +72,55 @@ def dashboard_view(request):
     total_documentos = Documento.objects.count()
     total_eventos = Evento.objects.count()
 
+    # Datos para la primera gráfica: Cantidad de subproyectos por proyecto
+    subproyectos_por_proyecto = (
+        Subproyecto.objects.values('proyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Datos para la segunda gráfica: Cantidad de documentos por subproyecto
+    documentos_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
     context = {
         'total_proyectos': total_proyectos,
         'total_subproyectos': total_subproyectos,
         'total_documentos': total_documentos,
         'proyectos': Proyecto.objects.all(),
         'total_eventos': total_eventos,
-        'eventos': Evento.objects.all()
+        'eventos': Evento.objects.all(),
+        'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
+        'documentos_por_subproyecto': list(documentos_por_subproyecto),
     }
     return render(request, 'documentos/dashboard.html', context)
+
+@login_required
+def obtener_datos_graficas(request):
+    # Datos para la primera gráfica
+    subproyectos_por_proyecto = (
+        Subproyecto.objects.values('proyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Datos para la segunda gráfica
+    documentos_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    data = {
+        'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
+        'documentos_por_subproyecto': list(documentos_por_subproyecto),
+    }
+    return JsonResponse(data)
+
+
 
 @login_required
 def get_subproyectos(request, proyecto_id):
@@ -666,7 +707,7 @@ def registrar_evento(request, documento_id):
             destinatarios = [email for email in destinatarios if email]
 
             if destinatarios:
-                subject = f"📄{evento.tipo_evento} - Nuevo Evento Registrado: "
+                subject = f"📄 [{documento.subproyecto.proyecto.nombre}] [{documento.subproyecto.nombre}] - {documento.codigo} : {evento.tipo_evento} - {documento.nombre}"
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,

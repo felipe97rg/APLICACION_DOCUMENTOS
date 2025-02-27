@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos
+from .views import login_view, logout_view, dashboard_view, obtener_datos_graficas, get_subproyectos, get_documentos
 from .views import upload_proyecto, registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento
 from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("dashboard/", dashboard_view, name="dashboard"),
+    path("api/dashboard/", obtener_datos_graficas, name="obtener_datos_graficas"),
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
     path("api/subproyectos/<int:proyecto_id>/", get_subproyectos, name="get_subproyectos"),
     path("api/documentos/<int:subproyecto_id>/", get_documentos, name="get_documentos"), 

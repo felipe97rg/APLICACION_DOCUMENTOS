@@ -27,7 +27,7 @@
     margin-bottom: 20px;
     padding: 20px;
     text-align: left; /* Se asegura que el texto esté alineado a la izquierda */
-    border-left: 5px solid #6a1b9a; /* Línea lateral para destacar */
+    border-left: 6px solid #000000; /* Línea lateral para destacar */
 }
 
 /* Posicionamiento de las tarjetas alternadas */
@@ -136,16 +136,6 @@
     color: #666;
 }
 
-/* Línea de progreso */
-.progress-line {
-    position: absolute;
-    top: 25px;
-    left: 15%;
-    width: 70%;
-    height: 5px;
-    background-color: #ccc;
-    z-index: -1;
-}
 
 /* Estilo de la etapa activa */
 .etapa-box.active .circle {
