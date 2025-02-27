@@ -20,6 +20,7 @@
             <nav class="navbar">
 
                 <span class="user-info">Usuario: {{ user.username }}</span>
+                <a href="{% url 'reporte' %}" class="nav-link">Reporte</a>
                 <a href="{% url 'dashboard' %}" class="nav-link">Documentos</a>   
                 <a href="{% url 'upload_proyecto' %}" class="nav-link">Gestionar Proyectos</a>             
                 {% block navbar_extra %}{% endblock %}

@@ -1,0 +1,64 @@
+
+#tarjetas-container {    
+    background-color: #ebebeb;  /* Color de fondo claro */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+
+/* Estilo general para las tarjetas */
+#tarjetas-container .card {
+    border-radius: 10px;  /* Bordes redondeados */
+    padding: 20px;
+
+    color: black; /* Texto negro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease-in-out; /* Animación suave */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Estilos para los títulos dentro de las tarjetas */
+#tarjetas-container .card h6 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Estilos para los números */
+#tarjetas-container .card h2 {
+    font-size: 32px;  /* Hacer los números más grandes */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Efecto Hover: cambia el fondo a negro y el texto a blanco */
+#tarjetas-container .card:hover {
+    background: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+}
+
+#graficas-container {
+    background-color: #ebebeb;  /* Color de fondo claro */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+#graficas-container .card {
+    border: none; /* Quitar bordes de las tarjetas */
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#graficas-container h5 {
+    font-weight: bold;
+    color: #000000; /* Azul oscuro */
+    text-transform: uppercase;
+}
+
+#graficas-container canvas {
+    max-height: 300px;
+}
+

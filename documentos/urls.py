@@ -1,13 +1,16 @@
 from django.urls import path
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
-from .views import upload_proyecto, registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas
+from .views import upload_proyecto, registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
 
 urlpatterns = [
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
 
+    path("reporte/", reporte_view, name="reporte"),
+    path('reporte/datos_graficas/', obtener_datos_graficas, name='datos_graficas'),
+
     path("dashboard/", dashboard_view, name="dashboard"),
-    path('dashboard/datos_graficas/', obtener_datos_graficas, name='datos_graficas'),
+
     path("api/subproyectos/<int:proyecto_id>/", get_subproyectos, name="get_subproyectos"),
     path("api/documentos/<int:subproyecto_id>/", get_documentos, name="get_documentos"), 
     path("api/documento/<int:documento_id>/detalle/", get_documento_detalle, name="get_documento_detalle"),

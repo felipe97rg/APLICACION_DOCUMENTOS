@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("/dashboard/datos_graficas/")
+    fetch("/reporte/datos_graficas/")
         .then(response => response.json())
         .then(data => {
             console.log("Datos recibidos:", data);

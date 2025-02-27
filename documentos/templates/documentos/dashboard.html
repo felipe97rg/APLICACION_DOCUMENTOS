@@ -5,63 +5,7 @@
 {% block content %}
 <!-- Contenido dinámico de cada página -->
     <div>
-        <div id = "reporte-container">
-            <div id = "tarjetas-container"class="container mb-5 mt-5">
 
-                <div class="row">
-                    <!-- Tarjeta: Total de Proyectos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Proyectos</h6>
-                            <h2>{{ total_proyectos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Subproyectos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Subproyectos</h6>
-                            <h2>{{ total_subproyectos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Documentos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Documentos</h6>
-                            <h2>{{ total_documentos }}</h2>
-                        </div>
-                    </div>
-            
-                    <!-- Tarjeta: Total de Eventos -->
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <h6>Total de Eventos</h6>
-                            <h2>{{ total_eventos }}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="graficas-container" class="container mb-5 mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card p-4">
-                            <h5 class="text-center">Subproyectos por Proyecto</h5>
-                            <canvas id="grafica1"></canvas>
-                        </div>
-                    </div>
-            
-                    <div class="col-md-6">
-                        <div class="card p-4">
-                            <h5 class="text-center">Documentos por Subproyecto</h5>
-                            <canvas id="grafica2"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        </div>
         <div class="container mb-5 mt-5">
             <h2 class="text-center mt-5 mb-5">Selecciona un Documento</h2>
 
@@ -169,12 +113,10 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'documentos/css/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'documentos/css/graficas.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
     <script src="{% static 'documentos/js/scripts.js' %}" defer></script>
-    <script src="{% static 'documentos/js/graficas.js' %}" defer></script>
+
 
 {% endblock %}

@@ -11,4 +11,3 @@ seaborn==0.13.2  # Si usas visualizaciones avanzadas
 schedule==1.2.2  # Si automatizas tareas
 selenium==4.25.0  # Solo si usas Web Scraping
 scikit-learn==1.6.1  # Solo si usas Machine Learning
-django-ploty-dash==1.6.1  # Si usas Dash en Django
