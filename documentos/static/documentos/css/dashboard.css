@@ -67,11 +67,19 @@
 
 
 
+#tarjetas-container {    
+    background-color: #ebebeb;  /* Color de fondo claro */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+
 /* Estilo general para las tarjetas */
-.card {
+#tarjetas-container .card {
     border-radius: 10px;  /* Bordes redondeados */
     padding: 20px;
-    background: white;  /* Fondo blanco */
+
     color: black; /* Texto negro */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     transition: all 0.3s ease-in-out; /* Animación suave */
@@ -80,20 +88,20 @@
 }
 
 /* Estilos para los títulos dentro de las tarjetas */
-.card h6 {
+#tarjetas-container .card h6 {
     font-size: 14px;
     font-weight: 600;
 }
 
 /* Estilos para los números */
-.card h2 {
+#tarjetas-container .card h2 {
     font-size: 32px;  /* Hacer los números más grandes */
     font-weight: bold;
     margin-top: 10px;
 }
 
 /* Efecto Hover: cambia el fondo a negro y el texto a blanco */
-.card:hover {
+#tarjetas-container .card:hover {
     background: black; /* Fondo negro */
     color: white; /* Texto blanco */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
@@ -110,7 +118,7 @@
 .etapa-box {
     text-align: center;
     position: relative;
-    width: 33%;
+    width: 20%;
 }
 
 /* Círculos de las etapas */
