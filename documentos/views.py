@@ -14,6 +14,8 @@ from django.utils.html import strip_tags
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
+from django.db.models import Count
+
 
 def ejecutar_collectstatic(request):
     try:
@@ -69,15 +71,53 @@ def dashboard_view(request):
     total_documentos = Documento.objects.count()
     total_eventos = Evento.objects.count()
 
+    # Datos para la primera gráfica: Cantidad de subproyectos por proyecto
+    subproyectos_por_proyecto = (
+        Subproyecto.objects.values('proyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Datos para la segunda gráfica: Cantidad de documentos por subproyecto
+    documentos_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
     context = {
         'total_proyectos': total_proyectos,
         'total_subproyectos': total_subproyectos,
         'total_documentos': total_documentos,
         'proyectos': Proyecto.objects.all(),
         'total_eventos': total_eventos,
-        'eventos': Evento.objects.all()
+        'eventos': Evento.objects.all(),
+        'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
+        'documentos_por_subproyecto': list(documentos_por_subproyecto),
     }
     return render(request, 'documentos/dashboard.html', context)
+
+@login_required
+def obtener_datos_graficas(request):
+    # Datos para la primera gráfica
+    subproyectos_por_proyecto = (
+        Subproyecto.objects.values('proyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Datos para la segunda gráfica
+    documentos_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    data = {
+        'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
+        'documentos_por_subproyecto': list(documentos_por_subproyecto),
+    }
+    return JsonResponse(data)
 
 @login_required
 def get_subproyectos(request, proyecto_id):
@@ -102,6 +142,8 @@ def get_documento_detalle(request, documento_id):
     """ Devuelve los detalles del documento seleccionado en formato JSON """
     documento = get_object_or_404(Documento, id=documento_id)
     data = {
+        "codigo": documento.codigo,
+        "nombre": documento.nombre,
         "estado_actual": documento.estado_actual,
         "etapa_actual": documento.etapa_actual,
         "version_actual": documento.version_actual,

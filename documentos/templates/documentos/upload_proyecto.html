@@ -3,7 +3,7 @@
 {% block title %}Nuevo Proyecto - Gestión Documental{% endblock %}
 
 {% block content %}
-<div class="mt-4">
+<div class="mt5- mb-5">
     <h2 class="text-center mb-4">Subir Proyecto</h2>
 
     <!-- Mensajes de éxito o error -->
@@ -18,7 +18,7 @@
             {% endfor %}
         </div>
     {% endif %}
-
+    <div class="mt-5 mb-5">
     <!-- Formulario de carga -->
     <form method="POST" enctype="multipart/form-data" action="{% url 'upload_proyecto' %}">
         {% csrf_token %}
@@ -29,6 +29,7 @@
         <button type="submit" class="btn btn-success">Subir Archivo</button>
         <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver</a>
     </form>
+    </div>
 </div>
 
 {% endblock %}
