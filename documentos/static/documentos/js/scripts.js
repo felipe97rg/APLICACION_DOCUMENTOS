@@ -173,6 +173,8 @@ $(document).ready(function() {
             
             // Obtener los detalles del documento y restricciones de eventos
             $.get("/api/documento/" + documento_id + "/detalle/", function(data) {
+                $("#nombre").text(data.nombre || "N/A");
+                $("#codigo").text(data.codigo || "N/A");
                 $("#estado_actual").text(data.estado_actual || "N/A");
                 $("#etapa_actual").text(data.etapa_actual || "N/A");
                 $("#version_actual").text(data.version_actual || "N/A");
