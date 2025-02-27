@@ -8,8 +8,10 @@ urlpatterns = [
     path('migrar/', ejecutar_migraciones, name='ejecutar_migraciones'),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
+
     path("dashboard/", dashboard_view, name="dashboard"),
-    path("api/dashboard/", obtener_datos_graficas, name="obtener_datos_graficas"),
+    path('dashboard/datos_graficas/', obtener_datos_graficas, name='datos_graficas'), 
+    
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
     path("api/subproyectos/<int:proyecto_id>/", get_subproyectos, name="get_subproyectos"),
     path("api/documentos/<int:subproyecto_id>/", get_documentos, name="get_documentos"), 
