@@ -56,7 +56,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')  # Redirige al dashboard después de iniciar sesión
+            return redirect('inicio')  # Redirige al dashboard después de iniciar sesión
         else:
             messages.error(request, "Credenciales incorrectas.")
     else:
@@ -191,7 +191,6 @@ def get_documento_detalle(request, documento_id):
         "etapa_actual": documento.etapa_actual,
         "version_actual": documento.version_actual,
         "numero_version": documento.numero_version,
-        "estado_version": documento.estado_version,
         "ruta_actual": documento.ruta_actual,
         "revisado": documento.revisado,  # Nuevo campo
         "aprobado": documento.aprobado   # Nuevo campo
@@ -218,7 +217,6 @@ def get_eventos_documento(request, documento_id):
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
             "numero_version": evento.numero_version,
-            "estado_version": evento.estado_version,
             "ruta_actual": evento.ruta_actual,
             "tipo_evento": evento.tipo_evento,
             "descripcion": evento.descripcion,
@@ -543,7 +541,6 @@ def registrar_evento(request, documento_id):
             evento.etapa_actual = documento.etapa_actual
             evento.version_actual = documento.version_actual
             evento.numero_version = documento.numero_version
-            evento.estado_version = documento.estado_version
             evento.descripcion = descripciones_eventos.get(evento.tipo_evento, "Descripción no disponible")
 
 ###############################################     Validaciones de eventos      ################################################
@@ -769,7 +766,6 @@ def registrar_evento(request, documento_id):
             "etapa_actual": documento.etapa_actual,
             "version_actual": documento.version_actual,
             "numero_version": documento.numero_version,
-            "estado_version": documento.estado_version,
             "ruta_actual": documento.ruta_actual,
             "descripcion": descripciones_eventos.get("Creación de Versión Preliminar", "Descripción no disponible"),
         })

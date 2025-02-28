@@ -21,7 +21,7 @@ def restringir_eventos(view_func):
         # Si el usuario no es admin ni editor y está intentando hacer un evento restringido, bloquearlo
         if request.method == "POST":
             tipo_evento = request.POST.get("tipo_evento")
-            if tipo_evento in EVENTOS_RESTRINGIDOS and perfil.rol not in ["ADMIN", "EDITOR"]:
+            if tipo_evento in EVENTOS_RESTRINGIDOS and perfil.rol not in ["ADMIN"]:
                 raise PermissionDenied("⚠️ No tienes permisos para realizar este evento.")
 
         return view_func(request, *args, **kwargs)

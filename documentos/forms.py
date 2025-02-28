@@ -54,10 +54,10 @@ class EventoForm(forms.ModelForm):
         ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
 
         # Eventos de Modificacion de estado del Documento
-        ("Actualización del documento", "Actualización del documento"),
-        ("Suspensión del documento", "Suspensión del documento"),
-        ("Eliminación del documento", "Eliminación del documento"),
-        ("Reactivación del documento", "Reactivación del documento"),
+        #("Actualización del documento", "Actualización del documento"),
+        #("Suspensión del documento", "Suspensión del documento"),
+        #("Eliminación del documento", "Eliminación del documento"),
+        #("Reactivación del documento", "Reactivación del documento"),
     ]
 
 
