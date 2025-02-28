@@ -1,38 +1,82 @@
-extends 'documentos/base.html' %}
+<!DOCTYPE html>
+<html lang="es">
 
-{% block title %}Inicio - Gestión Documental{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestión Documental{% endblock %}</title>
 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    {% load static %}
+    
+    <!-- CSS personalizados -->
+    <link rel="stylesheet" href="{% static 'documentos/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'documentos/css/inicio.css' %}">
+</head>
 
+<body>
 
-{% block content %}
-<div class="container mb-5 mt-5">
+    <header class="header shadow">
+        <div class="header-container">
+            <a href="{% url 'inicio' %}" class="logo">Gestión Documental</a>
+            
+            <nav class="navbar">
 
-    <h1 class="text-center">Bienvenido</h1>
-    <p class="text-center">En esta aplicación podrás gestionar tus proyectos y documentos de manera sencilla y eficiente.</p>
-    <p class="text-center">Para comenzar, seleccion
-        <div class="row mt-5">
-            <!-- Cuadro para Gestión de Documentos -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 text-center">
-                    <div class="card-body">
-                        <h2 class="card-title">Gestión de Documentos</h2>
-                        <p class="card-text">Accede a la herramienta de gestión de documentos para organizar, compartir y colaborar en archivos.</p>
-                        <a href="{% url 'dashboard' %}" class="btn btn-primary">Acceder</a>
+                <span class="user-info">Usuario: {{ user.username }}</span>
+      
+                <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 🔹 Contenido principal -->
+    <main id="inicio-page" >
+    <h1 class="title">Bienvenido</h1>
+
+    <!-- 🔹 Contenedor de tarjetas -->
+    <div class="container text-center mt-4">
+        <div class="row justify-content-center g-4"> <!-- Agregamos g-4 para espacio entre tarjetas -->
+            <!-- Tarjeta 1 - Gestión de Documentos -->
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card p-4 text-center shadow-sm">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-folder-open"></i> <!-- Icono -->
                     </div>
+                    <h2 class="card-title">Gestión de Documentos</h2>
+                    <p class="card-description">
+                        Accede a la herramienta de gestión de documentos para organizar, compartir y colaborar en archivos.
+                    </p>
+                    <a href="{% url 'reporte' %}" class="btn btn-primary">Acceder</a>
                 </div>
             </div>
-    
-            <!-- Cuadro para I+D+i Innovación y Nuevas Ideas -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 text-center">
-                    <div class="card-body">
-                        <h2 class="card-title">I+D+i Innovación y Nuevas Ideas</h2>
-                        <p class="card-text">Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.</p>
-                        <a href="#" class="btn btn-primary">Próximamente...</a>
+
+            <!-- Tarjeta 2 - I+D+i Innovación -->
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card p-4 text-center shadow-sm">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-lightbulb"></i> <!-- Icono -->
                     </div>
+                    <h2 class="card-title">I+D+i Innovación y Nuevas Ideas</h2>
+                    <p class="card-description">
+                        Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.
+                    </p>
+                    <a href="#" class="btn btn-secondary disabled">Próximamente...</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    </main>
+
+    <!-- Bootstrap JS para funcionalidad interactiva -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+

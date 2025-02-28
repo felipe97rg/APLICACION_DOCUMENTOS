@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var estadoActual = window.estadoActual;
     var versionActual = window.versionActual;
-    var estadoVersion = window.estadoVersion;
-    var revisado = window.revisado === "true";
+\    var revisado = window.revisado === "true";
     var aprobado = window.aprobado === "true";
     var comentariosPendientes = window.comentariosPendientes === "true";
     var usuarioRol = window.usuarioRol;  // Rol del usuario

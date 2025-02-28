@@ -51,13 +51,13 @@ class EventoForm(forms.ModelForm):
 
         # Eventos de Revisión y Aprobación de Documento
         ("Documento Aprobado por Ingeniería", "Documento Aprobado por Ingeniería"),
-        ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad")
+        ("Documento Aprobado por Calidad", "Documento Aprobado por Calidad"),
 
         # Eventos de Modificacion de estado del Documento
-        #("Actualización del documento", "Actualización del documento"),
-        #("Suspensión del documento", "Suspensión del documento"),
-        #("Eliminación del documento", "Eliminación del documento"),
-        #("Reactivación del documento", "Reactivación del documento"),
+        ("Actualización del documento", "Actualización del documento"),
+        ("Suspensión del documento", "Suspensión del documento"),
+        ("Eliminación del documento", "Eliminación del documento"),
+        ("Reactivación del documento", "Reactivación del documento"),
     ]
 
 
@@ -80,7 +80,6 @@ class EventoForm(forms.ModelForm):
             "etapa_actual",
             "version_actual",
             "numero_version",
-
             "ruta_actual",
             "tipo_evento",
             "descripcion",  # Este campo sigue siendo de solo lectura
@@ -100,4 +99,3 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
         }
-
