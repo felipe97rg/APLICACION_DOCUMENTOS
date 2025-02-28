@@ -1,4 +1,4 @@
-{% extends 'documentos/base.html' %}
+extends 'documentos/base.html' %}
 
 {% block title %}Inicio - Gestión Documental{% endblock %}
 
@@ -7,9 +7,32 @@
 {% block content %}
 <div class="container mb-5 mt-5">
 
-    <h1 class="text-center">Bienvenido a aplicaión la Gestión Documental</h1>
+    <h1 class="text-center">Bienvenido</h1>
     <p class="text-center">En esta aplicación podrás gestionar tus proyectos y documentos de manera sencilla y eficiente.</p>
-    <p class="text-center">Para comenzar, selecciona 
-
+    <p class="text-center">Para comenzar, seleccion
+        <div class="row mt-5">
+            <!-- Cuadro para Gestión de Documentos -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <h2 class="card-title">Gestión de Documentos</h2>
+                        <p class="card-text">Accede a la herramienta de gestión de documentos para organizar, compartir y colaborar en archivos.</p>
+                        <a href="{% url 'dashboard' %}" class="btn btn-primary">Acceder</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Cuadro para I+D+i Innovación y Nuevas Ideas -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <h2 class="card-title">I+D+i Innovación y Nuevas Ideas</h2>
+                        <p class="card-text">Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.</p>
+                        <a href="#" class="btn btn-primary">Próximamente...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
