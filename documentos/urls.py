@@ -3,7 +3,7 @@ from .views import  get_subproyectos, get_documentos
 from .views import  dashboard_view, get_documento_detalle, get_eventos_documento
 from .views import login_view, logout_view, inicio_view,  reporte_view, dashboard_view, upload_proyecto, registrar_evento, obtener_datos_graficas
 from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
-from .views import upload_proyecto, upload_documento, get_subproyectos2
+from .views import upload_proyecto
 
 urlpatterns = [
     path('collectstatic/', ejecutar_collectstatic, name='ejecutar_collectstatic'),
@@ -24,9 +24,6 @@ urlpatterns = [
     path("api/documento/<int:documento_id>/eventos/", get_eventos_documento, name="get_eventos_documento"),
     
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
-    path('upload_documento/', upload_documento, name='upload_documento'),
-
-    path('get_subproyectos2/', get_subproyectos2, name='get_subproyectos2'),
 
     
     path("documento/<int:documento_id>/evento/", registrar_evento, name="registrar_evento"),
