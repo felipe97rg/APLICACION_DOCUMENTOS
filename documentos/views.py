@@ -6,7 +6,7 @@ from documentos.decorators import restringir_eventos
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .forms import LoginForm, EventoForm
-from .models import Proyecto, Subproyecto, Documento, Evento
+from .models import Proyecto, Subproyecto, Documento, Evento, PerfilUsuario
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -340,6 +340,7 @@ def validar_evento_permitido(documento, tipo_evento):
     if tipo_evento == "Selecciona el tipo de evento":
         return "⚠️ Debes seleccionar un evento"
     
+
     # 🔍 Si el documento no tiene eventos registrados, solo se permiten estos eventos iniciales
     EVENTOS_INICIALES = {
         "Creación de Versión Preliminar",
@@ -525,7 +526,7 @@ def validar_evento_permitido(documento, tipo_evento):
         return None
 
 
-@restringir_eventos
+
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""

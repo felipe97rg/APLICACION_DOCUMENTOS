@@ -2,6 +2,7 @@ from django.urls import path
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
 from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
 from .views import upload_proyecto, upload_documento, get_subproyectos2
+
 urlpatterns = [
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
