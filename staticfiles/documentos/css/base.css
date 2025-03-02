@@ -67,13 +67,13 @@ body {
     bottom: -2px;
     width: 0;
     height: 2px;
-    background: #007bff; /* Color azul para la línea */
+    background: rgb(40,52,138); /* Color azul para la línea */
     transition: all 0.3s ease-in-out;
 }
 
 /* Cuando el usuario pasa el mouse sobre el enlace */
 .navbar .nav-link:hover {
-    color: #007bff;
+    color: rgb(40,52,138);
 }
 
 /* Expande la línea de subrayado al hacer hover */

@@ -27,7 +27,7 @@
 
 /* 🔹 Borde azul al seleccionar */
 #document-selector select:focus {
-    border-color: #007bff;
+    border-color: rgb(40,52,138);
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
@@ -44,8 +44,7 @@
     font-weight: bold;
     border-radius: 6px;
     padding: 10px;
-    background-color: #1f1f1f;
-    border-color: #000000;
+    background-color: rgb(40,52,138);
     color: white; /* Asegurar que el texto es visible */
     transition: all 0.3s ease-in-out;
 }

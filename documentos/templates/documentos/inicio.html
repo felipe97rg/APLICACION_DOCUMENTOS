@@ -14,51 +14,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     {% load static %}
-    
-    <!-- CSS personalizados -->
-
+    <!-- CSS personalizado -->
     <link rel="stylesheet" href="{% static 'documentos/css/inicio.css' %}">
 </head>
 
 <body>
+    <!-- Encabezado -->
     <header class="header shadow">
-        <div class="header-container">
-
-            <a href="{% url 'inicio' %}" class="logo">
-                <img src="{% static 'documentos/images/Logo_Cenyt_Reducido.png' %}" alt="Logo" width="40" height="40" style="vertical-align: middle; margin-right: 10px;">
-                Web Cen&t
+        <div class="header-container container-fluid d-flex justify-content-between align-items-center">
+            <a href="{% url 'inicio' %}" class="logo d-flex align-items-center">
+                <img src="{% static 'documentos/images/Logo_Cenyt_Reducido.png' %}" alt="Logo Cenyt" width="40" height="40" class="me-2">
+                <span>Web Cen&t</span>
             </a>
-                        
-            <nav class="navbar">
-
-                <span class="user-info">Usuario: {{ user.username }}</span>
-      
-                <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
+            <nav class="navbar d-flex align-items-center">
+                <span class="user-info me-3">Usuario: {{ user.username }}</span>
+                <a id="Cerrar" href="{% url 'logout' %}" class="nav-link  class="btn">Cerrar Sesión</a>
             </nav>
         </div>
     </header>
 
-    <!-- 🔹 Contenido principal -->
-    <main id="inicio-page">
-        <!-- Sección Principal con Fondo e Imagen -->
-        <div class="hero-section">
+    <!-- Contenido principal -->
+    <main id="inicio-page" class="container-fluid">
+        <!-- Hero Section -->
+        <!-- Hero Section -->
+        <section class="hero-section">
             <div class="hero-content">
-                <h1 class="title">Bienvenido al<br>Entorno Web Cen&t</h1>
-                <p class="subtitle">Aquí puedes encontrar las aplicaciones desarroladas en Cenyt,<br>selecciona una de ellas para continuar.</p>
-                <a href="#aplicaciones" class="btn btn-primary">Ver más</a>
+                <h1 class="title">Bienvenido al<br><span class="highlight">Entorno Web Cen&t</span></h1>
+                <p class="subtitle">
+                    Explora las aplicaciones desarrolladas en Cenyt y accede a soluciones innovadoras.<br>
+                    Selecciona una de ellas para continuar.
+                </p>
+                <a href="#aplicaciones" class="btn btn-primary btn-custom">Explorar aplicaciones</a>
             </div>
-    
             <div class="hero-image">
                 <img src="{% static 'documentos/images/Logo_Cenyt.png' %}" alt="Logo Cenyt">
             </div>
-        </div>
-    
-        <!-- 🔹 Contenedor de tarjetas -->
-        <div id="aplicaciones" class="container-fluid text-center mt-4">
-            <div class="row justify-content-center g-4">
+        </section>
+
+        <!-- Tarjetas de aplicaciones -->
+        <section id="aplicaciones" class="container text-center mt-5">
+            <div class="row g-4 justify-content-center">
                 <!-- Tarjeta 1 - Gestión de Documentos -->
-                <div class="col-md-6 col-lg-4 d-flex justify-content-center">
-                    <div class="card p-4 text-center shadow">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center shadow">
                         <div class="card-icon">
                             <i class="fa-solid fa-folder-open"></i>
                         </div>
@@ -69,14 +67,12 @@
                         <a href="{% url 'reporte' %}" class="btn btn-primary">Acceder</a>
                     </div>
                 </div>
-    
-                <!-- Tarjeta 2 - I+D+i Innovación -->
-                <div class="col-md-6 col-lg-4 d-flex justify-content-center">
-                    <div class="card p-4 text-center shadow">
-                        <div>
-                            <img src="{% static 'documentos/images/Logo_i+d.jpg' %}" class="card-img">
-                        </div>
-                        <h2 class="card-title">Innovación y Gestión</h2>
+        
+                <!-- Tarjeta 2 - Innovación y Gestión -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center shadow">
+                        <img src="{% static 'documentos/images/Logo_i+d.jpg' %}" class="card-img-top rounded">
+                        <h2 class="card-title mt-3">Innovación y Gestión de las Ideas</h2>
                         <p class="card-description">
                             Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.
                         </p>
@@ -84,16 +80,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+        
     </main>
-    
-    
+    <div><br><br><br></div>
 
-    <!-- Bootstrap JS para funcionalidad interactiva -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'documentos/js/incio.js' %}" defer></script>
+    <script src="{% static 'documentos/js/inicio.js' %}" defer></script>
 </body>
 
 </html>
-
-

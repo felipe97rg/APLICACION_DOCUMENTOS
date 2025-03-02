@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Generar colores: gris claro para todas, azul #28348A para la más alta
             const colors1 = subproyectos.map((value, index) =>
-                index === maxIndex1 ? 'rgba(40, 52, 138, 0.9)' : 'rgba(200, 200, 200, 0.7)'
+                index === maxIndex1 ? 'rgb(40,52,138)' : 'rgba(200, 200, 200, 0.7)'
             );
 
             new Chart(document.getElementById('grafica1'), {
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Generar colores: gris claro para todas, azul #28348A para la más alta
             const colors2 = documentos.map((value, index) =>
-                index === maxIndex2 ? 'rgba(40, 52, 138, 0.9)' : 'rgba(200, 200, 200, 0.7)'
+                index === maxIndex2 ? 'rgb(40,52,138)' : 'rgba(200, 200, 200, 0.7)'
             );
 
             new Chart(document.getElementById('grafica2'), {
