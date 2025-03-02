@@ -267,7 +267,7 @@ def upload_proyecto(request):
                             )
             
             messages.success(request, 'Archivo procesado exitosamente')
-            return redirect('dashboard')  # Redirige al dashboard después del éxito
+            return redirect('reporte')  # Redirige al dashboard después del éxito
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')

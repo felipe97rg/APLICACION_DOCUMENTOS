@@ -1,0 +1,139 @@
+/* 🔹 Sección general de subida */
+.upload-section {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 Estilo del texto de la izquierda */
+.upload-section h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.upload-instructions {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+    max-width: 90%;
+}
+
+/* 🔹 Botón de descarga */
+.upload-section .btn-outline-dark {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.upload-section .btn-outline-dark:hover {
+    background-color: black;
+    color: white;
+}
+
+/* 🔹 Contenedor del formulario de carga */
+.upload-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* 🔹 Caja de carga de archivos */
+.upload-box {
+    border: 2px dashed #007bff;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.upload-box:hover {
+    border-color: #0056b3;
+    background: #e9ecef;
+}
+
+/* 🔹 Ocultar el input de archivo real */
+.upload-box input[type="file"] {
+    display: none;
+}
+
+/* 🔹 Texto dentro de la caja */
+.upload-text {
+    font-size: 1rem;
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* 🔹 Botones */
+.upload-container .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.upload-container .btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.upload-container .btn-success:hover {
+    background-color: #218838;
+}
+
+.upload-container .btn-secondary {
+    margin-top: 10px;
+    background-color: #6c757d;
+    border: none;
+}
+
+.upload-container .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* 🔹 Mensajes de éxito y error */
+.upload-container .alert {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.upload-container .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.upload-container .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.upload-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.upload-list li {
+    margin-bottom: 8px;
+}
+
+.upload-list ul {
+    padding-left: 20px;
+    list-style-type: disc;
+}

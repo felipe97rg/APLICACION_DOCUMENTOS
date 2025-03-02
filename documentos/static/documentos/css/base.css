@@ -1,16 +1,22 @@
 /* Fondo y altura de la página */
 body {
+
     min-height: 100vh;
     background: url("") no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+
+
 }
 
 /* Barra de navegación */
 .header {
     width: 100%;
     background: #ffffff;
+    height: 60px;
     padding: 15px 30px;
     display: flex;
     align-items: center;
@@ -84,3 +90,8 @@ body {
     padding: 8px 15px;
     box-shadow: none !important;
 }
+
+.main {
+    padding-top: 90px;
+}
+
