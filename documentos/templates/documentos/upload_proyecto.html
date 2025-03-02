@@ -3,35 +3,60 @@
 {% block title %}Nuevo Proyecto - Gestión Documental{% endblock %}
 
 {% block content %}
-<div class="mt5- mb-5">
-    <h2 class="text-center mb-4">Subir Proyecto</h2>
+{% load static %}
+<div class="container upload-section mt-5 mb-5">
+    <div class="row align-items-center">
+        <!-- Columna izquierda: Texto + Botón de descarga -->
+        <div class="col-md-6">
+            <h2>Subir Proyecto</h2>
+            <p class="upload-instructions">
+                <strong>Recuerda que el archivo debe tener el proyecto, subproyecto y los documentos asociados.</strong> 
+                Si es posible, deben tener su respectivo <strong>código</strong>. Puedes descargar una plantilla de Excel con el siguiente botón:
+            </p>
 
-    <!-- Mensajes de éxito o error -->
-    {% if messages %}
-        <div class="mt-3">
-            {% for message in messages %}
-                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show text-center shadow-sm" role="alert">
-                    <strong>{% if message.tags == 'success' %}✔{% else %}⚠{% endif %}</strong>
-                    {{ message }}
-                    <button type="button" class="btn-close" aria-label="Close"></button>
-                </div>
-            {% endfor %}
+            <a href="{% static 'documentos/files/Listado_de_entregables_plantilla.xlsx' %}" class="btn btn-outline-dark">Descargar Plantilla</a>
         </div>
-    {% endif %}
-    <div class="mt-5 mb-5">
-    <!-- Formulario de carga -->
-    <form method="POST" enctype="multipart/form-data" action="{% url 'upload_proyecto' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="archivo_excel" class="form-label">Selecciona un archivo Excel:</label>
-            <input type="file" name="archivo_excel" id="archivo_excel" class="form-control" required>
+
+        <!-- Columna derecha: Formulario -->
+        <div class="col-md-6">
+            <div class="upload-container">
+                <!-- Mensajes de éxito o error -->
+                {% if messages %}
+                    <div class="mt-3">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show shadow-sm" role="alert">
+                                <strong>{% if message.tags == 'success' %}✔{% else %}⚠{% endif %}</strong>
+                                {{ message }}
+                                <button type="button" class="btn-close" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Formulario de carga -->
+                <form method="POST" enctype="multipart/form-data" action="{% url 'upload_proyecto' %}">
+                    {% csrf_token %}
+
+                    <!-- Caja de carga de archivos -->
+                    <!-- Caja de carga de archivos -->
+                    <label for="archivo_excel" class="upload-box">
+                        <span id="file-name" class="upload-text">Haz clic para seleccionar un archivo</span>
+                        <input type="file" name="archivo_excel" id="archivo_excel" required onchange="mostrarNombreArchivo()">
+                    </label>
+
+                    <button type="submit" class="btn btn-success mt-3">Subir Archivo</button>
+
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-success">Subir Archivo</button>
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver</a>
-    </form>
     </div>
 </div>
 
+
+{% load static %}   
+<!-- CSS personalizados -->
+<link rel="stylesheet" href="{% static 'documentos/css/upload_proyecto.css' %}">
+<script src="{% static 'documentos/js/upload_proyecto.js' %}" defer></script>
 
 
 {% endblock %}
