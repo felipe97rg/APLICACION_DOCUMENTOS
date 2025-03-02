@@ -1,3 +1,58 @@
+/* 🔹 Caja contenedora específica para la selección de documentos */
+#document-selector {
+    background: #ffffff; /* Mantiene el fondo blanco */
+    border-radius: 20px; /* Se aumentó para hacerlo más redondeado */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.12); /* Sombra más suave */
+    padding: 30px;
+    max-width: 900px; /* Ajuste de tamaño */
+    margin: 0 auto; /* Centra la caja */
+    border: 1px solid #ddd; /* Mantiene un borde sutil */
+}
+
+/* 🔹 Título */
+#document-selector h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #212529; /* Color oscuro para resaltar */
+}
+
+/* 🔹 Estilos para los selects */
+#document-selector select {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🔹 Borde azul al seleccionar */
+#document-selector select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* 🔹 Asegurar el mismo ancho para los selects */
+#document-selector .form-control {
+    width: 100%;
+}
+
+/* 🔹 Botón de "Registrar Evento" alineado */
+#document-selector #evento-link {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #1f1f1f;
+    border-color: #000000;
+    color: white; /* Asegurar que el texto es visible */
+    transition: all 0.3s ease-in-out;
+}
+
+#document-selector #evento-link:hover {
+    background-color: #343a40;
+}
 .timeline {
     position: relative;
     padding: 20px 0;
@@ -147,5 +202,12 @@
 @media (max-width: 768px) {
     .card {
         margin-bottom: 15px; /* Espacio entre tarjetas en móviles */
+    }
+}
+/* 🔹 Responsividad */
+@media (max-width: 768px) {
+    #document-selector {
+        max-width: 100%;
+        padding: 20px;
     }
 }
