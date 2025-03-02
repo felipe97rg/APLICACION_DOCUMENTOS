@@ -8,10 +8,13 @@
     <div class="row align-items-center">
         <!-- Columna izquierda: Texto + Botón de descarga -->
         <div class="col-md-6">
-            <h2>Subir Proyecto</h2>
+            <h2>Nuevo Proyecto</h2>
             <p class="upload-instructions">
-                <strong>Recuerda que el archivo debe tener el proyecto, subproyecto y los documentos asociados.</strong> 
-                Si es posible, deben tener su respectivo <strong>código</strong>. Puedes descargar una plantilla de Excel con el siguiente botón:
+                <strong>Sube un nuevo proyecto adjuntando un archivo en formato Excel.</strong> 
+                <br> 
+                <br>El archivo debe contener el nombre del proyecto, un subproyecto y los documentos correspondientes con sus respectivos códigos. 
+                <br> 
+                <br>Puedes descargar una plantilla de Excel con el formato requerido haciendo clic en el siguiente botón:
             </p>
 
             <a href="{% static 'documentos/files/Listado_de_entregables_plantilla.xlsx' %}" class="btn btn-outline-dark">Descargar Plantilla</a>
@@ -44,7 +47,7 @@
                         <input type="file" name="archivo_excel" id="archivo_excel" required onchange="mostrarNombreArchivo()">
                     </label>
 
-                    <button type="submit" class="btn btn-success mt-3">Subir Archivo</button>
+                    <button type="submit" class="btn btn-success mt-3">Subir</button>
 
                 </form>
             </div>

@@ -33,98 +33,94 @@
     {% endif %}
 
     <!-- Formulario -->
-    <div class="card p-4 shadow-lg">
-        <form method="POST" id="eventoForm">
-            {% csrf_token %}
+<div class="card p-4 shadow-lg">
+    <form method="POST" id="eventoForm">
+        {% csrf_token %}
 
-            <!-- Sección No Editable -->
-            <fieldset class="bg-light p-3 rounded">
-                <legend class="text-primary fw-bold">Información Actual del Documento (No Editable)</legend>
+        <!-- Sección No Editable -->
+        <fieldset class="bg-light p-3 rounded">
+            <legend class="text-primary fw-bold">Información Actual del Documento (No Editable)</legend>
+            
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Usuario</th>
+                            <td><input type="text" class="form-control" value="{{ usuario.username }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <th>Estado Actual</th>
+                            <td>{{ form.estado_actual }}</td>
+                        </tr>
+                        <tr>
+                            <th>Etapa Actual</th>
+                            <td>{{ form.etapa_actual }}</td>
+                        </tr>
+                        <tr>
+                            <th>Versión Actual</th>
+                            <td>{{ form.version_actual }}</td>
+                        </tr>
+                        <tr>
+                            <th>Número de Versión</th>
+                            <td>{{ form.numero_version }}</td>
+                        </tr>
+                        <tr>
+                            <th>Aprobado por Ingeniería</th>
+                            <td><input type="text" class="form-control" value="{% if documento.revisado %}Sí{% else %}No{% endif %}" readonly></td>
+                        </tr>
+                        <tr>
+                            <th>Aprobado por Calidad</th>
+                            <td><input type="text" class="form-control" value="{% if documento.aprobado %}Sí{% else %}No{% endif %}" readonly></td>
+                        </tr>
+                        <tr>
+                            <th>Ruta Actual del Documento</th>
+                            <td><input type="text" class="form-control" value="{{ documento.ruta_actual }}" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
 
-                <div class="mb-3">
-                    <label class="form-label">Usuario</label>
-                    <input type="text" class="form-control" value="{{ usuario.username }}" readonly>
-                </div>
+        <!-- Sección Editable -->
+        <fieldset class="border border-primary p-3 rounded mt-4">
+            <legend class="text-primary fw-bold">Información del Evento (Editable)</legend>
 
-                <div class="mb-3">
-                    <label class="form-label">Estado Actual</label>
-                    {{ form.estado_actual }}
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo de Evento</label>
+                <input type="text" id="searchTipoEvento" class="form-control mb-2" placeholder="Filtrar evento...">
+                {{ form.tipo_evento }}
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Etapa Actual</label>
-                    {{ form.etapa_actual }}
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Comentarios (Obligatorio)</label>
+                {{ form.comentarios }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Actualizar Ruta del Documento</label>
+                {{ form.ruta_actual }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 1</label>
+                {{ form.usuario_interesado_1 }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 2</label>
+                {{ form.usuario_interesado_2 }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Usuario Interesado 3</label>
+                {{ form.usuario_interesado_3 }}
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Versión Actual</label>
-                    {{ form.version_actual }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Número de Versión</label>
-                    {{ form.numero_version }}
-                </div>
-
-
-                <div class="mb-3">
-                    <label class="form-label">Aprobado por Ingeniería</label>
-                    <input type="text" class="form-control" value="{% if documento.revisado %}Sí{% else %}No{% endif %}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Aprobado por Calidad</label>
-                    <input type="text" class="form-control" value="{% if documento.aprobado %}Sí{% else %}No{% endif %}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Ruta Actual del Documento</label>
-                    <input type="text" class="form-control" value="{{ documento.ruta_actual }}" readonly>                
-                </div>
-            </fieldset>
-
-            <!-- Sección Editable -->
-            <fieldset class="border border-primary p-3 rounded mt-4">
-                <legend class="text-primary fw-bold">Información del Evento (Editable)</legend>
-
-                <div class="mb-3">
-                    <label class="form-label">Tipo de Evento</label>
-                    <input type="text" id="searchTipoEvento" class="form-control mb-2" placeholder="Filtrar evento...">
-                    
-                    {{ form.tipo_evento }}
-                </div>
-                
-
-                <div class="mb-3">
-                    <label class="form-label">Comentarios (Obligatorio)</label>
-                    {{ form.comentarios }}
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label">Actualizar Ruta del Documento</label>
-                    {{ form.ruta_actual }}
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label">Usuario Interesado 1</label>
-                    {{ form.usuario_interesado_1 }}
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label">Usuario Interesado 2</label>
-                    {{ form.usuario_interesado_2 }}
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label">Usuario Interesado 3</label>
-                    {{ form.usuario_interesado_3 }}
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100 mt-3">Registrar Evento</button>
-            </fieldset>
-        </form>
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver al Inicio</a>
-    </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Registrar Evento</button>
+        </fieldset>
+    </form>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver al Inicio</a>
+</div>
 
 
     <!-- JavaScript -->

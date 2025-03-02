@@ -1,185 +1,181 @@
 /* 🔹 Estilos generales */
 body {
     min-height: 100vh;
-    background: linear-gradient(to right, #e3f2fd, #bbdefb);
-    background-size: cover;
+    background: #f8f9fa;
+    font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* 🔹 Encabezado (Header) */
+/* 🔹 Encabezado */
 .header {
-    width: 100%;
-    background: #ffffff;
+    background: white;
     padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
     position: fixed;
-}
-
-
-/* Contenedor dentro del Header */
-.header-container {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
+    z-index: 1000;
 }
 
-/* Logo */
 .logo {
-    font-size: 32px;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+}
+
+/* Enlaces del menú */
+
+#Cerrar  {
     color: #000;
     text-decoration: none;
-    font-weight: 700;
-}
-
-/* 🔹 Menú de navegación */
-.navbar {
-    display: flex;
-    gap: 25px;
-}
-
-/* Enlaces de navegación */
-.navbar .nav-link {
-    font-size: 18px;
-    color: black;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 15px;
-    position: relative;
-    transition: color 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-
-}
-
-/* Efecto hover */
-.navbar .nav-link:hover {
-    color: #007bff;
-    
-}
-
-/* Subrayado en hover */
-.navbar .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background: #007bff;
-    transition: all 0.3s ease-in-out;
-}
-
-.navbar .nav-link:hover::after {
-    width: 100%;
-    left: 0;
-}
-
-/* Información del usuario */
-.user-info {
-    font-size: 18px;
+    margin: 0 10px;
+    font-size: 1rem;
     font-weight: bold;
-    color: black;
-    padding: 8px 15px;
 }
 
-/* 🔹 Contenido principal */
-#inicio-page {
-    background-color: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#Cerrar:hover {
+    color: #28348a;
+    transform: s;
+}
 
-    min-height: 100vh;
-    padding-top: 40px;
+/* 🔹 Hero Section */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60vh;
+    padding: 50px;
+    background: url("{% static 'documentos/images/fondo.jpg' %}") no-repeat center center / cover;
+    color: black;
+    position: relative;
+}
+
+/* Contenedor del contenido */
+.hero-content {
+    flex: 1;
+    padding-left: 40px;
 }
 
 /* Título */
-#inicio-page .title {
-    margin-top: 10;
-    padding-top: 10px;
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Resaltar parte del título */
+.highlight {
+    color: #0056b3;
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 1.2rem;
+    margin: 15px 0;
+    opacity: 0.9;
+}
+
+.hero-content /* Botón personalizado */.btn-custom {
+    background-color: #0056b3;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+.btn-custom:hover {
+    background-color: #003366;
+    color: #fff;
+    
+}
+
+/* Imagen del logo */
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero-image img {
+    max-width: 750px;
+
+    transition: 1s ease;
+}
+.hero-image img:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: 1s ease;
+
 }
 
 /* 🔹 Tarjetas */
-#inicio-page .card-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeIn 3s ease-in-out 0.3s forwards;
-}
-
-#inicio-page .card {
+.card {
     background: white;
     border-radius: 16px;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 350px;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    width: 375px; /* Tamaño estándar */
+    height: 400px; 
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Asegura que el botón se mantenga abajo */
     align-items: center;
     text-align: center;
-    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
-#inicio-page .card:hover {
-    transform: scale(1.05);
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
+.card:hover {
+    transform: scale(1.1);
 }
 
-
-/* Iconos en las tarjetas */
-#inicio-page .card-icon {
+/* 🔹 Icono de la tarjeta */
+.card-icon {
     font-size: 3rem;
-    color: #007bff;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    color: #28348a;
+    width: 100px; /* Mismo ancho para el icono */
+    height: 160px; /* Mismo alto para el icono */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Título de la tarjeta */
-#inicio-page .card-title {
+/* 🔹 Imagen en la tarjeta */
+.card-img-top {
+    width: 100%;
+    height: 140px; /* Tamaño fijo para todas las imágenes */
+    object-fit: cover; /* Evita deformaciones */
+    border-radius: 5px;
+}
+
+/* 🔹 Título de la tarjeta */
+.card-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 25px;
-    color: #000000;
+    margin-top: 10px;
 }
 
-/* Descripción de la tarjeta */
-#inicio-page .card-description {
+/* 🔹 Descripción de la tarjeta */
+.card-description {
     font-size: 1rem;
     color: #555;
-    margin-bottom: 20px;
+    max-height: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Asegura que el contenido se distribuya correctamente */
 }
 
-/* Botones de las tarjetas */
-#inicio-page .card-button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #000000;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
+/* 🔹 Botón en la tarjeta */
+.card .btn {
+    width: 80%;
+    padding: 10px;
     font-weight: bold;
-    transition: background 0.3s ease-in-out;
-}
-
-#inicio-page .card-button:hover {
-    background-color: #000000;
-}
-
-/* Botón deshabilitado */
-#inicio-page .card-button.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    margin-top: auto; /* Se mantiene alineado abajo */
+    background-color: #28348a;
 }
 
 /* 🔹 Animaciones */
@@ -194,133 +190,7 @@ body {
     }
 }
 
-#inicio-page .title,
-#inicio-page .card {
-    animation: fadeIn 0.8s ease-in-out;
-}
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#inicio-page .card {
-    animation: fadeUp 0.8s ease-in-out;
-}
-/* Sección Principal */
-.hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 60vh;
-    padding: 10px;
-    background: url("{% static 'documentos/images/fondo.jpg' %}") no-repeat center center;
-    background-size: cover;
-    color: rgb(0, 0, 0);
-    position: relative;
-}
-
-/* Fondo con Efecto Oscurecido */
-.hero-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: f8f9fa;
-    z-index: 1;
-}
-
-/* Contenido del Hero */
-.hero-content {
-    z-index: 2;
-    max-width: 100%;
-}
-
-.hero-content .title {
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 1.2;
-}
-
-.hero-content .subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
-/* Botón Principal */
-.hero-content .btn {
-    background-color: #ff7f50;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    text-transform: uppercase;
-}
-
-.hero-content .btn:hover {
-    background-color: #ff4500;
-}
-
-/* Imagen con Efecto de Recorte */
-.hero-image {
-    z-index: 2;
-    width: 40%;
-}
-
-.hero-image img {
-    width: 115%;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* 🔹 Tarjetas de Aplicaciones */
-.container-fluid {
-    margin-top: -50px;
-    padding: 30px;
-}
-
-#inicio-page .card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 25px;
-    width: 400px;
-    text-align: center;
-    transition: all 0.3s ease-in-out;
-}
-
-#inicio-page .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Ajuste de imágenes */
-.card-img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    font-size: 32px;
-    color: #000;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.logo img {
-    width: 40px;
-    height: 40px;
-    vertical-align: middle;
-    margin-right: 10px;
+.hero-section,
+.card {
+    animation: fadeIn 1s ease-in-out;
 }
