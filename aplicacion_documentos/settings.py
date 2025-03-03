@@ -156,7 +156,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+
+
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # 🚨 DESACTIVA EL SANDBOX MODE
 
 DEFAULT_FROM_EMAIL = "documentos@cenyt.com.co"  # Debe ser el mismo que verificaste
