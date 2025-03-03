@@ -73,6 +73,11 @@ class EventoForm(forms.ModelForm):
         label="Comentarios"
     )
 
+    correos_adicionales = forms.CharField(
+        required=False, 
+        widget=forms.TextInput(attrs={"placeholder": "Correos adicionales separados por comas"})
+    )
+
     class Meta:
         model = Evento
         fields = [
@@ -80,6 +85,7 @@ class EventoForm(forms.ModelForm):
             "etapa_actual",
             "version_actual",
             "numero_version",
+            "estado_version",
             "ruta_actual",
             "tipo_evento",
             "descripcion",  # Este campo sigue siendo de solo lectura
@@ -87,15 +93,18 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_1",
             "usuario_interesado_2",
             "usuario_interesado_3",
+            "correos_adicionales"
         ]
         widgets = {
             "estado_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "etapa_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "version_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "numero_version": forms.NumberInput(attrs={"class": "form-control", "readonly": "readonly"}),
+            "estado_version": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "ruta_actual": forms.TextInput(attrs={"class": "form-control"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "readonly": "readonly"}),  # No editable
             "usuario_interesado_1": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
+            "correos_adicionales": forms.TextInput(attrs={"class": "form-control"})
         }

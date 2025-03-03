@@ -271,7 +271,7 @@ def upload_proyecto(request):
                             )
             
             messages.success(request, 'Archivo procesado exitosamente')
-            return redirect('dashboard')  # Redirige al dashboard después del éxito
+            return redirect('upload_proyecto')  # Redirige al dashboard después del éxito
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')
@@ -478,17 +478,18 @@ def validar_evento_permitido(documento, tipo_evento):
         
         return None
 
-@restringir_eventos
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
     documento = get_object_or_404(Documento, id=documento_id)
-
+    Proyecto = documento.subproyecto.proyecto.nombre
+    Subproyecto = documento.subproyecto.nombre
+    
     # **Definir descripciones de eventos**
     descripciones_eventos = {
 
         # Eventos de Creación de Documento
-        "Creación de Versión Preliminar": "Se ha creado la versión A del documento y se solicita la revisión preliminar de este para su primera evaluación.",
+        "Creación de Versión Preliminar": "Se solicita la creación de la versión preliminar del documento.",
         "Creación de Versión Interna Superada": "Se ha creado la versión nueva del documento y se solicita la revisión de este para su evaluación.",
 
         "Creación de Versión Interdisciplinaria": "Se ha creado la versión interdisciplinaria del documento y se solicita la revisión de este para su evaluación.",
@@ -540,6 +541,7 @@ def registrar_evento(request, documento_id):
             evento.etapa_actual = documento.etapa_actual
             evento.version_actual = documento.version_actual
             evento.numero_version = documento.numero_version
+            evento.estado_version = documento.estado_version
             evento.descripcion = descripciones_eventos.get(evento.tipo_evento, "Descripción no disponible")
 
 ###############################################     Validaciones de eventos      ################################################
@@ -742,8 +744,16 @@ def registrar_evento(request, documento_id):
             ]
             destinatarios = [email for email in destinatarios if email]
 
+            # **📧 Obtener correos adicionales ingresados por el usuario**
+            correos_adicionales = form.cleaned_data.get("correos_adicionales", "")
+            
+            if correos_adicionales:
+                correos_lista = [correo.strip() for correo in correos_adicionales.split(",") if correo.strip()]
+                destinatarios.extend(correos_lista)
+
+
             if destinatarios:
-                subject = f"📄{evento.tipo_evento} - Nuevo Evento Registrado: "
+                subject = f"{Proyecto} - {Subproyecto} - {documento.codigo} - {evento.tipo_evento} - {documento.nombre}"
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,
@@ -765,6 +775,7 @@ def registrar_evento(request, documento_id):
             "etapa_actual": documento.etapa_actual,
             "version_actual": documento.version_actual,
             "numero_version": documento.numero_version,
+            "estado_version": documento.estado_version,
             "ruta_actual": documento.ruta_actual,
             "descripcion": descripciones_eventos.get("Creación de Versión Preliminar", "Descripción no disponible"),
         })
