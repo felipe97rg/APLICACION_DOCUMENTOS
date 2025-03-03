@@ -157,9 +157,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'documentos@cenyt.com.co'
-EMAIL_HOST_PASSWORD = 'kWX4Lb8nXL7L'
-DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
+EMAIL_HOST_USER = 'juanfelipe.rodriguez@cenyt.com.co'
+EMAIL_HOST_PASSWORD = 'Felipe1904@'
+DEFAULT_FROM_EMAIL = 'juanfelipe.rodriguez@cenyt.com.co'
 
 
 LOGGING = {
