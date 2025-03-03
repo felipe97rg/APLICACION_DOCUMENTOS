@@ -229,6 +229,7 @@ def get_eventos_documento(request, documento_id):
 
 
 
+
 @login_required
 def upload_proyecto(request):
     if request.method == 'POST' and request.FILES.get('archivo_excel'):
@@ -256,6 +257,7 @@ def upload_proyecto(request):
             subproyecto, _ = Subproyecto.objects.get_or_create(nombre=subproyecto_nombre, proyecto=proyecto)
             
             # Leer documentos desde la fila 4 en adelante
+            documentos_creados = []
             if len(df) > 3:
                 for index, row in df.iloc[3:].iterrows():
                     if pd.notna(row[0]) and pd.notna(row[1]):  # Verifica que las celdas no estén vacías
@@ -269,9 +271,33 @@ def upload_proyecto(request):
                                 nombre=documento_nombre,
                                 subproyecto=subproyecto
                             )
+                            documentos_creados.append(f"{documento_codigo} - {documento_nombre}")
+
+            # Enviar correo de notificación
+            subject = f"Nuevo proyecto subido: {proyecto_nombre}"
+            message = f"""
+            Se ha subido un nuevo proyecto en la plataforma.
+
+            **Proyecto:** {proyecto_nombre}
+            **Subproyecto:** {subproyecto_nombre}
+
+            **Documentos creados:**
+            {chr(10).join(documentos_creados) if documentos_creados else "No se crearon documentos nuevos."}
+
+            """
+            recipient_list = ['juanfelipe.rodriguez@cenyt.com.co']
             
-            messages.success(request, 'Archivo procesado exitosamente')
-            return redirect('upload_proyecto')  # Redirige al dashboard después del éxito
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                recipient_list,
+                fail_silently=False
+            )
+
+            messages.success(request, 'Archivo procesado exitosamente y correo enviado')
+            return redirect('upload_proyecto')  # Redirige después del éxito
+
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')
