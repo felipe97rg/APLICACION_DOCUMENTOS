@@ -158,7 +158,7 @@ EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'documentos@cenyt.com.co'
-EMAIL_HOST_PASSWORD = 'Documentos123'
+EMAIL_HOST_PASSWORD = 'kWX4Lb8nXL7L'
 DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
 
 
