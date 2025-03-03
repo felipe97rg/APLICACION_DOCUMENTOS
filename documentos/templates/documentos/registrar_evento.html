@@ -102,23 +102,24 @@
             </div>
             
             <div class="mb-3">
-                <label class="form-label">Usuario Interesado 1</label>
+                <label class="form-label">Destinatario</label>
                 {{ form.usuario_interesado_1 }}
             </div>
             
-            <div class="mb-3">
-                <label class="form-label">Usuario Interesado 2</label>
-                {{ form.usuario_interesado_2 }}
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">Usuario Interesado 3</label>
-                {{ form.usuario_interesado_3 }}
-            </div>
 
-            <button type="submit" class="btn btn-primary w-100 mt-3">Registrar Evento</button>
+        <!-- Nuevo campo con formato similar -->
+        <div class="mb-3">
+            <label class="form-label">Correos adicionales (separados por coma)</label>
+            <input type="text" name="correos_adicionales" id="correos_adicionales" class="form-control" 
+                placeholder="ejemplo@correo.com, otro@correo.com">
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mt-3">Registrar Evento</button>
+
         </fieldset>
     </form>
+
+
+    <br>
     <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver al Inicio</a>
 </div>
 

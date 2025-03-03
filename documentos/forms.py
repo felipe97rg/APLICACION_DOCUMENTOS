@@ -73,6 +73,11 @@ class EventoForm(forms.ModelForm):
         label="Comentarios"
     )
 
+    correos_adicionales = forms.CharField(
+        required=False, 
+        widget=forms.TextInput(attrs={"placeholder": "Correos adicionales separados por comas"})
+    )
+
     class Meta:
         model = Evento
         fields = [
@@ -88,6 +93,7 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_1",
             "usuario_interesado_2",
             "usuario_interesado_3",
+            "correos_adicionales"
         ]
         widgets = {
             "estado_actual": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
@@ -100,5 +106,6 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_1": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
+            "correos_adicionales": forms.TextInput(attrs={"class": "form-control"})
         }
 

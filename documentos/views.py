@@ -531,12 +531,14 @@ def validar_evento_permitido(documento, tipo_evento):
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
     documento = get_object_or_404(Documento, id=documento_id)
-
+    Proyecto = documento.subproyecto.proyecto.nombre
+    Subproyecto = documento.subproyecto.nombre
+    
     # **Definir descripciones de eventos**
     descripciones_eventos = {
 
         # Eventos de Creación de Documento
-        "Creación de Versión Preliminar": "Se ha creado la versión A del documento y se solicita la revisión preliminar de este para su primera evaluación.",
+        "Creación de Versión Preliminar": "Se solicita la creación de la versión preliminar del documento.",
         "Creación de Versión Interna Superada": "Se ha creado la versión nueva del documento y se solicita la revisión de este para su evaluación.",
 
         "Creación de Versión Interdisciplinaria": "Se ha creado la versión interdisciplinaria del documento y se solicita la revisión de este para su evaluación.",
@@ -791,8 +793,16 @@ def registrar_evento(request, documento_id):
             ]
             destinatarios = [email for email in destinatarios if email]
 
+            # **📧 Obtener correos adicionales ingresados por el usuario**
+            correos_adicionales = form.cleaned_data.get("correos_adicionales", "")
+            
+            if correos_adicionales:
+                correos_lista = [correo.strip() for correo in correos_adicionales.split(",") if correo.strip()]
+                destinatarios.extend(correos_lista)
+
+
             if destinatarios:
-                subject = f"📄{evento.tipo_evento} - Nuevo Evento Registrado: "
+                subject = f"{Proyecto} - {Subproyecto} - {documento.codigo} - {evento.tipo_evento} - {documento.nombre}"
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,
