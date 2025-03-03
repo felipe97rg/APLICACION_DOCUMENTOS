@@ -149,10 +149,11 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'documentos@cenyt.com.co'
 EMAIL_HOST_PASSWORD = 'Documentos123'
-DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'	# Dirección de correo electrónico que se usará como remitente
+DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
