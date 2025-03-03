@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,3 +160,23 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'documentos@cenyt.com.co'
 EMAIL_HOST_PASSWORD = 'Documentos123'
 DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'errores.log'),  # Archivo donde se guardarán los errores
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
