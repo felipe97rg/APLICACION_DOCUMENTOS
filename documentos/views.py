@@ -255,45 +255,51 @@ def upload_proyecto(request):
         try:
             # Leer el archivo Excel
             df = pd.read_excel(file_path, header=None)
-            
+
             # Extraer Proyecto y Subproyecto
             proyecto_nombre = df.iloc[0, 1] if len(df) > 0 else None
             subproyecto_nombre = df.iloc[1, 1] if len(df) > 1 else None
-            
+
             if not proyecto_nombre or not subproyecto_nombre:
-                messages.error(request, 'El archivo no contiene información válida de proyecto y subproyecto')
+                messages.error(request, 'El archivo no contiene información válida de proyecto y subproyecto.')
                 return redirect('upload_proyecto')
-            
+
             # Verificar y crear Proyecto
             proyecto, _ = Proyecto.objects.get_or_create(nombre=proyecto_nombre)
-            
+
             # Verificar y crear Subproyecto
             subproyecto, _ = Subproyecto.objects.get_or_create(nombre=subproyecto_nombre, proyecto=proyecto)
-            
-            # Leer documentos desde la fila 4 en adelante
-            if len(df) > 3:
-                for index, row in df.iloc[3:].iterrows():
-                    if pd.notna(row[0]) and pd.notna(row[1]):  # Verifica que las celdas no estén vacías
-                        documento_codigo = str(row[0]).strip()
-                        documento_nombre = str(row[1]).strip()
-                        
-                        # Verificar si el documento ya existe antes de crearlo
-                        if not Documento.objects.filter(codigo=documento_codigo).exists():
-                            Documento.objects.create(
-                                codigo=documento_codigo,
-                                nombre=documento_nombre,
-                                subproyecto=subproyecto
-                            )
-            
-            messages.success(request, 'Proyecto procesado existosamente, dirigete a la pagina de Reporte o Documentos para ver los cambios.')
-            return redirect('upload_proyecto') # Redirige al dashboard después del éxito
+
+            # Verificar la estructura del archivo
+            if len(df.columns) < 3:
+                messages.error(request, 'El archivo no tiene el formato esperado. Debe incluir las columnas COD CENYT, COD CLIENTE y DOCUMENTO / ACTIVIDAD.')
+                return redirect('upload_proyecto')
+
+            # Leer documentos desde la fila 3 en adelante
+            for index, row in df.iloc[3:].iterrows():
+                if pd.notna(row[0]) and pd.notna(row[2]):  # Verifica que las columnas COD CENYT y DOCUMENTO no estén vacías
+                    documento_codigo = str(row[0]).strip()
+                    codigo_cliente = str(row[1]).strip() if pd.notna(row[1]) else ""  # Manejar valores NaN
+                    documento_nombre = str(row[2]).strip()
+
+                    # Verificar si el documento ya existe antes de crearlo
+                    if not Documento.objects.filter(codigo=documento_codigo).exists():
+                        Documento.objects.create(
+                            codigo=documento_codigo,
+                            nombre=documento_nombre,
+                            subproyecto=subproyecto,
+                            codigo_cliente=codigo_cliente  # Agregar el código de cliente
+                        )
+
+            messages.success(request, 'Proyecto procesado exitosamente, dirígete a la página de Reporte o Documentos para ver los cambios.')
+            return redirect('upload_proyecto')  # Redirige después del éxito
+
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')
-        
 
-    
     return render(request, 'documentos/upload_proyecto.html')
+
 
 @login_required
 def get_subproyectos2(request):
@@ -313,11 +319,12 @@ def upload_documento(request):
 
     if request.method == 'POST' and 'upload_document' in request.POST:
         subproyecto_id = request.POST.get('subproyecto')  # ID del subproyecto seleccionado
-        documento_codigo = request.POST.get('documento_codigo').strip()  # Código ingresado
-        documento_nombre = request.POST.get('documento_nombre').strip()  # Nombre ingresado
+        documento_codigo = request.POST.get('documento_codigo', '').strip()  # Código ingresado
+        documento_nombre = request.POST.get('documento_nombre', '').strip()  # Nombre ingresado
+        codigo_cliente = request.POST.get('codigo_cliente', '').strip()  # Nuevo campo para código de cliente
 
-        if not subproyecto_id or not documento_codigo or not documento_nombre:
-            messages.error(request, "Debe seleccionar un subproyecto y escribir el código y nombre del documento.")
+        if not subproyecto_id or not documento_codigo or not documento_nombre or not codigo_cliente:
+            messages.error(request, "Debe seleccionar un subproyecto, escribir el código, nombre del documento y el código de cliente.")
             return redirect('upload_proyecto')
 
         try:
@@ -328,14 +335,15 @@ def upload_documento(request):
                 messages.error(request, "El código del documento ya existe. Debe ser único.")
                 return redirect('upload_proyecto')
 
-            # Crear el documento asociado al subproyecto
+            # Crear el documento asociado al subproyecto con el nuevo campo 'codigo_cliente'
             documento = Documento.objects.create(
                 codigo=documento_codigo,
                 nombre=documento_nombre,
-                subproyecto=subproyecto
+                subproyecto=subproyecto,
+                codigo_cliente=codigo_cliente  # Agregar el código de cliente
             )
 
-            messages.success(request, f'Documento "{documento.nombre}" creado exitosamente en el subproyecto "{subproyecto.nombre}".')
+            messages.success(request, f'Documento "{documento.nombre}" creado exitosamente en el subproyecto "{subproyecto.nombre}" con código de cliente "{codigo_cliente}".')
             return redirect('dashboard')  # Redirigir a la página principal después del éxito
 
         except Subproyecto.DoesNotExist:
@@ -343,6 +351,7 @@ def upload_documento(request):
             return redirect('upload_proyecto')
 
     return render(request, 'documentos/upload_proyecto.html', {'proyectos': proyectos})
+
 
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
