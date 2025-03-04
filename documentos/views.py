@@ -231,7 +231,6 @@ def get_eventos_documento(request, documento_id):
 
 
 
-
 @login_required
 def upload_proyecto(request):
     if request.method == 'POST' and request.FILES.get('archivo_excel'):
@@ -243,68 +242,61 @@ def upload_proyecto(request):
         try:
             # Leer el archivo Excel
             df = pd.read_excel(file_path, header=None)
-            
+
             # Extraer Proyecto y Subproyecto
             proyecto_nombre = df.iloc[0, 1] if len(df) > 0 else None
             subproyecto_nombre = df.iloc[1, 1] if len(df) > 1 else None
-            
+
             if not proyecto_nombre or not subproyecto_nombre:
-                messages.error(request, 'El archivo no contiene información válida de proyecto y subproyecto')
+                messages.error(request, 'El archivo no contiene información válida de proyecto y subproyecto.')
                 return redirect('upload_proyecto')
-            
+
             # Verificar y crear Proyecto
             proyecto, _ = Proyecto.objects.get_or_create(nombre=proyecto_nombre)
-            
+
             # Verificar y crear Subproyecto
             subproyecto, _ = Subproyecto.objects.get_or_create(nombre=subproyecto_nombre, proyecto=proyecto)
-            
-            # Leer documentos desde la fila 4 en adelante
-            documentos_creados = []
-            if len(df) > 3:
-                for index, row in df.iloc[3:].iterrows():
-                    if pd.notna(row[0]) and pd.notna(row[1]):  # Verifica que las celdas no estén vacías
-                        documento_codigo = str(row[0]).strip()
-                        documento_nombre = str(row[1]).strip()
-                        
-                        # Verificar si el documento ya existe antes de crearlo
-                        if not Documento.objects.filter(codigo=documento_codigo).exists():
-                            Documento.objects.create(
-                                codigo=documento_codigo,
-                                nombre=documento_nombre,
-                                subproyecto=subproyecto
-                            )
-                            documentos_creados.append(f"{documento_codigo} - {documento_nombre}")
 
-            # Enviar correo de notificación
-            subject = f"Nuevo proyecto subido: {proyecto_nombre}"
-            message = f"""
-            Se ha subido un nuevo proyecto en la plataforma.
+            # Verificar la estructura del archivo
+            if len(df.columns) < 3:
+                messages.error(request, 'El archivo no tiene el formato esperado. Debe incluir las columnas COD CENYT, COD CLIENTE y DOCUMENTO / ACTIVIDAD.')
+                return redirect('upload_proyecto')
 
-            **Proyecto:** {proyecto_nombre}
-            **Subproyecto:** {subproyecto_nombre}
+            # Leer documentos desde la fila 3 en adelante
+            for index, row in df.iloc[3:].iterrows():
+                if pd.notna(row[0]) and pd.notna(row[2]):  # Verifica que las columnas COD CENYT y DOCUMENTO no estén vacías
+                    documento_codigo = str(row[0]).strip()
+                    codigo_cliente = str(row[1]).strip() if pd.notna(row[1]) else ""  # Manejar valores NaN
+                    documento_nombre = str(row[2]).strip()
 
-            **Documentos creados:**
-            {chr(10).join(documentos_creados) if documentos_creados else "No se crearon documentos nuevos."}
+                    # Verificar si el documento ya existe antes de crearlo
+                    if not Documento.objects.filter(codigo=documento_codigo).exists():
+                        Documento.objects.create(
+                            codigo=documento_codigo,
+                            nombre=documento_nombre,
+                            subproyecto=subproyecto,
+                            codigo_cliente=codigo_cliente  # Agregar el código de cliente
+                        )
 
-            """
-            recipient_list = ['juanfelipe.rodriguez@cenyt.com.co']
-            
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                recipient_list,
-                fail_silently=False
-            )
-
-            messages.success(request, 'Archivo procesado exitosamente y correo enviado')
+            messages.success(request, 'Proyecto procesado exitosamente, dirígete a la página de Reporte o Documentos para ver los cambios.')
             return redirect('upload_proyecto')  # Redirige después del éxito
 
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
             return redirect('upload_proyecto')
-    
+
     return render(request, 'documentos/upload_proyecto.html')
+
+
+@login_required
+def get_subproyectos2(request):
+    """
+    Vista que devuelve los subproyectos de un proyecto en formato JSON.
+    """
+    proyecto_id = request.GET.get('proyecto_id')
+    subproyectos = Subproyecto.objects.filter(proyecto_id=proyecto_id).values('id', 'nombre')
+    return JsonResponse(list(subproyectos), safe=False)
+
 
 
 #**************************************************************************************************************************************#
@@ -505,6 +497,7 @@ def validar_evento_permitido(documento, tipo_evento):
             return "⚠️ Este documento está en etapa 'FINAL'. Solo puedes registrar eventos relacionados a esta etapa."
         
         return None
+    
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
