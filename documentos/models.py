@@ -40,10 +40,11 @@ class Subproyecto(models.Model):
 class Documento(models.Model):
     id = models.AutoField(primary_key=True)  # ID autoincremental
     codigo = models.CharField(max_length=100, unique=True)  # Código único del documento
+    codigo_cliente = models.CharField(max_length=100, default="Sin Código", null=True, blank=True)  # Código del cliente
     nombre = models.CharField(max_length=200)  # Nombre del documento
     subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE)  # Relación con un proyecto
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha de creación automática
-    estado_actual = models.CharField(max_length=50, default="NUEVO ")  # Estado actual por defecto
+    estado_actual = models.CharField(max_length=50, default="NUEVO")  # Estado actual por defecto
     etapa_actual = models.CharField(max_length=50, null= True,default= "NUEVO", blank=True)  # Etapa actual
     version_actual = models.CharField(max_length=50, null=True, default= "A", blank=True)  # Versión actual
     numero_version = models.IntegerField(null=True, blank=True, default= 1)  # Número de la versión
@@ -68,6 +69,7 @@ class Evento(models.Model):
     usuario_interesado_1 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="usuario_interesado_1")
     usuario_interesado_2 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="usuario_interesado_2")
     usuario_interesado_3 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="usuario_interesado_3")
+    correos_adicionales = models.TextField(null=True, blank=True)
     fecha_creacion_evento = models.DateTimeField(auto_now_add=True)
     
     estado_actual = models.CharField(max_length=50, null=True, blank=True)
