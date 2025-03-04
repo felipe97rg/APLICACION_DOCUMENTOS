@@ -144,12 +144,15 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+#SENDGRID_API_KEY = "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"
+#SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # 🚨 DESACTIVA EL SANDBOX MODE
+#DEFAULT_FROM_EMAIL = "documentos@cenyt.com.co"  # Debe ser el mismo que verificaste
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'documentos@cenyt.com.co'
-EMAIL_HOST_PASSWORD = 'Documentos123'
+EMAIL_HOST_PASSWORD = 'CenytDocumentos'
 DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'

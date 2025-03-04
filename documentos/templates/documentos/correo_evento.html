@@ -41,9 +41,15 @@
 
         <h3>✉ Destinatarios</h3>
         <ul>
-            {% if evento.usuario_interesado_1 %}<li>{{ evento.usuario_interesado_1.get_full_name }} ({{ evento.usuario_interesado_1.email }})</li>{% endif %}
- </ul>
-
+            {% if evento.usuario_interesado_1 %}
+                <li>{{ evento.usuario_interesado_1.get_full_name }} ({{ evento.usuario_interesado_1.email }})</li>
+            {% endif %}
+        
+            {% if evento.correos_adicionales %}
+                    <li>{{ evento.correos_adicionales }}</li>
+            {% endif %}
+        </ul>
+        
         <div class="footer">
             <p>Este es un mensaje automático generado por el sistema de gestión documental.</p>
         </div>

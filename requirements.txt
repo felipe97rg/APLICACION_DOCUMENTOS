@@ -11,3 +11,6 @@ seaborn==0.13.2  # Si usas visualizaciones avanzadas
 schedule==1.2.2  # Si automatizas tareas
 selenium==4.25.0  # Solo si usas Web Scraping
 scikit-learn==1.6.1  # Solo si usas Machine Learning
+csvkit==1.0.6  # Para manejar archivos CSV
+sendgrid==7.10.0  # Para enviar correos
+``` 

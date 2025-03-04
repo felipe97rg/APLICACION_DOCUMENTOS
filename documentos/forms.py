@@ -108,4 +108,3 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
             "correos_adicionales": forms.TextInput(attrs={"class": "form-control"})
         }
-

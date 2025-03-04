@@ -17,6 +17,8 @@ from django.core.management import call_command
 from django.db.models import Count
 import pandas as pd
 import json
+import logging
+import csv
 
 def ejecutar_collectstatic(request):
     try:
@@ -152,10 +154,23 @@ def obtener_datos_graficas(request):
         .annotate(total=Count('id'))
         .order_by('-total')
     )
+    documentos_por_etapa = (
+        Documento.objects.values('etapa_actual')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+
+    # Documentos por Cantidad de Eventos
+    documentos_eventos = (
+        Documento.objects.annotate(total_eventos=Count('evento'))
+        .values('codigo', 'total_eventos')
+    )
 
     data = {
         'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
         'documentos_por_subproyecto': list(documentos_por_subproyecto),
+        'documentos_por_etapa': list(documentos_por_etapa),
+        'documentos_eventos': list(documentos_eventos),
     }
     return JsonResponse(data)
 
@@ -184,6 +199,9 @@ def get_documento_detalle(request, documento_id):
     data = {
         "codigo": documento.codigo,
         "nombre": documento.nombre,
+        "subproyecto": documento.subproyecto.nombre,
+        "proyecto": documento.subproyecto.proyecto.nombre,
+        "codigo_cliente": documento.codigo_cliente,
         "estado_actual": documento.estado_actual,
         "etapa_actual": documento.etapa_actual,
         "version_actual": documento.version_actual,
@@ -208,6 +226,7 @@ def get_eventos_documento(request, documento_id):
             "usuario_interesado_1": evento.usuario_interesado_1.username if evento.usuario_interesado_1 else None,
             "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
             "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
+            "correos_adicionales": evento.correos_adicionales,
             "fecha": evento.fecha_creacion_evento.strftime("%Y-%m-%d %H:%M"),
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
@@ -783,7 +802,6 @@ def registrar_evento(request, documento_id):
            
             documento.save()
             evento.save()
-
             # **📧 Enviar correo si hay destinatarios**
             destinatarios = [
                 evento.usuario.email,
@@ -830,3 +848,36 @@ def registrar_evento(request, documento_id):
         })
 
     return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})
+
+@login_required
+def exportar_csv(request, modelo):
+    """
+    Vista para exportar datos en CSV de Proyecto, Subproyecto, Documento o Evento.
+    """
+    modelos_disponibles = {
+        'proyecto': Proyecto,
+        'subproyecto': Subproyecto,
+        'documento': Documento,
+        'evento': Evento,
+    }
+
+    if modelo not in modelos_disponibles:
+        return HttpResponse("Modelo no válido", status=400)
+
+    ModelClass = modelos_disponibles[modelo]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{modelo}.csv"'
+
+    writer = csv.writer(response)
+    
+    # Obtener los nombres de las columnas
+    fields = [field.name for field in ModelClass._meta.fields]
+    
+    # Escribir encabezados
+    writer.writerow(fields)
+
+    # Escribir datos de cada fila
+    for obj in ModelClass.objects.all():
+        writer.writerow([getattr(obj, field) for field in fields])
+
+    return response
