@@ -3,7 +3,7 @@ from .views import  get_subproyectos, get_documentos
 from .views import  dashboard_view, get_documento_detalle, get_eventos_documento
 from .views import login_view, logout_view, inicio_view,  reporte_view, dashboard_view, upload_proyecto, registrar_evento, obtener_datos_graficas
 from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
-from .views import upload_proyecto
+from .views import upload_proyecto, exportar_csv
 
 urlpatterns = [
     path('collectstatic/', ejecutar_collectstatic, name='ejecutar_collectstatic'),
@@ -29,6 +29,8 @@ urlpatterns = [
     path("documento/<int:documento_id>/evento/", registrar_evento, name="registrar_evento"),
 
     path('', inicio_view, name='inicio'),
+
+    path('exportar/<str:modelo>/', exportar_csv, name='exportar_csv'),
 
 ]
 

@@ -19,6 +19,8 @@ import pytz
 from django.db.models import Count
 import pandas as pd
 import json
+import logging
+import csv
 
 def ejecutar_collectstatic(request):
     try:
@@ -503,7 +505,6 @@ def validar_evento_permitido(documento, tipo_evento):
             return "⚠️ Este documento está en etapa 'FINAL'. Solo puedes registrar eventos relacionados a esta etapa."
         
         return None
-
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
@@ -760,7 +761,6 @@ def registrar_evento(request, documento_id):
            
             documento.save()
             evento.save()
-
             # **📧 Enviar correo si hay destinatarios**
             destinatarios = [
                 evento.usuario.email,
@@ -807,3 +807,36 @@ def registrar_evento(request, documento_id):
         })
 
     return render(request, "documentos/registrar_evento.html", {"form": form, "documento": documento, "usuario": request.user})
+
+@login_required
+def exportar_csv(request, modelo):
+    """
+    Vista para exportar datos en CSV de Proyecto, Subproyecto, Documento o Evento.
+    """
+    modelos_disponibles = {
+        'proyecto': Proyecto,
+        'subproyecto': Subproyecto,
+        'documento': Documento,
+        'evento': Evento,
+    }
+
+    if modelo not in modelos_disponibles:
+        return HttpResponse("Modelo no válido", status=400)
+
+    ModelClass = modelos_disponibles[modelo]
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{modelo}.csv"'
+
+    writer = csv.writer(response)
+    
+    # Obtener los nombres de las columnas
+    fields = [field.name for field in ModelClass._meta.fields]
+    
+    # Escribir encabezados
+    writer.writerow(fields)
+
+    # Escribir datos de cada fila
+    for obj in ModelClass.objects.all():
+        writer.writerow([getattr(obj, field) for field in fields])
+
+    return response
