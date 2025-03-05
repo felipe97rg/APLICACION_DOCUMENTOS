@@ -78,6 +78,8 @@ class EventoForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"placeholder": "Correos adicionales separados por comas"})
     )
 
+
+
     class Meta:
         model = Evento
         fields = [
@@ -103,7 +105,7 @@ class EventoForm(forms.ModelForm):
             "estado_version": forms.TextInput(attrs={"class": "form-control", "readonly": "readonly"}),
             "ruta_actual": forms.TextInput(attrs={"class": "form-control"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "readonly": "readonly"}),  # No editable
-            "usuario_interesado_1": forms.Select(attrs={"class": "form-control"}),
+            "usuario_interesado_1":forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_2": forms.Select(attrs={"class": "form-control"}),
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
             "correos_adicionales": forms.TextInput(attrs={"class": "form-control"})

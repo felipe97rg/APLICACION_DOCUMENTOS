@@ -20,6 +20,7 @@ import json
 import logging
 import csv
 
+
 def ejecutar_collectstatic(request):
     try:
         call_command('collectstatic', interactive=False, clear=True)
@@ -367,7 +368,6 @@ def validar_evento_permitido(documento, tipo_evento):
     eventos_previos = Evento.objects.filter(documento=documento).values_list("tipo_evento", flat=True)
     if tipo_evento == "Selecciona el tipo de evento":
         return "⚠️ Debes seleccionar un evento"
-    
 
     # 🔍 Si el documento no tiene eventos registrados, solo se permiten estos eventos iniciales
     EVENTOS_INICIALES = {
@@ -386,6 +386,7 @@ def validar_evento_permitido(documento, tipo_evento):
     # 🚨 No permitir duplicados de "Solicitud de Creación de Medición o Actividad"
     if tipo_evento == "Solicitud de Creación de Medición o Actividad" and "Solicitud de Creación de Medición o Actividad" in eventos_previos:
         return "⚠️ No puedes registrar otra 'Solicitud de Creación de Medición o Actividad' en este documento."
+    
 
 
     # 🔍 Camino de "Creación de Medición o Actividad"
@@ -611,6 +612,15 @@ def registrar_evento(request, documento_id):
     if request.method == "POST":
         form = EventoForm(request.POST)
         if form.is_valid():
+                    # 🚨 Validar que usuario_interesado_1 no esté vacío
+            if not form.cleaned_data.get("usuario_interesado_1"):
+                messages.error(request, "⚠️ Debes seleccionar al menos un usuario interesado en la casilla de Destinatario.")
+                return render(request, "documentos/registrar_evento.html", {
+                    "form": form,  # Mantiene los datos ingresados
+                    "documento": documento,
+                    "usuario": request.user
+                })  # No redirige, solo recarga la página con los datos previos
+
             evento = form.save(commit=False)
             evento.documento = documento
             evento.usuario = request.user
@@ -808,9 +818,12 @@ def registrar_evento(request, documento_id):
                 documento.estado_actual = "VIGENTE"
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
-           
+
             documento.save()
             evento.save()
+
+
+
             # **📧 Enviar correo si hay destinatarios**
             destinatarios = [
                 evento.usuario.email,
