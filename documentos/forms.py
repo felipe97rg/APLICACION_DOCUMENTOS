@@ -42,6 +42,8 @@ class EventoForm(forms.ModelForm):
         ("Solicitud de Superación a Versión Final", "Solicitud de Superación a Versión Final"),
         ("Solicitud de Superación de Numero de Versión Final", "Solicitud de Superación de Numero de Versión Final"),
 
+        ("Solicitud de Creación de Código", "Solicitud de Creación de Código"),
+
         # Eventos de creacion de Mediciones y Actividades
         
         ("Solicitud de Creación de Medición o Actividad", "Solicitud de Creación de Medición o Actividad"),

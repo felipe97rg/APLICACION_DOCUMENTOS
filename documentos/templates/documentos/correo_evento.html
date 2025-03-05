@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuevo Evento Registrado</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
 </head>
 <body>
     <div class="container">
+        {% load static %}
+        <img src="{% static 'documentos/images/Logo_Cenyt_Reducido.png' %}" alt="Logo" width="40" height="40" style="vertical-align: middle; margin-right: 10px;">
+
         <h2>{{ evento.tipo_evento }}</h2>
 
         <p><span class="highlight">Proyecto:</span> {{ documento.subproyecto.proyecto.nombre }}</p>
         <p><span class="highlight">Subproyecto:</span> {{ documento.subproyecto.nombre }}</p>
         <p><span class="highlight">Código del Documento:</span> {{ documento.codigo }}</p>
+        <p><span class="highlight">Código del Cliente:</span>{{documento.codigo_cliente}}</p>
         <p><span class="highlight">Nombre del Documento:</span> {{ documento.nombre }}</p>
 
         <div class="divider"></div>
@@ -49,11 +52,28 @@
                     <li>{{ evento.correos_adicionales }}</li>
             {% endif %}
         </ul>
-        
+
+
         <div class="footer">
             <p>Este es un mensaje automático generado por el sistema de gestión documental.</p>
+            
+            <div class="contact-info">
+                <p><strong>CEN&T INGENIEROS CONSULTORES S.A.S</strong></p>
+                <p>Calle 61 # 3a 26 Piso 2- Bogotá D.C, Colombia</p>
+                <p>Teléfono: +57(1) 6351904</p>
+                <p><a href="https://www.cenyt.com.co">www.cenyt.com.co</a> / <a href="mailto:cenyt.ingenieros@cenyt.com.co">cenyt.ingenieros@cenyt.com.co</a></p>
+            </div>
+
+
+            {% load static %}
+            <!-- Logo en el pie de página -->
+            <div class="footer-logo">
+                <img src="{% static 'documentos/images/Logo_Cenyt.png' %}" alt="CEN&T Ingenieros Consultores S.A.S" class="logo">
+                <img src="" alt="">
+            </div>
         </div>
     </div>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -82,6 +102,8 @@
         }
         h3 {
             text-align: center;
+            font-size: 16px;
+            color: #34495e;
         }
         p {
             font-size: 14px;
@@ -102,7 +124,30 @@
             padding-top: 15px;
             border-top: 1px solid #ddd;
         }
+        .contact-info {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 3px 0;
+        }
+        .contact-info a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .footer-logo {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .logo {
+            max-width: 120px;
+            height: auto;
+        }
     </style>
-      
 </body>
 </html>
