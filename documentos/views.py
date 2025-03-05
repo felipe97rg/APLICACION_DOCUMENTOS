@@ -553,6 +553,17 @@ def registrar_evento(request, documento_id):
 
     if request.method == "POST":
         form = EventoForm(request.POST)
+
+        if form.is_valid():
+                    # 🚨 Validar que usuario_interesado_1 no esté vacío
+            if not form.cleaned_data.get("usuario_interesado_1"):
+                messages.error(request, "⚠️ Debes seleccionar al menos un usuario interesado en la casilla de Destinatario.")
+                return render(request, "documentos/registrar_evento.html", {
+                    "form": form,  # Mantiene los datos ingresados
+                    "documento": documento,
+                    "usuario": request.user
+                })  # No redirige, solo recarga la página con los datos previos
+
         if form.is_valid():
             evento = form.save(commit=False)
             evento.documento = documento
