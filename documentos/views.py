@@ -302,8 +302,7 @@ def get_subproyectos2(request):
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
-#*********************************************** ***************************************************************************************#
-def validar_evento_permitido(documento, tipo_evento):
+#def validar_evento_permitido(documento, tipo_evento):
     """"
     Verifica si el evento es válido para ser registrado en base a reglas de negocio.
     Retorna un mensaje de error si no se permite, o None si es válido.
@@ -313,11 +312,12 @@ def validar_evento_permitido(documento, tipo_evento):
     eventos_previos = Evento.objects.filter(documento=documento).values_list("tipo_evento", flat=True)
     if tipo_evento == "Selecciona el tipo de evento":
         return "⚠️ Debes seleccionar un evento"
-    
+
     # 🔍 Si el documento no tiene eventos registrados, solo se permiten estos eventos iniciales
     EVENTOS_INICIALES = {
         "Creación de Versión Preliminar",
         "Solicitud de Creación de Medición o Actividad",
+        "Solicitud de Creación de Código",
   
         "Actualización del documento",
         "Suspensión del documento",
@@ -331,7 +331,17 @@ def validar_evento_permitido(documento, tipo_evento):
     # 🚨 No permitir duplicados de "Solicitud de Creación de Medición o Actividad"
     if tipo_evento == "Solicitud de Creación de Medición o Actividad" and "Solicitud de Creación de Medición o Actividad" in eventos_previos:
         return "⚠️ No puedes registrar otra 'Solicitud de Creación de Medición o Actividad' en este documento."
+    
+    if documento.estado_actual != "Actividad":
+        EVENTOS_CAMINO_MEDICION = {
+            "Solicitud de Creación de Medición o Actividad",
+            "Solicitud de Revisión de Medición o Actividad",
+            "Creación de Informe de Medición o Actividad",
 
+        }
+
+        if tipo_evento in EVENTOS_CAMINO_MEDICION:
+            return "⚠️ Este evento pertenece a documentos de tipo Medición o Actividad. Debes seleccionar un evento válido."
 
     # 🔍 Camino de "Creación de Medición o Actividad"
     if documento.estado_actual == "Actividad":
@@ -339,6 +349,7 @@ def validar_evento_permitido(documento, tipo_evento):
             "Solicitud de Creación de Medición o Actividad",
             "Solicitud de Revisión de Medición o Actividad",
             "Creación de Informe de Medición o Actividad",
+            "Solicitud de Creación de Código",
         }
 
         # 🚨 Solo se permiten eventos en el camino correcto
@@ -357,6 +368,7 @@ def validar_evento_permitido(documento, tipo_evento):
     if documento.etapa_actual == "PRELIMINAR":
         EVENTOS_CAMINO_ETAPA_PRELIMINAR = {
             "Solicitud de Revisión",
+            "Solicitud de Creación de Código",
 
             "Solicitud de Corrección por Calidad",
             "Solicitud de Corrección por Ingeniería",
@@ -380,6 +392,8 @@ def validar_evento_permitido(documento, tipo_evento):
         if tipo_evento == "Documento Aprobado por Calidad" and documento.aprobado:
             return "⚠️ El documento se encuentra actualmente aprobado por calidad"
 
+        if tipo_evento == "Solicitud de Superación de Numero de Versión Interna" and not documento.aprobado and not documento.revisado:
+            return "⚠️ No puedes solicitar la superación de un documento que no ha sido aprobado por Ingeniería y Calidad"
 
         # No se puede solicitar la superacion de un documento que no se encuantra actualmente aprobado por Ingeniería y calidad
         if tipo_evento == "Solicitud de Superación a Versión Interdisciplinaria" and (not documento.revisado or not documento.aprobado):
@@ -497,7 +511,9 @@ def validar_evento_permitido(documento, tipo_evento):
             return "⚠️ Este documento está en etapa 'FINAL'. Solo puedes registrar eventos relacionados a esta etapa."
         
         return None
-    
+
+
+
 @login_required
 def registrar_evento(request, documento_id):
     """Vista para registrar un evento en un documento"""
@@ -534,6 +550,8 @@ def registrar_evento(request, documento_id):
         "Solicitud de Superación a Versión Final": "Se ha solicitado subir de versión interdisciplinaria (B) a Version final (0).",
         "Solicitud de Superación de Numero de Versión Final": "Se ha solicitado subir el número de versión final del documento.",
 
+        "Solicitud de Creación de Código": "Se ha solicitado la creación de un código para el documento.",
+
         # Eventos de Documento de Medición o Actividad
         "Solicitud de Creación de Medición o Actividad": "Se ha solicitado la creación de una medición o actividad.",
         "Solicitud de Revisión de Medición o Actividad": "Se ha solicitado la revisión de una medición o actividad.",
@@ -564,7 +582,6 @@ def registrar_evento(request, documento_id):
                     "usuario": request.user
                 })  # No redirige, solo recarga la página con los datos previos
 
-        if form.is_valid():
             evento = form.save(commit=False)
             evento.documento = documento
             evento.usuario = request.user
@@ -732,6 +749,9 @@ def registrar_evento(request, documento_id):
             elif evento.tipo_evento == "Creación de Informe de Medición o Actividad":
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
+            elif evento.tipo_evento == "Solicitud de Creación de Código":
+                documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
+
             
 ############## Revisiones y Aprobaciones ##############
 
@@ -762,9 +782,12 @@ def registrar_evento(request, documento_id):
                 documento.estado_actual = "VIGENTE"
                 documento.ruta_actual = request.POST.get("ruta_actual", documento.ruta_actual)
 
-           
+
             documento.save()
             evento.save()
+
+
+
             # **📧 Enviar correo si hay destinatarios**
             destinatarios = [
                 evento.usuario.email,
@@ -783,7 +806,7 @@ def registrar_evento(request, documento_id):
 
 
             if destinatarios:
-                subject = f"{Proyecto} - {Subproyecto} - {documento.codigo} - {evento.tipo_evento} - {documento.nombre}"
+                subject = f"{Proyecto} - {Subproyecto} - {documento.codigo_cliente} - {evento.tipo_evento} - {documento.nombre}"
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,

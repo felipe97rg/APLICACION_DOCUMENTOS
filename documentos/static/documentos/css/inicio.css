@@ -9,8 +9,12 @@ body {
     padding: 0;
 }
 
+main {
+    padding-bottom: 50px;
+}
+
 /* 🔹 Encabezado */
-.header {
+.header { 
     background: white;
     padding: 10px 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -38,20 +42,23 @@ body {
 
 #Cerrar:hover {
     color: #28348a;
-    transform: s;
+    text-decoration: underline;
 }
+
 
 /* 🔹 Hero Section */
 .hero-section {
+    min-height: 60vh;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
-    height: 60vh;
-    padding: 50px;
-    background: url("{% static 'documentos/images/fondo.jpg' %}") no-repeat center center / cover;
-    color: black;
-    position: relative;
+    justify-content: center;
+
+    padding-top: 150px; /* Ajusta según sea necesario */
+    padding-left: 50px;
+    padding-right: 50px;
 }
+
 
 /* Contenedor del contenido */
 .hero-content {
@@ -101,7 +108,9 @@ body {
     align-items: center;
 }
 .hero-image img {
-    max-width: 750px;
+    max-width: 75%;
+    height: auto;
+    transition: transform 1s ease;
 
     transition: 1s ease;
 }
@@ -130,7 +139,9 @@ body {
 }
 
 .card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* 🔹 Icono de la tarjeta */
@@ -193,4 +204,30 @@ body {
 .hero-section,
 .card {
     animation: fadeIn 1s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .hero-image img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+@media (max-width: 768px) {
+    .hero-section {
+        padding-top: 120px; /* Más espacio en pantallas pequeñas */
+        text-align: center;
+        flex-direction: column;
+    }
+    .hero-content {
+        padding: 20px;
+    }
+    .hero-image img {
+        max-width: 80%;
+    }
+}
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
