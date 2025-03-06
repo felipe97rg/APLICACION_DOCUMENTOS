@@ -14,7 +14,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
-from django.db.models import Count
+from django.db.models import Count, Q
 import pandas as pd
 import json
 import logging
@@ -111,10 +111,31 @@ def dashboard_view(request):
 
 @login_required
 def reporte_view(request):
+
+    usuario = request.user
+
     total_proyectos = Proyecto.objects.count()
     total_subproyectos = Subproyecto.objects.count()
     total_documentos = Documento.objects.count()
     total_eventos = Evento.objects.count()
+
+        # Eventos enviados por el usuario
+    eventos_enviados = Evento.objects.filter(usuario=usuario).count()
+
+    # Eventos recibidos por el usuario (como usuario_interesado_1, usuario_interesado_2 o usuario_interesado_3)
+    eventos_recibidos = Evento.objects.filter(
+        Q(usuario_interesado_1=usuario) | 
+        Q(usuario_interesado_2=usuario) | 
+        Q(usuario_interesado_3=usuario)
+    ).count()
+
+    # Documentos asociados a el usuario
+    documentos_asociados = Evento.objects.filter(
+        Q(usuario = usuario) |  
+        Q(usuario_interesado_1=usuario) | 
+        Q(usuario_interesado_2=usuario) | 
+        Q(usuario_interesado_3=usuario)
+    ).values('documento').distinct().count()
 
     # Datos para la primera gráfica: Cantidad de subproyectos por proyecto
     subproyectos_por_proyecto = (
@@ -131,6 +152,11 @@ def reporte_view(request):
     )
 
     context = {
+        'usuario_nombre': usuario.get_full_name() or usuario.username,
+        'usuario_correo': usuario.email,
+        'eventos_enviados': eventos_enviados,
+        'eventos_recibidos': eventos_recibidos,
+        'documentos_asociados': documentos_asociados,
         'total_proyectos': total_proyectos,
         'total_subproyectos': total_subproyectos,
         'total_documentos': total_documentos,
@@ -141,7 +167,6 @@ def reporte_view(request):
         'documentos_por_subproyecto': list(documentos_por_subproyecto),
     }
     return render(request, 'documentos/reporte.html',context)
-
 @login_required
 def obtener_datos_graficas(request):
     # Datos para la primera gráfica
@@ -157,8 +182,11 @@ def obtener_datos_graficas(request):
         .annotate(total=Count('id'))
         .order_by('-total')
     )
+    
+    # Datos : Distribucion de documentos por etapa (Ignorar valores nulos)
     documentos_por_etapa = (
-        Documento.objects.values('etapa_actual')
+        Documento.objects.exclude(etapa_actual__isnull=True)
+        .values('etapa_actual')
         .annotate(total=Count('id'))
         .order_by('-total')
     )
@@ -176,6 +204,7 @@ def obtener_datos_graficas(request):
         'documentos_eventos': list(documentos_eventos),
     }
     return JsonResponse(data)
+
 
 @login_required
 def get_subproyectos(request, proyecto_id):
