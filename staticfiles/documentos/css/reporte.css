@@ -1,3 +1,37 @@
+#usuario-container {
+    background-color: #ebebeb;  /* Color de fondo claro */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#usuario-container .card {
+    border-radius: 10px;
+    padding: 20px;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+#usuario-container .card h6 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#usuario-container .card h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#usuario-container .card:hover {
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
 
 #tarjetas-container {    
     background-color: #ebebeb;  /* Color de fondo claro */
@@ -38,27 +72,3 @@
     color: white; /* Texto blanco */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
 }
-
-#graficas-container {
-    background-color: #ebebeb;  /* Color de fondo claro */
-    border-radius: 15px; /* Bordes redondeados */
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-#graficas-container .card {
-    border: none; /* Quitar bordes de las tarjetas */
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#graficas-container h5 {
-    font-weight: bold;
-    color: #000000; /* Azul oscuro */
-    text-transform: uppercase;
-}
-
-#graficas-container canvas {
-    max-height: 300px;
-}
-
