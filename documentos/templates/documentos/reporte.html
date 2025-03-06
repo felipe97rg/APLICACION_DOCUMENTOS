@@ -3,7 +3,47 @@
 {% block title %}Reporte - Gestión Documental{% endblock %}
 
 {% block content %}
-<div id = "reporte-container">
+
+    <div id="usuario-container" class="container mb-5 mt-5">
+        <div class="row">
+            <!-- Tarjeta: Información del Usuario -->
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <h6>Usuario</h6>
+                    <h4>{{ usuario_nombre }}</h4>
+                    <h6 class="text-muted">{{ usuario_correo }}</h6>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Rol del Usuario -->
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <h6>Documentos Asociados:</h6>
+                    <h2>{{ documentos_asociados }}</h2>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Eventos Enviados -->
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <h6>Eventos Enviados</h6>
+                    <h2>{{ eventos_enviados }}</h2>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Eventos Recibidos -->
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <h6>Eventos Recibidos</h6>
+                    <h2>{{ eventos_recibidos }}</h2>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
     <div id = "tarjetas-container"class="container mb-5 mt-5">
 
         <div class="row">
@@ -56,13 +96,27 @@
                     <canvas id="grafica2"></canvas>
                 </div>
             </div>
-        </div>
+        </div> <!-- Cierre de la primera fila -->
+    
+        <!-- Nueva fila para la gráfica de Documentos por Etapa -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card p-4">
+                    <h5 class="text-center">Distribución de Documentos por Etapa</h5>
+                    <canvas id="grafica3"></canvas>
+                </div>
+            </div>
+        </div>        
+        
     </div>
+    
+
 
 </div>
 
     {%load static%}
     <link rel="stylesheet" href="{% static 'documentos\css\reporte.css' %}">
+    <link rel="stylesheet" href="{% static 'documentos\css\graficas.css' %}">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>

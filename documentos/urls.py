@@ -1,8 +1,15 @@
 from django.urls import path
-from .views import  get_subproyectos, get_documentos
-from .views import  dashboard_view, get_documento_detalle, get_eventos_documento
-from .views import login_view, logout_view, inicio_view,  reporte_view, dashboard_view, upload_proyecto, registrar_evento, obtener_datos_graficas
 from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
+
+from .views import login_view, logout_view, inicio_view,   upload_proyecto
+
+from .views import reporte_view, obtener_datos_graficas
+
+from .views import  get_subproyectos, get_documentos
+
+from .views import  dashboard_view, get_documento_detalle, get_eventos_documento, registrar_evento
+
+
 from .views import upload_proyecto, exportar_csv
 
 urlpatterns = [
