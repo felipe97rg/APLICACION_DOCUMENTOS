@@ -17,6 +17,8 @@ from django.core.management import call_command
 from django.utils.timezone import localtime
 import pytz
 from django.db.models import Count, Q, Sum, Case, When, FloatField
+from django.db.models.functions import TruncDate
+
 import pandas as pd
 import json
 import logging
@@ -149,6 +151,9 @@ def reporte_view(request):
         .order_by('-total')
     )
 
+   
+    
+
     context = {
         'usuario_nombre': usuario.get_full_name() or usuario.username,
         'usuario_correo': usuario.email,
@@ -165,6 +170,7 @@ def reporte_view(request):
         'documentos_por_subproyecto': list(documentos_por_subproyecto),
     }
     return render(request, 'documentos/reporte.html',context)
+
 @login_required
 def obtener_datos_graficas(request):
     # Datos para la primera gráfica
@@ -244,7 +250,6 @@ def obtener_datos_graficas(request):
         "avance_por_subproyecto": list(avance_por_subproyecto)
     }
     return JsonResponse(data)
-
 
 
 
@@ -386,7 +391,7 @@ def get_subproyectos2(request):
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
 #**************************************************************************************************************************************#
-#def validar_evento_permitido(documento, tipo_evento):
+def validar_evento_permitido(documento, tipo_evento):
     """"
     Verifica si el evento es válido para ser registrado en base a reglas de negocio.
     Retorna un mensaje de error si no se permite, o None si es válido.
