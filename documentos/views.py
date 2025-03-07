@@ -14,7 +14,9 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.files.storage import FileSystemStorage
 from django.core.management import call_command
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum, Case, When, FloatField
+from django.db.models.functions import TruncDate
+
 import pandas as pd
 import json
 import logging
@@ -151,6 +153,9 @@ def reporte_view(request):
         .order_by('-total')
     )
 
+   
+    
+
     context = {
         'usuario_nombre': usuario.get_full_name() or usuario.username,
         'usuario_correo': usuario.email,
@@ -197,11 +202,53 @@ def obtener_datos_graficas(request):
         .values('codigo', 'total_eventos')
     )
 
+    # Cantidad de eventos registrados por dia
+    eventos_por_dia = (
+        Evento.objects.annotate(fecha = TruncDate("fecha_creacion_evento"))
+        .values("fecha")
+        .annotate(total = Count("id"))
+        .order_by("fecha")
+    )
+
+    # Porcentaje de avance de los subproyectos
+
+    avance_por_subproyecto = (
+        Documento.objects.values('subproyecto__nombre')
+        .annotate(
+            total_peso=Sum(
+                Case(
+                    When(etapa_actual='NUEVO', then=0),
+                    When(etapa_actual='PRELIMINAR', then=0.25),
+                    When(etapa_actual='INTERDISCIPLINARIA', then=0.5),
+                    When(etapa_actual='FINAL', then=0.75),
+                    default=0,
+                    output_field=FloatField(),
+                )
+            ),
+            total_documentos=Count('id')
+        )
+        .annotate(
+            porcentaje_avance=100 * Sum(
+                Case(
+                    When(etapa_actual='NUEVO', then=0),
+                    When(etapa_actual='PRELIMINAR', then=0.25),
+                    When(etapa_actual='INTERDISCIPLINARIA', then=0.5),
+                    When(etapa_actual='FINAL', then=0.75),
+                    default=0,
+                    output_field=FloatField(),
+                )
+            ) / Count('id', output_field=FloatField())
+        )
+        .order_by('-porcentaje_avance')
+    )
+
     data = {
         'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
         'documentos_por_subproyecto': list(documentos_por_subproyecto),
         'documentos_por_etapa': list(documentos_por_etapa),
         'documentos_eventos': list(documentos_eventos),
+        "eventos_por_dia": list(eventos_por_dia),
+        "avance_por_subproyecto": list(avance_por_subproyecto)
     }
     return JsonResponse(data)
 
