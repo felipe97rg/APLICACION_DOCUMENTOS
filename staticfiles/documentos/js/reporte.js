@@ -108,3 +108,127 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al obtener los datos:", error));
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/reporte/datos_graficas/")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Datos recibidos:", data);
+
+            // Función para formatear fechas (YYYY-MM-DD)
+            function formatearFecha(fecha) {
+                return new Date(fecha).toLocaleDateString("es-ES", {
+                    year: "numeric", month: "2-digit", day: "2-digit"
+                });
+            }
+
+            // 📌 Nueva Gráfica: Eventos registrados por día
+            if (data.eventos_por_dia.length > 0) {
+                const fechas = data.eventos_por_dia.map(item => formatearFecha(item.fecha));
+                const eventosPorDia = data.eventos_por_dia.map(item => item.total);
+
+                new Chart(document.getElementById('grafica4'), {
+                    type: 'line',
+                    data: {
+                        labels: fechas,
+                        datasets: [{
+                            label: 'Eventos Registrados',
+                            data: eventosPorDia,
+                            borderColor: 'rgb(0, 123, 255)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.3)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3,  // Suaviza la línea
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgb(0, 123, 255)',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: true } },
+                        scales: {
+                            x: {
+                                ticks: { color: 'black' },
+                                grid: { display: false }
+                            },
+                            y: {
+                                ticks: { color: 'black' },
+                                grid: { display: false }
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.warn("No hay datos disponibles para la gráfica de eventos por día.");
+            }
+        })
+        .catch(error => console.error("Error al obtener los datos:", error));
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/reporte/datos_graficas/")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Datos recibidos:", data);
+
+            // 📌 Función para generar colores con la barra más alta en azul
+            function generarColores(dataArray) {
+                const maxValor = Math.max(...dataArray);
+                return dataArray.map(value =>
+                    parseFloat(value) === maxValor ? 'rgb(0, 123, 255)' : 'rgba(200, 200, 200, 0.7)'
+                );
+            }
+
+            // 📌 Configuración de ejes sin líneas de fondo
+            const opcionesGrafica = {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        ticks: { color: 'black' },
+                        grid: { display: false }  // Elimina líneas de fondo
+                    },
+                    y: {
+                        ticks: { color: 'black' },
+                        grid: { display: false },  // Elimina líneas de fondo
+                        min: 0,
+                        max: 100, // 📌 Asegura que el eje Y vaya de 0 a 100%
+                        ticks: {
+                            callback: function(value) {
+                                return value + "%"; // 📌 Formato en porcentaje
+                            }
+                        }
+                    }
+                }
+            };
+
+            // 📌 Nueva Gráfica: Porcentaje de avance por subproyecto
+            if (data.avance_por_subproyecto.length > 0) {
+                const subproyectos = data.avance_por_subproyecto.map(item => item.subproyecto__nombre);
+                const porcentajeAvance = data.avance_por_subproyecto.map(item => parseFloat(item.porcentaje_avance.toFixed(2)));
+
+                // Generar colores con la barra más alta en azul
+                const colorsAvance = generarColores(porcentajeAvance);
+
+                new Chart(document.getElementById('grafica5'), {
+                    type: 'bar',
+                    data: {
+                        labels: subproyectos,
+                        datasets: [{
+                            label: 'Porcentaje de Avance',
+                            data: porcentajeAvance,
+                            backgroundColor: colorsAvance,
+                            borderColor: colorsAvance,
+                            borderWidth: 1,
+                            borderRadius: 10
+                        }]
+                    },
+                    options: opcionesGrafica
+                });
+            } else {
+                console.warn("No hay datos disponibles para la gráfica de avance por subproyecto.");
+            }
+        })
+        .catch(error => console.error("Error al obtener los datos:", error));
+});
