@@ -205,7 +205,6 @@ def obtener_datos_graficas(request):
 
 
 
-
 @login_required
 def get_subproyectos(request, proyecto_id):
     """ Devuelve los subproyectos asociados a un proyecto """
