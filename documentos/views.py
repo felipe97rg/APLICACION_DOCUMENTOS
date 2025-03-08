@@ -151,9 +151,6 @@ def reporte_view(request):
         .order_by('-total')
     )
 
-   
-    
-
     context = {
         'usuario_nombre': usuario.get_full_name() or usuario.username,
         'usuario_correo': usuario.email,
@@ -241,15 +238,20 @@ def obtener_datos_graficas(request):
         .order_by('-porcentaje_avance')
     )
 
+
+
     data = {
         'subproyectos_por_proyecto': list(subproyectos_por_proyecto),
         'documentos_por_subproyecto': list(documentos_por_subproyecto),
         'documentos_por_etapa': list(documentos_por_etapa),
         'documentos_eventos': list(documentos_eventos),
         "eventos_por_dia": list(eventos_por_dia),
-        "avance_por_subproyecto": list(avance_por_subproyecto)
+        "avance_por_subproyecto": list(avance_por_subproyecto),
+
     }
+       
     return JsonResponse(data)
+
 
 
 

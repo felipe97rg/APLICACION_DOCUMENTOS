@@ -1,3 +1,15 @@
+body{
+    background-color: #ebebeb;
+}
+
+.list-group-item button {
+    min-width: 200px;
+    text-align: center;
+    white-space: nowrap; /* Evita que el texto haga saltos de línea */
+    padding: 10px 15px; /* Ajusta el padding para uniformidad */
+}
+
+
 /* 🔹 Sección general de subida */
 .upload-section {
     background: #ffffff;

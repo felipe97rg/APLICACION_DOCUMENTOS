@@ -1,7 +1,7 @@
 /* 🔹 Estilos generales */
 body {
     min-height: 100vh;
-    background: #f8f9fa;
+    background-color: #f8f9fa;
     font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;

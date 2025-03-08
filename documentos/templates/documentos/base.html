@@ -6,41 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Gestión Documental{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Bootstrap 5 JS (para que funcione el dropdown) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'documentos/css/base.css' %}">
 </head>
 
 <body>
-    <!-- Barra de navegación principal -->
-    <header class="header shadow">
-        <div class="header-container">
-            {% load static %}
-
-            <a href="{% url 'reporte' %}" class="logo">
-                <img src="{% static 'documentos/images/Logo_Cenyt_Reducido.png' %}" alt="Logo" width="40" height="40" style="vertical-align: middle; margin-right: 10px;">
+    <!-- Barra de navegación fija con ID -->
+    <header id="main-navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Logo -->
+            <a href="{% url 'reporte' %}" class="logo d-flex align-items-center text-decoration-none text-dark fw-bold">
+                <img src="{% static 'documentos/images/Logo_Cenyt_Reducido.png' %}" alt="Logo Cenyt" width="40" height="40" class="me-2">
                 Gestión Documental
             </a>
-                        
 
-            
+            <!-- Navegación -->
             <nav class="navbar">
-                <span class="user-info">Usuario: {{ user.username }}</span>
+                <span class="dropdown-item-text fw-bold">Usuario: {{ user.username }}</span>
+                <a href="{% url 'inicio' %}" class="nav-link {% if request.path == '/' %}active{% endif %}" >Inicio</a>
                 <a href="{% url 'reporte' %}" class="nav-link {% if request.path == '/reporte/' %}active{% endif %}">Reporte</a>
                 <a href="{% url 'dashboard' %}" class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}">Documentos</a>
                 <a href="{% url 'upload_proyecto' %}" class="nav-link {% if request.path == '/upload_proyecto/' %}active{% endif %}">Gestionar Proyectos</a>
-                <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
-            </nav>
+                <a href="{% url 'logout' %}" class="nav-link {% if request.path == '/logout/' %}active{% endif %}">Cerrar Sesión</a>
             
+            </nav>
         </div>
     </header>
 
-    <!-- Contenido dinámico de cada página -->
-    <main>
+    <!-- Contenido de la página -->
+    <main class="container mt-5">
         <div class="content">
             {% block content %}{% endblock %}
         </div>
     </main>
 </body>
-
 </html>

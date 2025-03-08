@@ -1,19 +1,10 @@
-/* Fondo y altura de la página */
-body {
-
-    min-height: 100vh;
-    background: url("") no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-
-
+body{
+    background-color: #ebebeb;
 }
-
-/* Barra de navegación */
-.header {
+#main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     background: #ffffff;
     height: 60px;
@@ -22,68 +13,84 @@ body {
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important; /* Aplica sombra solo en la barra */
+    border-bottom: #000;
 }
 
-/* Contenedor de la barra de navegación */
-.header-container {
-    width: 100%;
+/* Contenedor del navbar */
+#main-navbar .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Estilo del logo */
-.logo {
-    font-size: 32px;
+/* Estilos del logo */
+#main-navbar .logo {
+    font-size: 24px;
     color: #000;
     text-decoration: none;
-    font-weight: 700;
-}
-
-/* Menú de navegación */
-.navbar {
+    font-weight: bold;
     display: flex;
-    gap: 25px;
+    align-items: center;
 }
 
-/* Enlaces del menú */
-.navbar .nav-link {
-    font-size: 18px;
+/* Imagen del logo */
+#main-navbar .logo img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* ----- NAVEGACIÓN ----- */
+#main-navbar .navbar {
+    display: flex;
+    gap: 20px;
+}
+
+/* Enlaces de navegación */
+#main-navbar .nav-link {
+    font-size: 16px;
     color: black;
     font-weight: 500;
     text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 0;
-    position: relative; /* Necesario para el efecto hover */
+    padding: 8px 12px;
+    position: relative;
     transition: color 0.3s ease-in-out;
 }
 
-/* Efecto hover con subrayado individual */
-.navbar .nav-link::after {
+/* Efecto hover con subrayado */
+#main-navbar .nav-link::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -2px;
+    bottom: -3px;
     width: 0;
     height: 2px;
     background: rgb(40,52,138); /* Color azul para la línea */
     transition: all 0.3s ease-in-out;
 }
 
-/* Cuando el usuario pasa el mouse sobre el enlace */
-.navbar .nav-link:hover {
+#main-navbar .nav-link:hover {
     color: rgb(40,52,138);
 }
 
-/* Expande la línea de subrayado al hacer hover */
-.navbar .nav-link:hover::after {
+#main-navbar .nav-link:hover::after {
     width: 100%;
     left: 0;
 }
+
+/* Estilo del enlace activo */
+#main-navbar .nav-link.active {
+    color: rgb(40,52,138);
+    font-weight: bold;
+}
+
+#main-navbar .nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
 /* Información del usuario */
-.user-info {
-    font-size: 18px;
+#main-navbar .user-info {
+    font-size: 16px;
     font-weight: bold;
     color: black;
     background: transparent !important;
@@ -91,7 +98,9 @@ body {
     box-shadow: none !important;
 }
 
-.main {
-    padding-top: 90px;
-}
 
+
+/* ----- AJUSTES DEL CONTENIDO ----- */
+main {
+    padding-top: 80px; /* Para evitar que el contenido quede cubierto por la navbar */
+}

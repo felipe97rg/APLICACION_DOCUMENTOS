@@ -1,3 +1,17 @@
+body {
+    background-color: #ebebeb;
+}
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* 🔹 Caja contenedora específica para la selección de documentos */
 #document-selector {
     background: #ffffff; /* Mantiene el fondo blanco */
@@ -7,7 +21,15 @@
     max-width: 900px; /* Ajuste de tamaño */
     margin: 0 auto; /* Centra la caja */
     border: 1px solid #ddd; /* Mantiene un borde sutil */
+
+    /* Inicialmente oculto */
+    opacity: 0;
+    transform: translateY(30px);
+
+    /* Aplica la animación */
+    animation: fadeInUp 1s ease-out 0.3s forwards;
 }
+
 
 /* 🔹 Título */
 #document-selector h2 {
@@ -57,6 +79,8 @@
     padding: 20px 0;
     max-width: 800px;
     margin: auto;
+    /* Aplica la animación */
+    animation: fadeInUp 0.5s ease-out 0.3s forwards;
     }
 
 
@@ -126,6 +150,8 @@
     position: relative;
     width: 100%;
     padding: 20px 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    
 }
 
 /* Estilos base para las cajas de etapa */

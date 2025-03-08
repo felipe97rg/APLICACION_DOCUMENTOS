@@ -5,6 +5,60 @@
 {% block content %}
 {% load static %}
 <div class="container upload-section mt-5 mb-5">
+    <!-- Título y Descripción -->
+    <h2 class="mb-3">Gestionar Proyectos</h2>
+    <p class="text-muted">
+        Administra los proyectos de la plataforma. Puedes subir nuevos proyectos, modificar el estado de los documentos 
+        y agregar nuevos documentos a los proyectos existentes.
+    </p>
+
+    <!-- Notificaciones de éxito o error -->
+    {% if messages %}
+        <div id="notification" class="mt-3">
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} 
+                alert-dismissible fade show shadow-sm" role="alert">
+                    <strong>{% if message.tags == 'success' %}✔ Éxito{% else %}⚠ Error{% endif %}</strong>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Lista de Funciones -->
+    <div class="mt-4">
+        <h2>Funciones disponibles:</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>- Subir un Proyecto:</strong> Cargar un nuevo proyecto con su estructura.</span>
+                <button class="btn btn-success mt-3" onclick="scrollToSection('upload_proyecto_section')">
+                    Ir a Subir Proyecto 
+                </button>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>- Agregar Nuevos Documentos:</strong> Agregar documentos a subproyectos existentes.</span>
+                <button class="btn btn-success mt-3" onclick="scrollToSection('upload_documento_section')">
+                    Ir a Agregar Documento 
+                </button>
+            </li>
+            
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>- Modificar Estado de Documentos:</strong> Cambiar el estado actual de los documentos. (Anular, Suspender, Reactivar, Actualizar)</span>
+                <button class="btn btn-success mt-3" onclick="scrollToSection('modificar_estado_section')">
+                    Ir a Modificar Estado 
+                </button>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+
+
+<div id="upload_proyecto_section" class="container upload-section mt-5 mb-5 d-none">
     <div class="row align-items-center">
         <!-- Columna izquierda: Texto + Botón de descarga -->
         <div class="col-md-6">
@@ -23,18 +77,7 @@
         <!-- Columna derecha: Formulario -->
         <div class="col-md-6">
             <div class="upload-container">
-                <!-- Mensajes de éxito o error -->
-                {% if messages %}
-                    <div class="mt-3">
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show shadow-sm" role="alert">
-                                <strong>{% if message.tags == 'success' %}✔{% else %}⚠{% endif %}</strong>
-                                {{ message }}
-                                <button type="button" class="btn-close" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+
 
                 <!-- Formulario de carga -->
                 <form method="POST" enctype="multipart/form-data" action="{% url 'upload_proyecto' %}">
@@ -55,11 +98,111 @@
     </div>
 </div>
 
+<div id="upload_documento_section" class="container upload-section mt-5 mb-5 d-none">
+    <h2>Subir un Documento</h2>
+
+    <form method="POST" action="{% url 'upload_documento' %}">
+        {% csrf_token %}
+
+        <!-- Selección de Proyecto -->
+        <div class="mb-3">
+            <label for="proyecto" class="form-label">Selecciona un Proyecto</label>
+            <select id="proyecto" name="proyecto" class="form-select" required>
+                <option value="">Selecciona un proyecto...</option>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                {% empty %}
+                    <option value="" disabled>No hay proyectos disponibles</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Selección de Subproyecto -->
+        <div class="mb-3">
+            <label for="subproyecto" class="form-label">Selecciona un Subproyecto</label>
+            <select id="subproyecto" name="subproyecto" class="form-select" required disabled>
+                <option value="">Selecciona un subproyecto...</option>
+            </select>
+        </div>
+
+        <!-- Campos del Documento -->
+        <div class="mb-3">
+            <label for="documento_codigo" class="form-label">Código Interno</label>
+            <input type="text" name="documento_codigo" id="documento_codigo" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="codigo_cliente" class="form-label">Código del Cliente</label>
+            <input type="text" name="codigo_cliente" id="codigo_cliente" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="documento_nombre" class="form-label">Nombre del Documento</label>
+            <input type="text" name="documento_nombre" id="documento_nombre" class="form-control" required>
+        </div>
+
+        <button type="submit" name="upload_document" class="btn btn-success mt-3">Subir Documento</button>
+    </form>
+</div>
+
+<div id="modificar_estado_section"  class="container upload-section mt-5 mb-5 d-none">
+    <h2>Modificar Estado de un Documento</h2>
+
+
+    <form method="POST" action="{% url 'modificar_estado_documento' %}">
+        {% csrf_token %}
+
+        <!-- Selección de Proyecto -->
+        <div class="mb-3">
+            <label for="proyecto_estado" class="form-label">Selecciona un Proyecto</label>
+            <select id="proyecto_estado" name="proyecto_estado" class="form-select" required>
+                <option value="">Selecciona un proyecto...</option>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                {% empty %}
+                    <option value="" disabled>No hay proyectos disponibles</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Selección de Subproyecto -->
+        <div class="mb-3">
+            <label for="subproyecto_estado" class="form-label">Selecciona un Subproyecto</label>
+            <select id="subproyecto_estado" name="subproyecto_estado" class="form-select" required disabled>
+                <option value="">Selecciona un subproyecto...</option>
+            </select>
+        </div>
+
+        <!-- Selección de Documento -->
+        <div class="mb-3">
+            <label for="documento_estado" class="form-label">Selecciona un Documento</label>
+            <select id="documento_estado" name="documento" class="form-select" required disabled>
+                <option value="">Selecciona un documento...</option>
+            </select>
+        </div>
+
+        <!-- Selección de Acción -->
+        <div class="mb-3">
+            <label for="accion" class="form-label">Acción</label>
+            <select id="accion" name="accion" class="form-select" required>
+                <option value="">Selecciona una acción...</option>
+                <option value="actualizar">Actualizar</option>
+                <option value="suspender">Suspender</option>
+                <option value="eliminar">Eliminar</option>
+                <option value="reactivar">Reactivar</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Modificar Estado</button>
+    </form>
+</div>
+
 
 {% load static %}   
 <!-- CSS personalizados -->
 <link rel="stylesheet" href="{% static 'documentos/css/upload_proyecto.css' %}">
 <script src="{% static 'documentos/js/upload_proyecto.js' %}" defer></script>
+
 
 
 {% endblock %}

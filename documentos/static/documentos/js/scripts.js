@@ -150,12 +150,10 @@ function actualizarHistorialEventos(eventos) {
             "FINAL": "etapa-final"
         };
 
-        etapaProgreso.addClass("d-none"); // Ocultar por defecto
 
         if (etapaActual in etapas) {
             $(".etapa-box").removeClass("active");
             $("#" + etapas[etapaActual]).addClass("active");
-            etapaProgreso.removeClass("d-none");
         }
     }
     

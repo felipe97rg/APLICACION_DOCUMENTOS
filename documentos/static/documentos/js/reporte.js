@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function generarColores(dataArray) {
                 const maxValor = Math.max(...dataArray);
                 return dataArray.map(value =>
-                    value === maxValor ? 'rgb(0, 123, 255)' : 'rgba(200, 200, 200, 0.7)'
+                    value === maxValor ? 'rgb(0, 123, 255)' : 'rgb(189, 188, 188)'
                 );
             }
 
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function generarColores(dataArray) {
                 const maxValor = Math.max(...dataArray);
                 return dataArray.map(value =>
-                    parseFloat(value) === maxValor ? 'rgb(0, 123, 255)' : 'rgba(200, 200, 200, 0.7)'
+                    parseFloat(value) === maxValor ? 'rgb(0, 123, 255)' : 'rgb(189, 188, 188)'
                 );
             }
 
@@ -231,4 +231,29 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => console.error("Error al obtener los datos:", error));
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll("div[id]");
+    const navLinks = document.querySelectorAll("#sidebar ul li a");
+
+    function changeActiveSection() {
+        let currentSection = "";
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                currentSection = section.getAttribute("id");
+            }
+        });
+
+        navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").includes(currentSection)) {
+                link.classList.add("active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", changeActiveSection);
 });
