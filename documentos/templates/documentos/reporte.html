@@ -3,76 +3,88 @@
 {% block title %}Reporte - Gestión Documental{% endblock %}
 
 {% block content %}
-<div id="usuario-container" class="container mb-5 mt-5">
-    <div class="row">
-        <!-- Tarjeta: Información del Usuario -->
-        <div class="col-md-3">
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-front text-center">
-                        <h6>Usuario</h6>
-                        <h4>{{ usuario_nombre }}</h4>
-                        <h6 class="text-muted">{{ usuario_correo }}</h6>
-                    </div>
-                    <div class="card-back text-center">
-                        <p id="desc-usuario">Información personal y correo asociado a la cuenta.</p>
+
+
+<div id="sidebar">
+    <ul>
+        <li><a href="#titulo">Usuario</a></li>
+        <li><a href="#usuario-container">Totales</a></li>
+        <li><a href="#tarjetas-container">Gráficas</a></li>
+        <li><a href="#grafica5">Avance por Subproyecto</a></li>
+    </ul>
+</div>
+
+<div id="main-content">
+    
+    <div id="titulo"><h1>Reporte de visualizacion y control de Proyectos</h1></div>
+
+    <div id="usuario-container" class="container mb-5 mt-5">
+        <div class="row">
+            <!-- Tarjeta: Información del Usuario -->
+            <div class="col-md-3">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front text-center">
+                            <h6>Usuario</h6>
+                            <h4 class="text-muted">{{ usuario_nombre }}</h4>
+                            <h6 class="text-muted">{{ usuario_correo }}</h6>
+                        </div>
+                        <div class="card-back text-center">
+                            <p id="desc-usuario">Información personal y correo asociado a la cuenta.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Tarjeta: Documentos Asociados -->
-        <div class="col-md-3">
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-front text-center">
-                        <h6>Documentos Asociados:</h6>
-                        <h2>{{ documentos_asociados }}</h2>
-                    </div>
-                    <div class="card-back text-center">
-                        <p id="desc-documentos">Número total de documentos con los cuales has interactuado.</p>
+            <!-- Tarjeta: Documentos Asociados -->
+            <div class="col-md-3">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front text-center">
+                            <h6>Documentos Asociados:</h6>
+                            <h2>{{ documentos_asociados }}</h2>
+                        </div>
+                        <div class="card-back text-center">
+                            <p id="desc-documentos">Cantidad de documentos con los cuales has interactuado.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Tarjeta: Eventos Enviados -->
-        <div class="col-md-3">
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-front text-center">
-                        <h6>Eventos Enviados</h6>
-                        <h2>{{ eventos_enviados }}</h2>
-                    </div>
-                    <div class="card-back text-center">
-                        <p id="desc-eventos-enviados">Cantidad de eventos que has registrado.</p>
+            <!-- Tarjeta: Eventos Enviados -->
+            <div class="col-md-3">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front text-center">
+                            <h6>Eventos Enviados</h6>
+                            <h2>{{ eventos_enviados }}</h2>
+                        </div>
+                        <div class="card-back text-center">
+                            <p id="desc-eventos-enviados">Cantidad de eventos que has registrado.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Tarjeta: Eventos Recibidos -->
-        <div class="col-md-3">
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-front text-center">
-                        <h6>Eventos Recibidos</h6>
-                        <h2>{{ eventos_recibidos }}</h2>
-                    </div>
-                    <div class="card-back text-center">
-                        <p id="desc-eventos-recibidos">Eventos en lo cuales has sido notificado.</p>
+            <!-- Tarjeta: Eventos Recibidos -->
+            <div class="col-md-3">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front text-center">
+                            <h6>Eventos Recibidos</h6>
+                            <h2>{{ eventos_recibidos }}</h2>
+                        </div>
+                        <div class="card-back text-center">
+                            <p id="desc-eventos-recibidos">Cantidad de eventos en lo cuales has sido notificado.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
 
 
     <div id = "tarjetas-container"class="container mb-5 mt-5">
-
         <div class="row">
             <!-- Tarjeta: Total de Proyectos -->
             <div class="col-md-3">
@@ -109,56 +121,55 @@
     </div>
 
     <div id="graficas-container" class="container mb-5 mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card p-4">
-                    <h5 class="text-center">Subproyectos por Proyecto</h5>
-                    <canvas id="grafica1"></canvas>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="text-center">Subproyectos por Proyecto</h5>
+                        <canvas id="grafica1"></canvas>
+                    </div>
                 </div>
-            </div>
-    
-            <div class="col-md-6">
-                <div class="card p-4">
-                    <h5 class="text-center">Documentos por Subproyecto</h5>
-                    <canvas id="grafica2"></canvas>
+        
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="text-center">Documentos por Subproyecto</h5>
+                        <canvas id="grafica2"></canvas>
+                    </div>
                 </div>
-            </div>
-        </div> <!-- Cierre de la primera fila -->
-    
-        <!-- Nueva fila para la gráfica de Documentos por Etapa -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card p-4">
-                    <h5 class="text-center">Distribución de Documentos por Etapa</h5>
-                    <canvas id="grafica3"></canvas>
+            </div> <!-- Cierre de la primera fila -->
+        
+            <!-- Nueva fila para la gráfica de Documentos por Etapa -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h5 class="text-center">Distribución de Documentos por Etapa</h5>
+                        <canvas id="grafica3"></canvas>
+                    </div>
                 </div>
-            </div>
 
-        </div>  
-        
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card p-4">
-                    <h5 class="text-center">Eventos Registrados por Día</h5>
-                    <canvas id="grafica4"></canvas>
+            </div>  
+            
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h5 class="text-center">Eventos Registrados por Día</h5>
+                        <canvas id="grafica4"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card p-4">
-                    <h5 class="text-center">Porcentaje de Avance por Subproyecto</h5>
-                    <canvas id="grafica5"></canvas>
+            
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h5 class="text-center">Porcentaje de Avance por Subproyecto</h5>
+                        <canvas id="grafica5"></canvas>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        
+            </div> 
+
+
+            
+            
     </div>
-    
-
-
 </div>
 
     {%load static%}

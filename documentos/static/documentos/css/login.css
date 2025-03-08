@@ -1,12 +1,12 @@
 /* Estilos generales */
 body {
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa; /* Fondo claro */
 }
 
 /* Contenedor principal */
@@ -31,7 +31,6 @@ body {
     border-radius: 5px; /* Bordes redondeados */
     object-fit: contain;
     padding: 10PX;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Sombra */
 
     
     /* Efecto de aparición */

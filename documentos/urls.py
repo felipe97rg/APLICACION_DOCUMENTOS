@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
 from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
-from .views import upload_proyecto, upload_documento, get_subproyectos2
+from .views import upload_proyecto, modificar_estado_documento, upload_documento, get_subproyectos2
 from .views import exportar_csv
 
 urlpatterns = [
@@ -19,6 +19,8 @@ urlpatterns = [
     path("api/documento/<int:documento_id>/eventos/", get_eventos_documento, name="get_eventos_documento"),
     
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
+    path("modificar-estado/", modificar_estado_documento, name="modificar_estado_documento"),
+
     path('upload_documento/', upload_documento, name='upload_documento'),
 
     path('get_subproyectos2/', get_subproyectos2, name='get_subproyectos2'),
