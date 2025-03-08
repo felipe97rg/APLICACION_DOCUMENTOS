@@ -383,6 +383,86 @@ def upload_proyecto(request):
     # Asegurar que siempre se envían los proyectos al renderizar la página
     return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
 
+@login_required
+def upload_documento(request):
+    """
+    Vista para crear un documento desde un formulario y asociarlo a un subproyecto.
+    Muestra mensajes de éxito o error según el resultado.
+    """
+    proyectos = Proyecto.objects.all()  # Obtener todos los proyectos disponibles
+
+    if request.method == 'POST' and 'upload_document' in request.POST:
+        subproyecto_id = request.POST.get('subproyecto')
+        documento_codigo = request.POST.get('documento_codigo', '').strip()
+        codigo_cliente = request.POST.get('codigo_cliente', '').strip()
+        documento_nombre = request.POST.get('documento_nombre', '').strip()
+
+        # Validar que los campos obligatorios no estén vacíos
+        if not subproyecto_id or not documento_codigo or not documento_nombre:
+            messages.error(request, "❌ Debe seleccionar un subproyecto y completar los campos.")
+            return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
+
+        try:
+            subproyecto = get_object_or_404(Subproyecto, id=subproyecto_id)
+
+            # Validar si el documento ya existe
+            if Documento.objects.filter(codigo=documento_codigo).exists():
+                messages.error(request, "⚠️ El código del documento ya existe. Debe ser único.")
+                return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
+
+            # Crear el documento
+            Documento.objects.create(
+                codigo=documento_codigo,
+                nombre=documento_nombre,
+                subproyecto=subproyecto,
+                codigo_cliente=codigo_cliente
+            )
+
+            messages.success(request, f"✅ Documento '{documento_nombre}' creado exitosamente.")
+            return redirect('upload_proyecto')
+
+        except Subproyecto.DoesNotExist:
+            messages.error(request, "❌ El subproyecto seleccionado no existe.")
+            return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
+
+    return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
+
+
+
+
+@login_required
+def modificar_estado_documento(request):
+    """
+    Vista para modificar el estado de un documento.
+    """
+    proyectos = Proyecto.objects.all()
+
+    if request.method == "POST":
+        documento_id = request.POST.get("documento")
+        accion = request.POST.get("accion")
+
+        documento = get_object_or_404(Documento, id=documento_id)
+
+        # Modificar el estado del documento según la acción seleccionada
+        if accion == "actualizar":
+            documento.estado_actual = "ACTUALIZADO"
+        elif accion == "suspender":
+            documento.estado_actual = "SUSPENDIDO"
+        elif accion == "eliminar":
+            documento.estado_actual = "ELIMINADO"
+        elif accion == "reactivar":
+            documento.estado_actual = "VIGENTE"
+        else:
+            messages.error(request, "❌ Acción no válida.")
+            return redirect("upload_proyecto")
+
+        documento.save()
+        messages.success(request, f"✅ El estado del documento '{documento.nombre}' ha sido actualizado correctamente.")
+        return redirect("upload_proyecto")
+
+    return render(request, "documentos/upload_proyecto.html", {"proyectos": proyectos})
+
+
 
 
 @login_required
