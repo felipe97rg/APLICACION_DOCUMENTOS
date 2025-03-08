@@ -321,9 +321,13 @@ def get_eventos_documento(request, documento_id):
     return JsonResponse(data, safe=False)
 
 
-
 @login_required
 def upload_proyecto(request):
+    """
+    Vista para subir un proyecto desde un archivo Excel.
+    """
+    proyectos = Proyecto.objects.all()  # Obtener todos los proyectos disponibles
+
     if request.method == 'POST' and request.FILES.get('archivo_excel'):
         archivo = request.FILES['archivo_excel']
         fs = FileSystemStorage()
@@ -331,7 +335,7 @@ def upload_proyecto(request):
         file_path = fs.path(filename)
 
         try:
-            # Leer el archivo Excel
+            # Leer el archivo Excel sin encabezados
             df = pd.read_excel(file_path, header=None)
 
             # Extraer Proyecto y Subproyecto
@@ -340,7 +344,7 @@ def upload_proyecto(request):
 
             if not proyecto_nombre or not subproyecto_nombre:
                 messages.error(request, 'El archivo no contiene información válida de proyecto y subproyecto.')
-                return redirect('upload_proyecto')
+                return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
 
             # Verificar y crear Proyecto
             proyecto, _ = Proyecto.objects.get_or_create(nombre=proyecto_nombre)
@@ -348,17 +352,17 @@ def upload_proyecto(request):
             # Verificar y crear Subproyecto
             subproyecto, _ = Subproyecto.objects.get_or_create(nombre=subproyecto_nombre, proyecto=proyecto)
 
-            # Verificar la estructura del archivo
+            # Verificar la estructura del archivo (que al menos tenga las 3 columnas esperadas)
             if len(df.columns) < 3:
                 messages.error(request, 'El archivo no tiene el formato esperado. Debe incluir las columnas COD CENYT, COD CLIENTE y DOCUMENTO / ACTIVIDAD.')
-                return redirect('upload_proyecto')
+                return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
 
-            # Leer documentos desde la fila 3 en adelante
+            # Leer documentos desde la fila 4 en adelante
             for index, row in df.iloc[3:].iterrows():
-                if pd.notna(row[0]) and pd.notna(row[2]):  # Verifica que las columnas COD CENYT y DOCUMENTO no estén vacías
-                    documento_codigo = str(row[0]).strip()
-                    codigo_cliente = str(row[1]).strip() if pd.notna(row[1]) else ""  # Manejar valores NaN
-                    documento_nombre = str(row[2]).strip()
+                if pd.notna(row[0]) and pd.notna(row[2]):  # Verifica que COD CENYT y DOCUMENTO no estén vacíos
+                    documento_codigo = str(row[0]).strip()  # COD CENYT
+                    codigo_cliente = str(row[1]).strip() if pd.notna(row[1]) else ""  # COD CLIENTE (Opcional)
+                    documento_nombre = str(row[2]).strip()  # DOCUMENTO / ACTIVIDAD
 
                     # Verificar si el documento ya existe antes de crearlo
                     if not Documento.objects.filter(codigo=documento_codigo).exists():
@@ -369,14 +373,16 @@ def upload_proyecto(request):
                             codigo_cliente=codigo_cliente  # Agregar el código de cliente
                         )
 
-            messages.success(request, 'Proyecto procesado exitosamente, dirígete a la página de Reporte o Documentos para ver los cambios.')
-            return redirect('upload_proyecto')  # Redirige después del éxito
+            messages.success(request, 'Proyecto procesado exitosamente, revisa la base de datos.')
+            return redirect('upload_proyecto')
 
         except Exception as e:
             messages.error(request, f'Error al procesar el archivo: {str(e)}')
-            return redirect('upload_proyecto')
+            return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
 
-    return render(request, 'documentos/upload_proyecto.html')
+    # Asegurar que siempre se envían los proyectos al renderizar la página
+    return render(request, 'documentos/upload_proyecto.html', {"proyectos": proyectos})
+
 
 
 @login_required
