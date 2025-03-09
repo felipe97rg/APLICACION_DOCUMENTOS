@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import ejecutar_migraciones, crear_superusuario, ejecutar_collectstatic
 
-from .views import login_view, logout_view, inicio_view,   upload_proyecto
+from .views import login_view, logout_view, inicio_view
 
 from .views import reporte_view, obtener_datos_graficas
 
@@ -10,7 +10,7 @@ from .views import  get_subproyectos, get_documentos
 from .views import  dashboard_view, get_documento_detalle, get_eventos_documento, registrar_evento
 
 
-from .views import upload_proyecto, exportar_csv
+from .views import upload_proyecto, upload_documento, modificar_estado_documento,exportar_csv
 
 urlpatterns = [
     path('collectstatic/', ejecutar_collectstatic, name='ejecutar_collectstatic'),
@@ -31,6 +31,10 @@ urlpatterns = [
     path("api/documento/<int:documento_id>/eventos/", get_eventos_documento, name="get_eventos_documento"),
     
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
+    
+    path("modificar-estado/", modificar_estado_documento, name="modificar_estado_documento"),
+
+    path('upload_documento/', upload_documento, name='upload_documento'),
 
     
     path("documento/<int:documento_id>/evento/", registrar_evento, name="registrar_evento"),
