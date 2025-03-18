@@ -514,7 +514,7 @@ def validar_evento_permitido(documento, tipo_evento):
             
             "Solicitud de Revisión de Medición o Actividad",
             "Creación de Informe de Medición o Actividad",
-                        "Solicitud de Creación de Código",
+
         }
 
         if tipo_evento in EVENTOS_CAMINO_MEDICION:
