@@ -511,10 +511,10 @@ def validar_evento_permitido(documento, tipo_evento):
     
     if documento.estado_actual != "Actividad":
         EVENTOS_CAMINO_MEDICION = {
-            ,
+            
             "Solicitud de Revisión de Medición o Actividad",
             "Creación de Informe de Medición o Actividad",
-
+                        "Solicitud de Creación de Código",
         }
 
         if tipo_evento in EVENTOS_CAMINO_MEDICION:
