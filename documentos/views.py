@@ -6,13 +6,13 @@ from documentos.decorators import restringir_eventos
 from django.contrib import messages
 from .forms import LoginForm, EventoForm
 from .models import Proyecto, Subproyecto, Documento, Evento
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, FileResponse
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import FileSystemStorage, default_storage
 from django.core.management import call_command
 from django.utils.timezone import localtime
 import pytz
@@ -23,6 +23,137 @@ import pandas as pd
 import json
 import logging
 import csv
+import os
+import shutil
+
+
+def backup_database():
+    """
+    Exports all data from the database into CSV files, stored in the media folder.
+    """
+    models = {
+        'proyecto': Proyecto,
+        'subproyecto': Subproyecto,
+        'documento': Documento,
+        'evento': Evento,
+    }
+    
+    backup_folder = os.path.join(settings.MEDIA_ROOT, 'backup')
+    os.makedirs(backup_folder, exist_ok=True)
+    
+    for model_name, model in models.items():
+        file_path = os.path.join(backup_folder, f'{model_name}.csv')
+        with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            fields = [field.name for field in model._meta.fields]
+            writer.writerow(fields)
+            for obj in model.objects.all():
+                writer.writerow([getattr(obj, field) for field in fields])
+    
+    return f"Backup completed in {backup_folder}"
+
+def restore_database():
+    """
+    Imports data from CSV files and populates the new database while avoiding duplicates.
+    """
+    models = {
+        'proyecto': Proyecto,
+        'subproyecto': Subproyecto,
+        'documento': Documento,
+        'evento': Evento,
+    }
+    
+    backup_folder = os.path.join(settings.MEDIA_ROOT, 'backup')
+    if not os.path.exists(backup_folder):
+        return "Backup folder not found!"
+    
+    # Restore projects first (no dependencies)
+    proyecto_file = os.path.join(backup_folder, 'proyecto.csv')
+    if os.path.exists(proyecto_file):
+        with open(proyecto_file, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            fields = next(reader)  # Read headers
+            for row in reader:
+                data = dict(zip(fields, row))
+                obj, created = Proyecto.objects.update_or_create(nombre=data['nombre'], defaults=data)
+    
+    # Restore subprojects (with foreign key to Proyecto)
+    subproyecto_file = os.path.join(backup_folder, 'subproyecto.csv')
+    if os.path.exists(subproyecto_file):
+        with open(subproyecto_file, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            fields = next(reader)  # Read headers
+            for row in reader:
+                data = dict(zip(fields, row))
+                proyecto_instance = Proyecto.objects.get(nombre=data['proyecto'])
+                data['proyecto'] = proyecto_instance  # Replace string with the instance
+                obj, created = Subproyecto.objects.update_or_create(nombre=data['nombre'], defaults=data)
+    
+    # Restore documents (with foreign key to Subproyecto)
+    documento_file = os.path.join(backup_folder, 'documento.csv')
+    if os.path.exists(documento_file):
+        with open(documento_file, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            fields = next(reader)  # Read headers
+            for row in reader:
+                data = dict(zip(fields, row))
+                subproyecto_instance = Subproyecto.objects.get(nombre=data['subproyecto'])
+                data['subproyecto'] = subproyecto_instance  # Replace string with the instance
+                obj, created = Documento.objects.update_or_create(codigo=data['codigo'], defaults=data)
+    
+    # Restore events (with foreign key to Documento and User)
+    evento_file = os.path.join(backup_folder, 'evento.csv')
+    if os.path.exists(evento_file):
+        with open(evento_file, 'r', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            fields = next(reader)  # Read headers
+            for row in reader:
+                data = dict(zip(fields, row))
+                try:
+                    # Extract only the codigo from "codigo - nombre"
+                    codigo_documento = data['documento'].split(" - ")[0]
+                    documento_instance = Documento.objects.get(codigo=codigo_documento)
+                    data['documento'] = documento_instance  # Replace string with the instance
+                    
+                    # Find user instance by email
+                    usuario_instance = User.objects.filter(email=data['usuario']).first()
+                    if not usuario_instance:
+                        print(f"Warning: Skipping event '{data['tipo_evento']}' because User '{data['usuario']}' does not exist.")
+                        continue
+                    data['usuario'] = usuario_instance
+                    
+                    # Handle usuario_interesado fields
+                    for field in ['usuario_interesado_1', 'usuario_interesado_2', 'usuario_interesado_3']:
+                        if data[field]:
+                            user_instance = User.objects.filter(email=data[field]).first()
+                            data[field] = user_instance if user_instance else None
+                        else:
+                            data[field] = None
+                    
+                    obj, created = Evento.objects.update_or_create(tipo_evento=data['tipo_evento'], defaults=data)
+                except Documento.DoesNotExist:
+                    print(f"Warning: Skipping event '{data['tipo_evento']}' because Documento '{data['documento']}' does not exist.")
+    
+    return "Database restored successfully!"
+
+
+@login_required
+def download_backup(request):
+    """
+    View to trigger database backup and provide a ZIP file for download.
+    """
+    backup_database()
+    zip_path = os.path.join(settings.MEDIA_ROOT, 'backup.zip')
+    shutil.make_archive(zip_path.replace('.zip', ''), 'zip', os.path.join(settings.MEDIA_ROOT, 'backup'))
+    return FileResponse(open(zip_path, 'rb'), as_attachment=True, filename='backup.zip')
+
+@login_required
+def restore_backup_view(request):
+    """
+    View to restore database from the backup.
+    """
+    message = restore_database()
+    return HttpResponse(message)
 
 def ejecutar_collectstatic(request):
     try:

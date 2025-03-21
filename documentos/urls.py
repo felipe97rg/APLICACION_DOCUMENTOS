@@ -10,7 +10,8 @@ from .views import  get_subproyectos, get_documentos
 from .views import  dashboard_view, get_documento_detalle, get_eventos_documento, registrar_evento
 
 
-from .views import upload_proyecto, upload_documento, modificar_estado_documento,exportar_csv
+from .views import upload_proyecto, upload_documento, modificar_estado_documento
+from .views import exportar_csv, download_backup, restore_backup_view
 
 urlpatterns = [
     path('collectstatic/', ejecutar_collectstatic, name='ejecutar_collectstatic'),
@@ -42,6 +43,8 @@ urlpatterns = [
     path('', inicio_view, name='inicio'),
 
     path('exportar/<str:modelo>/', exportar_csv, name='exportar_csv'),
+    path('backup/download/', download_backup, name='download_backup'),
+    path('backup/restore/', restore_backup_view, name='restore_backup'),
 
 ]
 
