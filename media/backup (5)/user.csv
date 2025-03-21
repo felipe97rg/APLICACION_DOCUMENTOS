@@ -1,0 +1,12 @@
+username,email,first_name,last_name,password,is_superuser,is_staff,is_active
+atorres@cenyt.com.co,atorres@cenyt.com.co,Alejandro,Torres,pbkdf2_sha256$870000$QVpH7FbsLYwcwO0o3praW9$fkoeGwgbiQaMm/hjzONKAQcbQWxIszVknpc3IKM2vaY=,False,True,True
+dsdaza@cenyt.com.co,dsdaza@cenyt.com.co,David Santiago,Daza,pbkdf2_sha256$870000$giKEJDOQ1QNBDgA2XXTTcI$al5eD9QiXmOg07KY7t7rpeiaLEtWZrhRv5wWp0F6Pik=,False,True,True
+sebastian.perez@cenyt.com.co,sebastian.perez@cenyt.com.co,Sebastian,Perez,pbkdf2_sha256$870000$fcL1U4lxyAhmJiGNeRWJZc$xsq2ur1Cmx1URI1NEGDbt/l/Tdhmi6ZTGt/x3+GB50g=,False,True,True
+asuarez@cenyt.com.co,asuarez@cenyt.com.co,aicardo,suarez,pbkdf2_sha256$870000$QlXSfhP85JQYfWz0OxX5xn$m+OTj41OnlFul8MVwh3Spwa7CByIkmcUX6Uh4LTifT4=,False,True,True
+wilson.hernandez@cenyt.com.co,wilson.hernandez@cenyt.com.co,Wilson,Hernandez,pbkdf2_sha256$870000$Hr9GdEr7HOyM0xqWI4Ib6p$PY2/ZEqMAldCZ8ZSZwEZy5zzcafY4w+bF95LYm36REM=,False,True,True
+elkin.pena@cenyt.com.co,elkin.pena@cenyt.com.co,elkin,pena,pbkdf2_sha256$870000$RfF4EHQ6uaZeY4aqey0hxo$tnlI0GAgOLkTNpJD+YZGqaThnBGKGZzB7IXCRjpjF/0=,False,True,True
+senino@cenyt.com.co,senino@cenyt.com.co,Samuel Eliecer,Niño Quintero,pbkdf2_sha256$870000$nIFSh6iDfN6tlxR3tmGcAU$JC7ZEV0AxIYMcdSM7u4rAH3Pzbq0NpEqXlSvx0jLKoE=,False,True,True
+juanfelipe.rodriguez@cenyt.com.co,juanfelipe.rodriguez@cenyt.com.co,,,pbkdf2_sha256$870000$NfUb2cW7iPh6kt6yFaUSZS$gquHmxUPfcg2RkoCpPdyJrWt/eHPMVxIl0T5GJaFsBA=,True,True,True
+valentina.diaz@cenyt.com.co,valentina.diaz@cenyt.com.co,Valentina,diaz,pbkdf2_sha256$870000$tCuBJ86yLvPCWwStZmEq2A$q+3p+eHlJhs5Cu0IyQcoQ9grImYJhvFCERyamU1hX1Y=,False,True,True
+javier.munoz@cenyt.com.co,javier.munoz@cenyt.com.co,Javier,Muñoz,pbkdf2_sha256$870000$znmGew0ARORHZxaAubbFaZ$at6WfKrUyutk8/x9lEK2rmGuZVjOTpwdtBhR+IA5434=,False,False,True
+oruiz@cenyt.com.co,oruiz@cenyt.com.co,Omar,Ruiz,pbkdf2_sha256$870000$pqLPViqhenwxU1ymvn2kwf$VtwT/IFlb1LRUs29KbXm4GhwtaZ6DfBkrqb1OCX1j+c=,False,True,True
