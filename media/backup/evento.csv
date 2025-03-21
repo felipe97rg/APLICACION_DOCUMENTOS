@@ -1,0 +1,2 @@
+id,documento,usuario,usuario_interesado_1,usuario_interesado_2,usuario_interesado_3,correos_adicionales,fecha_creacion_evento,estado_actual,etapa_actual,version_actual,numero_version,estado_version,ruta_actual,tipo_evento,descripcion,comentarios
+22,123457 - plano nuevo,juanfelipe.rodriguez@cenyt.com.co,juanfelipe.rodriguez@cenyt.com.co,,,,2025-03-20 15:13:05.132884+00:00,NUEVO,NUEVO,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,Creación de Versión Preliminar,Se solicita la creación de la versión preliminar del documento.,hola

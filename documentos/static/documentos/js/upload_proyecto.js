@@ -132,3 +132,98 @@ function scrollToSection(sectionId) {
     // Hacer scroll a la sección
     section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const proyectoSelect = document.getElementById("proyecto_gestion");
+    const subproyectoSelect = document.getElementById("subproyecto_gestion");
+    const documentoSelect = document.getElementById("documento_gestion");
+    const codigoContainer = document.getElementById("codigo-container");
+    const codigoInput = document.getElementById("codigo");
+    const codigoClienteInput = document.getElementById("codigo_cliente");
+    const mensaje = document.getElementById("mensaje");
+
+    // Obtener subproyectos cuando se selecciona un proyecto
+    proyectoSelect.addEventListener("change", function() {
+        subproyectoSelect.innerHTML = "<option value=''>-- Seleccionar --</option>";
+        documentoSelect.innerHTML = "<option value=''>-- Seleccionar --</option>";
+        subproyectoSelect.disabled = true;
+        documentoSelect.disabled = true;
+        codigoContainer.style.display = "none";
+
+        if (this.value) {
+            fetch(`/api/subproyectos/${this.value}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(subproyecto => {
+                        const option = document.createElement("option");
+                        option.value = subproyecto.id;
+                        option.textContent = subproyecto.nombre;
+                        subproyectoSelect.appendChild(option);
+                    });
+                    subproyectoSelect.disabled = false;
+                });
+        }
+    });
+
+    // Obtener documentos cuando se selecciona un subproyecto
+    subproyectoSelect.addEventListener("change", function() {
+        documentoSelect.innerHTML = "<option value=''>-- Seleccionar --</option>";
+        documentoSelect.disabled = true;
+        codigoContainer.style.display = "none";
+
+        if (this.value) {
+            fetch(`/api/documentos/${this.value}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(documento => {
+                        const option = document.createElement("option");
+                        option.value = documento.id;
+                        option.textContent = documento.nombre;
+                        documentoSelect.appendChild(option);
+                    });
+                    documentoSelect.disabled = false;
+                });
+        }
+    });
+
+    // Mostrar inputs cuando se selecciona un documento
+    documentoSelect.addEventListener("change", function() {
+        if (this.value) {
+            fetch(`/api/documentos/${subproyectoSelect.value}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const documento = data.find(doc => doc.id == documentoSelect.value);
+                    if (documento) {
+                        codigoInput.value = documento.codigo || "";
+                        codigoClienteInput.value = documento.codigo_cliente || "";
+                        codigoContainer.style.display = "block";
+                    }
+                });
+        } else {
+            codigoContainer.style.display = "none";
+        }
+    });
+
+    // Enviar formulario con AJAX para actualizar el documento
+    document.getElementById("gestionar-documento-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        formData.append("documento_id", documentoSelect.value);
+
+        fetch("{% url 'crear_codigo_documento' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mensaje.textContent = data.message;
+                mensaje.style.display = "block";
+                setTimeout(() => mensaje.style.display = "none", 3000);
+            }
+        });
+    });
+});

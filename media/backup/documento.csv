@@ -1,0 +1,11 @@
+id,codigo,codigo_cliente,nombre,subproyecto,fecha_creacion,estado_actual,etapa_actual,version_actual,numero_version,estado_version,ruta_actual,revisado,aprobado,Solicitud_Superación_Numero_de_Versión,Solicitud_Superación_de_Versión,Solicitud_de_Envio
+7,29787,rty9865,documento de prueba 21231248,CEN222,2025-03-20 15:11:16.719982+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+5,456546,abc1564651,documento de prueba1234,CEN222,2025-03-20 15:11:16.721980+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+13,987654,54698,plano documento de prueba 21231247,789,2025-03-20 15:11:16.725979+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+14,felipe97,felipe97rg,pruebapruebaprueba,789,2025-03-20 15:11:16.726980+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+4,11213213213,gp124,documento de prueba 2123124,Cen1997,2025-03-20 15:11:16.727980+00:00,SUSPENDIDO,PRELIMINAR,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,False,False,False,False,False
+11,sdffggsdfh3,gpk123456,documento de prueba nuevo,cen 105,2025-03-20 15:11:16.729982+00:00,VIGENTE,NUEVO,A,1,,,False,False,False,False,False
+6,687542,fgh1285964,documento de prueba 21231247,CEN222,2025-03-20 15:11:16.732982+00:00,ELIMINADO,NUEVO,A,1,,,False,False,False,False,False
+3,1120580111,gpk123,documento de prueba123,Cen1997,2025-03-20 15:11:16.734981+00:00,SUSPENDIDO,INTERDISCIPLINARIA,B,1,,asd,False,False,False,False,False
+16,felipe9712345,asddsa,saddfad,CEN222,2025-03-20 15:11:16.736980+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+12,123457,gpk123457,plano nuevo,cen 105,2025-03-20 15:11:16.723980+00:00,VIGENTE,PRELIMINAR,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,False,False,False,False,False

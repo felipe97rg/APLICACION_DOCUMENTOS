@@ -1,8 +1,10 @@
-from django.urls import path
+
+from django.urls import path, include
+
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
 from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
-from .views import upload_proyecto, modificar_estado_documento, upload_documento, get_subproyectos2
-from .views import exportar_csv
+from .views import upload_proyecto, modificar_estado_documento, upload_documento, get_subproyectos2, crear_codigo_documento
+from .views import exportar_csv, download_backup, restore_backup_view
 
 urlpatterns = [
     path("login/", login_view, name="login"),
@@ -22,6 +24,7 @@ urlpatterns = [
     path("modificar-estado/", modificar_estado_documento, name="modificar_estado_documento"),
 
     path('upload_documento/', upload_documento, name='upload_documento'),
+    path("crear_codigo_documento/", crear_codigo_documento, name="crear_codigo_documento"),
 
     path('get_subproyectos2/', get_subproyectos2, name='get_subproyectos2'),
 
@@ -31,6 +34,11 @@ urlpatterns = [
     path('', inicio_view, name='inicio'),
 
     path('exportar/<str:modelo>/', exportar_csv, name='exportar_csv'),
+    path('backup/download/', download_backup, name='download_backup'),
+    path('backup/restore/', restore_backup_view, name='restore_backup'),
+
+    path('backup/', include('documentos.views')),  # Ensure the backup routes are included
+
 
 
 ]
