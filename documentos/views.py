@@ -27,6 +27,7 @@ import os
 import shutil
 
 
+
 def backup_database():
     """
     Exports all data from the database into CSV files, stored in the media folder.
@@ -36,6 +37,7 @@ def backup_database():
         'subproyecto': Subproyecto,
         'documento': Documento,
         'evento': Evento,
+        'user': User,
     }
     
     backup_folder = os.path.join(settings.MEDIA_ROOT, 'backup')
@@ -45,12 +47,16 @@ def backup_database():
         file_path = os.path.join(backup_folder, f'{model_name}.csv')
         with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
-            fields = [field.name for field in model._meta.fields]
+            if model_name == 'user':
+                fields = ['username', 'email', 'first_name', 'last_name', 'password', 'is_superuser', 'is_staff', 'is_active']
+            else:
+                fields = [field.name for field in model._meta.fields]
             writer.writerow(fields)
             for obj in model.objects.all():
                 writer.writerow([getattr(obj, field) for field in fields])
     
     return f"Backup completed in {backup_folder}"
+
 
 def restore_database():
     """
