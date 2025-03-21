@@ -4,7 +4,7 @@ id,codigo,codigo_cliente,nombre,subproyecto,fecha_creacion,estado_actual,etapa_a
 355,CEN-205-CIV-PL-001,Sin Código,Planos Estructurales Ampliación Edificio Existente,CEN205,2025-02-28 15:44:43.743844+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 356,CEN-205-CIV-MC-002,Sin Código,Memoria de Cálculo Estructural Edificio Proyectado,CEN205,2025-02-28 15:44:43.746293+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 9,GPK-COL-LL34-xxN-ELE-PLT-300,Sin Código,Plano de redes,SP27,2025-02-19 15:40:24.153223+00:00,VIGENTE,PRELIMINAR,A,1,,cas,False,False,False,False,False
-382,SinCodigo-CEN178-SP34-Revision de Informacion disponible,,Revision de Informacion disponible,SP34,2025-03-17 16:52:37.109834+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+382,SinCodigo-CEN178-SP34-Revision de Informacion disponible,Sin Código,Revision de Informacion disponible,SP34,2025-03-17 16:52:37.109834+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
 357,CEN-205-CIV-PL-002,Sin Código,Planos Estructurales Edificio Proyectado,CEN205,2025-02-28 15:44:43.748852+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 358,CEN-205-CIV-MC-003,Sin Código,Memoria de Cálculo Estructural Bloque Unidades Sanitarias,CEN205,2025-02-28 15:44:43.752172+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 359,CEN-205-CIV-PL-003,Sin Código,Planos Estructurales Bloque Unidades Sanitarias,CEN205,2025-02-28 15:44:43.754805+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
@@ -17,10 +17,10 @@ id,codigo,codigo_cliente,nombre,subproyecto,fecha_creacion,estado_actual,etapa_a
 365,CEN-205-ELE-PL-003,Sin Código,Planos de Instalación Eléctrica Interior - Planimetrías,CEN205,2025-02-28 15:44:43.816576+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 366,CEN-205-ELE-PL-004,Sin Código,Planos de Instalación Eléctrica Interior - Detalles Constructivos,CEN205,2025-02-28 15:44:43.822949+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 367,CEN-205-GEN-ET-001,Sin Código,Especificaciones Técnicas de Construcción,CEN205,2025-02-28 15:44:43.826852+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
-384,SinCodigo-CEN178-SP34-Unifilares Shelter 1 (SWG-01 y SWG-02),,Unifilares Shelter 1 (SWG-01 y SWG-02),SP34,2025-03-17 16:52:37.125340+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+384,SinCodigo-CEN178-SP34-Unifilares Shelter 1 (SWG-01 y SWG-02),Sin Código,Unifilares Shelter 1 (SWG-01 y SWG-02),SP34,2025-03-17 16:52:37.125340+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
 368,CEN-205-GEN-LI-001,Sin Código,Cantidades de Obra,CEN205,2025-02-28 15:44:43.831814+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 369,CEN-205-GEN-PT-001,Sin Código,Presupuesto,CEN205,2025-02-28 15:44:43.835763+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
-385,SinCodigo-CEN178-SP34-Unifilares Shelter 2 (SWG-04 (HPS 202A/B/C/D),,Unifilares Shelter 2 (SWG-04 (HPS 202A/B/C/D),SP34,2025-03-17 16:52:37.128619+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+385,SinCodigo-CEN178-SP34-Unifilares Shelter 2 (SWG-04 (HPS 202A/B/C/D),Sin Código,Unifilares Shelter 2 (SWG-04 (HPS 202A/B/C/D),SP34,2025-03-17 16:52:37.128619+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
 345,CEN-205-ARQ-PL-001,Sin Código,Plano diseño arquitectónico conceptual,CEN205,2025-02-28 15:44:43.693923+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 346,CEN-205-ARQ-3D-001,Sin Código,Modelo 3D conceptual,CEN205,2025-02-28 15:44:43.718955+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 347,CEN-205-ARQ-PL-002,Sin Código,Plantas Diseño Arquitectónico Detallado Ampliación Edificio Existente,CEN205,2025-02-28 15:44:43.721848+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
@@ -31,22 +31,22 @@ id,codigo,codigo_cliente,nombre,subproyecto,fecha_creacion,estado_actual,etapa_a
 352,CEN-205-ARQ-PL-007,Sin Código,Detalles Diseño Arquitectónico Detallado Edificio Proyectado,CEN205,2025-02-28 15:44:43.735303+00:00,NUEVO ,NUEVO,A,1,,,False,False,False,False,False
 11,GPK-COL-LL34-xxS-CIV-ET-301,Sin Código,Especificacion civil,SP27,2025-02-19 15:40:24.158726+00:00,VIGENTE,PRELIMINAR,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,False,False,False,False,False
 7,GPK-COL-LL34-xxS-ELE-PPT-345,Sin Código,Presentacion proyecto,SP27,2025-02-19 15:40:24.147544+00:00,VIGENTE,PRELIMINAR,A,1,,asdfas,False,False,False,False,False
-386,SinCodigo-CEN178-SP34-Unifilares Shelter 3 - CCM-01,,Unifilares Shelter 3 - CCM-01,SP34,2025-03-17 16:52:37.131752+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-387,SinCodigo-CEN178-SP34-Unifilares Shelter 3 - CCM-02,,Unifilares Shelter 3 - CCM-02,SP34,2025-03-17 16:52:37.134806+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-388,SinCodigo-CEN178-SP34-Unifilares Shelter 4 - CCM-GALQUI,,Unifilares Shelter 4 - CCM-GALQUI,SP34,2025-03-17 16:52:37.138109+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+386,SinCodigo-CEN178-SP34-Unifilares Shelter 3 - CCM-01,Sin Código,Unifilares Shelter 3 - CCM-01,SP34,2025-03-17 16:52:37.131752+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+387,SinCodigo-CEN178-SP34-Unifilares Shelter 3 - CCM-02,Sin Código,Unifilares Shelter 3 - CCM-02,SP34,2025-03-17 16:52:37.134806+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+388,SinCodigo-CEN178-SP34-Unifilares Shelter 4 - CCM-GALQUI,Sin Código,Unifilares Shelter 4 - CCM-GALQUI,SP34,2025-03-17 16:52:37.138109+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
 10,GPK-COL-LL34-xxS-ELE-PLT-365,Sin Código,Plano de equipos,SP27,2025-02-19 15:40:24.155833+00:00,SUSPENDIDO,FINAL,0,,,xxx-xx,False,False,False,False,False
-389,SinCodigo-CEN178-SP34-Unifilares Shelter 4 - CCM-ICCD,,Unifilares Shelter 4 - CCM-ICCD,SP34,2025-03-17 16:52:37.141069+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-390,SinCodigo-CEN178-SP34-Unifilares Shelter ECTRICOL - SWG-05,,Unifilares Shelter ECTRICOL - SWG-05,SP34,2025-03-17 16:52:37.143954+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-391,SinCodigo-CEN178-SP34-Unifilares Shelter Sistema de emergencia,,Unifilares Shelter Sistema de emergencia,SP34,2025-03-17 16:52:37.203159+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-392,SinCodigo-CEN178-SP34-Unifilares Shelter Bota de gas - CCM Bota de gas y VRLU,,Unifilares Shelter Bota de gas - CCM Bota de gas y VRLU,SP34,2025-03-17 16:52:37.207112+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-393,SinCodigo-CEN178-SP34-Unifilares CCM Bombas Booster,,Unifilares CCM Bombas Booster,SP34,2025-03-17 16:52:37.210808+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-394,SinCodigo-CEN178-SP34-Unifilares CCM Bombas Tratamiento de agua,,Unifilares CCM Bombas Tratamiento de agua,SP34,2025-03-17 16:52:37.214077+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-395,SinCodigo-CEN178-SP34-Unifilares Shelter MT - HPS E/F/G/H,,Unifilares Shelter MT - HPS E/F/G/H,SP34,2025-03-17 16:52:37.217615+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-396,SinCodigo-CEN178-SP34-Unifilares Shelter MT - HPS 1/2,,Unifilares Shelter MT - HPS 1/2,SP34,2025-03-17 16:52:37.220723+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-397,SinCodigo-CEN178-SP34-PRESENTACIONES / REUNIONES,,PRESENTACIONES / REUNIONES,SP34,2025-03-17 16:52:37.224733+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-398,SinCodigo-CEN178-SP34-INFORME TECNICO,,INFORME TECNICO,SP34,2025-03-17 16:52:37.228737+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-399,SinCodigo-CEN178-SP34-DIAGRAMA UNIFILAR,,DIAGRAMA UNIFILAR,SP34,2025-03-17 16:52:37.231719+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-400,SinCodigo-CEN178-SP34-HOJA DE DATOS Y ESPECIFICACION,,HOJA DE DATOS Y ESPECIFICACION,SP34,2025-03-17 16:52:37.235007+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-401,SinCodigo-CEN178-SP34-PRESENTACIONES,,PRESENTACIONES,SP34,2025-03-17 16:52:37.238115+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
-402,holamundo123,holamundo123,pruebamedicionactividad,SP27,2025-03-18 15:02:55.243915+00:00,Actividad,NUEVO,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,False,False,False,False,False
-383,SinCodigo-CEN178-SP34-Levantamiento en campo -  20 DIAS - 1 Ingeniero Lider + 1 ing Junior,,Levantamiento en campo -  20 DIAS - 1 Ingeniero Lider + 1 ing Junior,SP34,2025-03-17 16:52:37.122014+00:00,Actividad,NUEVO,A,1,,\\192.168.1.2\cenyt-proyectos\CEN-178_GPK 2023\5.EJECUCIONxOT\SP34-ASBUILT TGS\3.EJECUCION,False,False,False,False,False
+389,SinCodigo-CEN178-SP34-Unifilares Shelter 4 - CCM-ICCD,Sin Código,Unifilares Shelter 4 - CCM-ICCD,SP34,2025-03-17 16:52:37.141069+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+390,SinCodigo-CEN178-SP34-Unifilares Shelter ECTRICOL - SWG-05,Sin Código,Unifilares Shelter ECTRICOL - SWG-05,SP34,2025-03-17 16:52:37.143954+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+391,SinCodigo-CEN178-SP34-Unifilares Shelter Sistema de emergencia,Sin Código,Unifilares Shelter Sistema de emergencia,SP34,2025-03-17 16:52:37.203159+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+392,SinCodigo-CEN178-SP34-Unifilares Shelter Bota de gas - CCM Bota de gas y VRLU,Sin Código,Unifilares Shelter Bota de gas - CCM Bota de gas y VRLU,SP34,2025-03-17 16:52:37.207112+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+393,SinCodigo-CEN178-SP34-Unifilares CCM Bombas Booster,Sin Código,Unifilares CCM Bombas Booster,SP34,2025-03-17 16:52:37.210808+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+394,SinCodigo-CEN178-SP34-Unifilares CCM Bombas Tratamiento de agua,Sin Código,Unifilares CCM Bombas Tratamiento de agua,SP34,2025-03-17 16:52:37.214077+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+395,SinCodigo-CEN178-SP34-Unifilares Shelter MT - HPS E/F/G/H,Sin Código,Unifilares Shelter MT - HPS E/F/G/H,SP34,2025-03-17 16:52:37.217615+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+396,SinCodigo-CEN178-SP34-Unifilares Shelter MT - HPS 1/2,Sin Código,Unifilares Shelter MT - HPS 1/2,SP34,2025-03-17 16:52:37.220723+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+397,SinCodigo-CEN178-SP34-PRESENTACIONES / REUNIONES,Sin Código,PRESENTACIONES / REUNIONES,SP34,2025-03-17 16:52:37.224733+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+398,SinCodigo-CEN178-SP34-INFORME TECNICO,Sin Código,INFORME TECNICO,SP34,2025-03-17 16:52:37.228737+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+399,SinCodigo-CEN178-SP34-DIAGRAMA UNIFILAR,Sin Código,DIAGRAMA UNIFILAR,SP34,2025-03-17 16:52:37.231719+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+400,SinCodigo-CEN178-SP34-HOJA DE DATOS Y ESPECIFICACION,Sin Código,HOJA DE DATOS Y ESPECIFICACION,SP34,2025-03-17 16:52:37.235007+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+401,SinCodigo-CEN178-SP34-PRESENTACIONES,Sin Código,PRESENTACIONES,SP34,2025-03-17 16:52:37.238115+00:00,NUEVO,NUEVO,A,1,,,False,False,False,False,False
+402,holamundo123,Sin Código,pruebamedicionactividad,SP27,2025-03-18 15:02:55.243915+00:00,Actividad,NUEVO,A,1,,\\192.168.1.2\Public\PAUSAS ACTIVAS,False,False,False,False,False
+383,SinCodigo-CEN178-SP34-Levantamiento en campo -  20 DIAS - 1 Ingeniero Lider + 1 ing Junior,Sin Código,Levantamiento en campo -  20 DIAS - 1 Ingeniero Lider + 1 ing Junior,SP34,2025-03-17 16:52:37.122014+00:00,Actividad,NUEVO,A,1,,\\192.168.1.2\cenyt-proyectos\CEN-178_GPK 2023\5.EJECUCIONxOT\SP34-ASBUILT TGS\3.EJECUCION,False,False,False,False,False
