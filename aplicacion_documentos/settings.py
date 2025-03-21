@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'aplicacion_documentos.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('postgresql://db_trazabilidad_documentos_user:vnNcnX7Iny9s4y0Bx0Y6aa3vZC9OJFd0@dpg-cuqug0l6l47c73ciuocg-a/db_trazabilidad_documentos'))
+    'default': dj_database_url.config(default=os.getenv('postgresql://trazabilidad_documentos_67rs_user:FTxE5fqyAi72jT7H9R7F4fM3cSwiZmk2@dpg-cvepn8qn91rc73erkti0-a/trazabilidad_documentos_67rs'))
 }
 
 
