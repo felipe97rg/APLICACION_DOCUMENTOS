@@ -39,7 +39,7 @@ class Subproyecto(models.Model):
 
 class Documento(models.Model):
     id = models.AutoField(primary_key=True)  # ID autoincremental
-    codigo = models.CharField(max_length=100, unique=True)  # Código único del documento
+    codigo = models.CharField(max_length=500, unique=True)  # Código único del documento
     codigo_cliente = models.CharField(max_length=100, default="Sin Código", null=True, blank=True)  # Código del cliente
     nombre = models.CharField(max_length=200)  # Nombre del documento
     subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE)  # Relación con un proyecto
