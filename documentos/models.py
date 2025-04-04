@@ -39,9 +39,9 @@ class Subproyecto(models.Model):
 
 class Documento(models.Model):
     id = models.AutoField(primary_key=True)  # ID autoincremental
-    codigo = models.CharField(max_length=500, unique=True)  # Código único del documento
-    codigo_cliente = models.CharField(max_length=100, default="Sin Código", null=True, blank=True)  # Código del cliente
-    nombre = models.CharField(max_length=200)  # Nombre del documento
+    codigo = models.CharField(max_length=1000, unique=True)  # Código único del documento
+    codigo_cliente = models.CharField(max_length=1000, default="Sin Código", null=True, blank=True)  # Código del cliente
+    nombre = models.CharField(max_length=1000)  # Nombre del documento
     subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE)  # Relación con un proyecto
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha de creación automática
     estado_actual = models.CharField(max_length=50, default="NUEVO")  # Estado actual por defecto
@@ -49,7 +49,7 @@ class Documento(models.Model):
     version_actual = models.CharField(max_length=50, null=True, default= "A", blank=True)  # Versión actual
     numero_version = models.IntegerField(null=True, blank=True, default= 1)  # Número de la versión
     estado_version = models.CharField(max_length=50, null=True, blank=True)  # Estado de la versión
-    ruta_actual = models.CharField(max_length=255, null=True, blank=True)  # Ruta actual del documento
+    ruta_actual = models.CharField(max_length=500, null=True, blank=True)  # Ruta actual del documento
 
     # Nuevas columnas booleanas
     revisado = models.BooleanField(default=False)  # Indica si el documento ha sido revisado
@@ -77,9 +77,9 @@ class Evento(models.Model):
     version_actual = models.CharField(max_length=50, null=True, blank=True)
     numero_version = models.IntegerField(null=True, blank=True)
     estado_version = models.CharField(max_length=50, null=True, blank=True)
-    ruta_actual = models.CharField(max_length=255, null=True, blank=True)
+    ruta_actual = models.CharField(max_length=500, null=True, blank=True)
     
-    tipo_evento = models.CharField(max_length=100)
+    tipo_evento = models.CharField(max_length=200)
     descripcion = models.TextField(null=True, blank=True)  # Mensaje predeterminado para cada evento
     comentarios = models.TextField(null=True, blank=True)  # Comentarios adicionales del usuario
 
