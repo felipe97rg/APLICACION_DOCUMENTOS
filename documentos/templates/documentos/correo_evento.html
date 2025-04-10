@@ -24,7 +24,8 @@
         <h3>Detalles del Evento</h3>
         <p><span class="highlight">Tipo de Evento:</span> {{ evento.tipo_evento }}</p>
         <p><span class="highlight">Descripción:</span> {{ evento.descripcion }}</p>
-        <p><span class="highlight">Comentarios:</span> {{ evento.comentarios }}</p>
+        <p><span class="highlight">Comentarios:</span> {{ evento.comentarios|linebreaksbr }}</p>
+
         
         <div class="divider"></div>
 

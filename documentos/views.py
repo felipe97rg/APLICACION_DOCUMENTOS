@@ -444,7 +444,7 @@ def get_eventos_documento(request, documento_id):
             "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
             "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
             "correos_adicionales": evento.correos_adicionales,
-            "fecha": localtime(evento.fecha_creacion_evento, bogota_tz).strftime("%Y-%m-%d %H:%M"),
+            "fecha": evento.feha_creacion_evento,
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
             "numero_version": evento.numero_version,

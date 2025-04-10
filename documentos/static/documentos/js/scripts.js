@@ -126,8 +126,9 @@ function actualizarHistorialEventos(eventos) {
                         <p><strong>Versión:</strong> ${evento.version_actual}</p>
                         <p><strong>Número de Versión:</strong> ${evento.numero_version || "No disponible"}</p>
                         <p><strong>Descripción:</strong> ${evento.descripcion}</p>
-                        <p><strong>Comentarios:</strong> ${evento.comentarios || "Sin comentarios"}</p>
+                        <p><strong>Comentarios:</strong> ${evento.comentarios ? evento.comentarios.replace(/\n/g, '<br>') : "Sin comentarios"}</p>
                         <p><strong>Ruta del Documento:</strong> ${evento.ruta_actual}</p>
+                        <P><strong>Fecha de Creación:</strong> ${evento.fecha_creacion_evento}</p>
 
                     </div>
                 </div>
