@@ -443,6 +443,7 @@ def get_eventos_documento(request, documento_id):
             "usuario_interesado_1": evento.usuario_interesado_1.username if evento.usuario_interesado_1 else None,
             "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
             "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
+            "correos_adicionales": evento.correos_adicionales,
             "fecha": localtime(evento.fecha_creacion_evento, bogota_tz).strftime("%Y-%m-%d %H:%M"),
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
@@ -1118,9 +1119,13 @@ def registrar_evento(request, documento_id):
                 correos_lista = [correo.strip() for correo in correos_adicionales.split(",") if correo.strip()]
                 destinatarios.extend(correos_lista)
 
+            if documento.codigo_cliente == "Sin Código":
+                codigo = documento.codigo
+            else:
+                codigo = documento.codigo_cliente  # Use codigo_cliente as a fallback
 
             if destinatarios:
-                subject = f"{Proyecto} - {Subproyecto} - {documento.codigo_cliente} - {evento.tipo_evento} - {documento.nombre}"
+                subject = f"{Proyecto} - {Subproyecto} - {codigo} - {evento.tipo_evento} - {documento.nombre}"
                 html_message = render_to_string("documentos/correo_evento.html", {
                     "documento": documento,
                     "evento": evento,
