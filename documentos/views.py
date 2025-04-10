@@ -14,7 +14,7 @@ from django.utils.html import strip_tags
 
 from django.core.files.storage import FileSystemStorage, default_storage
 from django.core.management import call_command
-from django.utils.timezone import localtime
+from django.utils import timezone
 import pytz
 from django.db.models import Count, Q, Sum, Case, When, FloatField
 from django.db.models.functions import TruncDate
@@ -444,7 +444,7 @@ def get_eventos_documento(request, documento_id):
             "usuario_interesado_2": evento.usuario_interesado_2.username if evento.usuario_interesado_2 else None,
             "usuario_interesado_3": evento.usuario_interesado_3.username if evento.usuario_interesado_3 else None,
             "correos_adicionales": evento.correos_adicionales,
-            "fecha": evento.feha_creacion_evento,
+            "fecha": timezone.localtime(evento.fecha_creacion_evento),
             "estado_actual": evento.estado_actual,
             "version_actual": evento.version_actual,
             "numero_version": evento.numero_version,

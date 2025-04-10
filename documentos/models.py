@@ -71,7 +71,7 @@ class Evento(models.Model):
     usuario_interesado_2 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="usuario_interesado_2")
     usuario_interesado_3 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="usuario_interesado_3")
     correos_adicionales = models.TextField(null=True, blank=True)
-    fecha_creacion_evento = timezone.localtime(models.DateTimeField(auto_now_add=True))
+    fecha_creacion_evento = models.DateTimeField(auto_now_add=True)  # <-- Deja esto así
     
     estado_actual = models.CharField(max_length=50, null=True, blank=True)
     etapa_actual = models.CharField(max_length=50, null=True, blank=True)
