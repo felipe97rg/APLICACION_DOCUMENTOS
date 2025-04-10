@@ -97,6 +97,17 @@ function actualizarHistorialEventos(eventos) {
             var destinatario1 = evento.usuario_interesado_1 || "No asignado";
             var destinatario2 = evento.usuario_interesado_2 || "No asignado";
             var destinatario3 = evento.usuario_interesado_3 || "No asignado";
+            const fechaUtc = new Date(evento.fecha_creacion_evento);
+
+            const fechaBogota = fechaUtc.toLocaleString("es-CO", {
+            timeZone: "America/Bogota",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            });
 
             // Manejar correos adicionales
             var correosListaHTML = "";
@@ -128,7 +139,7 @@ function actualizarHistorialEventos(eventos) {
                         <p><strong>Descripción:</strong> ${evento.descripcion}</p>
                         <p><strong>Comentarios:</strong> ${evento.comentarios ? evento.comentarios.replace(/\n/g, '<br>') : "Sin comentarios"}</p>
                         <p><strong>Ruta del Documento:</strong> ${evento.ruta_actual}</p>
-                        <P><strong>Fecha de Creación:</strong> ${evento.fecha_creacion_evento}</p>
+                        <P><strong>Fecha de Creación:</strong> ${fechaBogota}</p>
 
                     </div>
                 </div>
