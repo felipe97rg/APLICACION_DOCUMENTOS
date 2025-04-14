@@ -170,7 +170,7 @@ EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'documentos@cenyt.com.co'  # Tu dirección de correo electrónico de Zoho
-EMAIL_HOST_PASSWORD = "CenytDocumentos" # os.getenv('EMAIL_HOST_PASSWORD')  # crea una variable de entorno segura
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # crea una variable de entorno segura
  #'EnGxQGseJg2x'  # Tu contraseña de Zoho
 DEFAULT_FROM_EMAIL = 'documentos@cenyt.com.co'
 
