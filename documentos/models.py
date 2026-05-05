@@ -85,3 +85,19 @@ class Evento(models.Model):
 
     def __str__(self):
         return f"Evento {self.tipo_evento} - Documento: {self.documento.codigo}"
+    
+
+class HorasHombre(models.Model):
+    # Relaciones con los modelos existentes, ahora todas son opcionales
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True, blank=True)
+    subproyecto = models.ForeignKey(Subproyecto, on_delete=models.CASCADE, null=True, blank=True)
+    documento = models.ForeignKey(Documento, on_delete=models.CASCADE, null=True, blank=True)
+
+    # Campos para la información de las horas
+    tipo_actividad = models.CharField(max_length=100)
+    fecha = models.DateField()
+    cantidad_horas = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"Registro de {self.cantidad_horas} horas por {self.usuario.username}"

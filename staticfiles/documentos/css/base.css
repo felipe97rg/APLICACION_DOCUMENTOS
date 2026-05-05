@@ -1,0 +1,106 @@
+body{
+    background-color: #ebebeb;
+}
+#main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    height: 60px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    border-bottom: #000;
+}
+
+/* Contenedor del navbar */
+#main-navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Estilos del logo */
+#main-navbar .logo {
+    font-size: 24px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+/* Imagen del logo */
+#main-navbar .logo img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* ----- NAVEGACIÓN ----- */
+#main-navbar .navbar {
+    display: flex;
+    gap: 20px;
+}
+
+/* Enlaces de navegación */
+#main-navbar .nav-link {
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 12px;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Efecto hover con subrayado */
+#main-navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background: rgb(40,52,138); /* Color azul para la línea */
+    transition: all 0.3s ease-in-out;
+}
+
+#main-navbar .nav-link:hover {
+    color: rgb(40,52,138);
+}
+
+#main-navbar .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Estilo del enlace activo */
+#main-navbar .nav-link.active {
+    color: rgb(40,52,138);
+    font-weight: bold;
+}
+
+#main-navbar .nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Información del usuario */
+#main-navbar .user-info {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    background: transparent !important;
+    padding: 8px 15px;
+    box-shadow: none !important;
+}
+
+
+
+/* ----- AJUSTES DEL CONTENIDO ----- */
+main {
+    padding-top: 80px; /* Para evitar que el contenido quede cubierto por la navbar */
+}

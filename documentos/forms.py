@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Evento
+from .models import Evento, Documento, User,  HorasHombre, Proyecto, Subproyecto
+from documentos import models
+from decimal import Decimal  # <-- AÑADE ESTA LÍNEA
+
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -112,3 +116,61 @@ class EventoForm(forms.ModelForm):
             "usuario_interesado_3": forms.Select(attrs={"class": "form-control"}),
             "correos_adicionales": forms.TextInput(attrs={"class": "form-control"})
         }
+
+# --- INICIO DE CAMBIOS ---
+
+# 1. Definimos las opciones para el tipo de actividad.
+#    Puedes modificar esta lista según tus necesidades.
+ACTIVIDAD_CHOICES = [
+    ('', 'Seleccione una actividad...'), # Opción por defecto
+    ('Documentación', 'Documentación'),
+    ('Reunión', 'Reunión'),
+    ('Diseño', 'Diseño'),
+    ('Capacitación', 'Capacitación'),
+    ("Visita a Campo", "Visita a Campo"),
+]
+
+# 2. Generamos dinámicamente las opciones para las horas.
+#    Aquí creamos una lista de 0.5 a 10.0 horas. Puedes ajustar el rango(1, 21) si necesitas más.
+HORAS_CHOICES = [
+    ('', 'Seleccione las horas...') # Opción por defecto
+] + [(Decimal(f'{i/2:.1f}'), f'{i/2:.1f} horas') for i in range(1, 21)] # Genera de 0.5 a 10.0
+
+
+# 3. Modificamos tu clase HorasHombreForm
+class HorasHombreForm(forms.ModelForm):
+    # Sobrescribimos los campos del modelo para convertirlos en listas desplegables.
+    # Esto tiene prioridad sobre lo que se define en la clase Meta.
+
+    tipo_actividad = forms.ChoiceField(
+        choices=ACTIVIDAD_CHOICES,
+        label="Tipo de Actividad",
+        widget=forms.Select(attrs={'class': 'form-select'}) # 'form-select' es la clase de Bootstrap 5 para <select>
+    )
+
+    cantidad_horas = forms.TypedChoiceField(
+        choices=HORAS_CHOICES,
+        coerce=Decimal, # Asegura que el valor se guarde como un número (Decimal), no como texto.
+        label="Cantidad de Horas",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
+    # Mantenemos tus campos existentes que ya funcionaban bien.
+    proyecto = forms.ModelChoiceField(queryset=Proyecto.objects.all(), required=False, label="Proyecto", widget=forms.Select(attrs={'class': 'form-select'}))
+    subproyecto = forms.ModelChoiceField(queryset=Subproyecto.objects.all(), required=False, label="Subproyecto", widget=forms.Select(attrs={'class': 'form-select'}))
+    documento = forms.ModelChoiceField(queryset=Documento.objects.all(), required=False, label="Documento", widget=forms.Select(attrs={'class': 'form-select'}))
+
+    class Meta:
+        model = HorasHombre
+        # El orden aquí define el orden en que aparecerán los campos en el formulario.
+        fields = ['proyecto', 'subproyecto', 'documento', 'tipo_actividad', 'fecha', 'cantidad_horas']
+        
+        # Ya no necesitamos definir 'tipo_actividad' ni 'cantidad_horas' aquí,
+        # pero mantenemos el widget para el campo de fecha.
+        widgets = {
+            'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
+
+# --- FIN DE CAMBIOS ---
+
+#Proyectos obligatorios y busquedaro en horas hombre

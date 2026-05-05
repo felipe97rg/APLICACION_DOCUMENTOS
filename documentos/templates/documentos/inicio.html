@@ -34,55 +34,71 @@
     </header>
 
     <!-- Contenido principal -->
-    <main id="inicio-page" class="container-fluid">
-        <!-- Hero Section -->
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="title">Bienvenido al<br><span class="highlight">Entorno Web CEN&T</span></h1>
-                <p class="subtitle">
-                    Explora las aplicaciones desarrolladas en CEN&T y accede a soluciones innovadoras.<br>
-                    Selecciona una de ellas para continuar.
-                </p>
-                <a href="#aplicaciones" class="btn btn-primary btn-custom">Explorar aplicaciones</a>
-            </div>
-            <div class="hero-image">
-                <img src="{% static 'documentos/images/Logo_Cenyt.png' %}" alt="Logo Cenyt">
-            </div>
-        </section>
+```html
+<main id="inicio-page" class="container-fluid">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="title">
+                Bienvenido al<br>
+                <span class="highlight">Entorno Web CEN&T</span>
+            </h1>
+            <p class="subtitle">
+                Explora las aplicaciones desarrolladas en CEN&T y accede a soluciones innovadoras.<br>
+                Selecciona una de ellas para continuar.
+            </p>
+            <a href="#aplicaciones" class="btn btn-primary btn-custom">Explorar aplicaciones</a>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'documentos/images/Logo_Cenyt.png' %}" alt="Logo Cenyt">
+        </div>
+    </section>
 
-        <!-- Tarjetas de aplicaciones -->
-        <section id="aplicaciones" class="container text-center mt-5">
-            <div class="row g-4 justify-content-center">
-                <!-- Tarjeta 1 - Gestión de Documentos -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card text-center shadow">
-                        <div class="card-icon">
-                            <i class="fa-solid fa-folder-open"></i>
-                        </div>
-                        <h2 class="card-title">Gestión de Documentos</h2>
-                        <p class="card-description">
-                            Accede a la herramienta de gestión de documentos para organizar, compartir y colaborar en archivos.
-                        </p>
-                        <a href="{% url 'reporte' %}" class="btn btn-primary">Acceder</a>
+    <!-- Tarjetas de aplicaciones -->
+    <section id="aplicaciones" class="container text-center mt-5">
+        <div class="row g-4 justify-content-center">
+            <!-- Tarjeta 1 - Gestión de Documentos -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card text-center shadow">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-folder-open"></i>
                     </div>
-                </div>
-        
-                <!-- Tarjeta 2 - Innovación y Gestión -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card text-center shadow">
-                        <img src="{% static 'documentos/images/Logo_i+d.jpg' %}" class="card-img-top rounded">
-                        <h2 class="card-title mt-3">Innovación y Gestión de las Ideas</h2>
-                        <p class="card-description">
-                            Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.
-                        </p>
-                        <a href="#" class="btn btn-secondary disabled">Próximamente...</a>
-                    </div>
+                    <h2 class="card-title">Gestión de Documentos</h2>
+                    <p class="card-description">
+                        Accede a la herramienta de gestión de documentos para organizar, compartir y colaborar en archivos.
+                    </p>
+                    <a href="{% url 'reporte' %}" class="btn btn-primary">Acceder</a>
                 </div>
             </div>
-        </section>
-        
-    </main>
+
+            <!-- Tarjeta 2 - Innovación y Gestión -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card text-center shadow">
+                    <img src="{% static 'documentos/images/Logo_i+d.jpg' %}" class="card-img-top rounded" alt="Innovación">
+                    <h2 class="card-title mt-3">Innovación y Gestión de las Ideas</h2>
+                    <p class="card-description">
+                        Explora nuevas ideas, proyectos de innovación y colabora en iniciativas de I+D+i.
+                    </p>
+                    <a href="#" class="btn btn-secondary disabled">Próximamente...</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 - Control de Horas Hombre -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card text-center shadow">
+                    <img src="{% static 'documentos/images/Reloj.png' %}" class="card-img-top rounded" alt="Control Horas">
+                    <h2 class="card-title mt-3">Control de Horas Hombre</h2>
+                    <p class="card-description">
+                        Registra y explora la cantidad de horas trabajadas por proyectos.
+                    </p>
+                    <a href="{% url 'registro_horas' %}" class="btn btn-primary">Acceder</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+```
+
 
 
     <!-- Bootstrap JS -->

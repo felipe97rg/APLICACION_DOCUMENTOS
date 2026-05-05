@@ -2,7 +2,7 @@
 from django.urls import path, include
 
 from .views import login_view, logout_view, dashboard_view, get_subproyectos, get_documentos, inicio_view
-from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view
+from .views import  registrar_evento, dashboard_view, get_documento_detalle, get_eventos_documento, obtener_datos_graficas, reporte_view, control_horas
 from .views import upload_proyecto, modificar_estado_documento, upload_documento, get_subproyectos2, crear_codigo_documento
 from .views import exportar_csv, download_backup, restore_backup_view
 
@@ -22,6 +22,9 @@ urlpatterns = [
     
     path('upload_proyecto/', upload_proyecto, name='upload_proyecto'),
     path("modificar-estado/", modificar_estado_documento, name="modificar_estado_documento"),
+
+    path('registro_horas/', control_horas, name='registro_horas'),
+
 
     path('upload_documento/', upload_documento, name='upload_documento'),
     path("crear_codigo_documento/", crear_codigo_documento, name="crear_codigo_documento"),

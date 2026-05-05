@@ -1,0 +1,238 @@
+body {
+    background-color: #ebebeb;
+}
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 🔹 Caja contenedora específica para la selección de documentos */
+#document-selector {
+    background: #ffffff; /* Mantiene el fondo blanco */
+    border-radius: 20px; /* Se aumentó para hacerlo más redondeado */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.12); /* Sombra más suave */
+    padding: 30px;
+    max-width: 900px; /* Ajuste de tamaño */
+    margin: 0 auto; /* Centra la caja */
+    border: 1px solid #ddd; /* Mantiene un borde sutil */
+
+    /* Inicialmente oculto */
+    opacity: 0;
+    transform: translateY(30px);
+
+    /* Aplica la animación */
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+
+/* 🔹 Título */
+#document-selector h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #212529; /* Color oscuro para resaltar */
+}
+
+/* 🔹 Estilos para los selects */
+#document-selector select {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🔹 Borde azul al seleccionar */
+#document-selector select:focus {
+    border-color: rgb(40,52,138);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* 🔹 Asegurar el mismo ancho para los selects */
+#document-selector .form-control {
+    width: 100%;
+}
+
+/* 🔹 Botón de "Registrar Evento" alineado */
+#document-selector #evento-link {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: rgb(40,52,138);
+    color: white; /* Asegurar que el texto es visible */
+    transition: all 0.3s ease-in-out;
+}
+
+#document-selector #evento-link:hover {
+    background-color: #343a40;
+}
+.timeline {
+    position: relative;
+    padding: 20px 0;
+    max-width: 800px;
+    margin: auto;
+    /* Aplica la animación */
+    animation: fadeInUp 0.5s ease-out 0.3s forwards;
+    }
+
+
+/* Línea central de la línea de tiempo */
+.timeline-line {
+    position: absolute;
+    width: 3px;
+    background-color: #d3d3d3;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Tarjetas de los eventos */
+.timeline-item {
+    position: relative;
+    width: 60%;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: left; /* Se asegura que el texto esté alineado a la izquierda */
+    border-left: 6px solid #000000; /* Línea lateral para destacar */
+}
+
+/* Posicionamiento de las tarjetas alternadas */
+.timeline-item.left {
+    left: -15%;
+}
+
+.timeline-item.right {
+    left: 55%;
+}
+
+/* Título del evento */
+.timeline-content h5 {
+    margin: 0 0 15px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #1f1f1f;
+    text-align: center; /* Mantiene el título centrado */
+    text-transform: uppercase;
+}
+
+/* Párrafos del contenido */
+.timeline-content p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #424242;
+}
+
+/* Enlaces dentro de las tarjetas */
+.timeline-content a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #0056b3;
+    font-weight: bold;
+}
+
+
+
+/* Contenedor de las etapas */
+.etapa-container {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    
+}
+
+/* Estilos base para las cajas de etapa */
+.etapa-box {
+    text-align: center;
+    position: relative;
+    width: 20%;
+}
+
+/* Círculos de las etapas */
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;  /* Color gris claro para las etapas inactivas */
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Texto de la etapa */
+.etapa-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+
+
+/* Estilo de la etapa activa */
+.etapa-box.active .circle {
+    background-color: black; /* La etapa actual se muestra en negro */
+    color: white;
+}
+
+.etapa-box.active .etapa-text {
+    color: black; /* Texto en negro */
+}
+
+#evento-link {
+    background-color: #1f1f1f;
+    border-color: #000000;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 10px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        left: 0;
+        text-align: left;
+        padding-left: 30px;
+        margin-left: 10px;
+    }
+
+    .timeline-item::before {
+        left: 0;
+    }
+
+    .timeline-item.right {
+        left: 0;
+    }
+}
+
+/* Responsividad: en pantallas pequeñas, que las tarjetas ocupen todo el ancho */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px; /* Espacio entre tarjetas en móviles */
+    }
+}
+/* 🔹 Responsividad */
+@media (max-width: 768px) {
+    #document-selector {
+        max-width: 100%;
+        padding: 20px;
+    }
+}

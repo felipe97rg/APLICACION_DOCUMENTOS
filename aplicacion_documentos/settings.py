@@ -26,10 +26,7 @@ SECRET_KEY = 'django-insecure-wht0eh&-@+fkqqz19=_klgp*-^vv$iz7sz$p3+sv6i##+1h&!u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+ALLOWED_HOSTS = ['192.168.1.2', 'localhost']
 
 
 # Application definition
@@ -55,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Añade esta línea
+
 ]
 
 ROOT_URLCONF = 'aplicacion_documentos.urls'
@@ -77,6 +76,9 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'documentos', 'static'),  # Ajuste correcto para los archivos estáticos
@@ -90,15 +92,14 @@ WSGI_APPLICATION = 'aplicacion_documentos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trazabilidad_documentos',
-        'USER': 'postgres',
-        'PASSWORD': 'Cenyt123*',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),  # Asegúrate de que esta línea esté presente
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 

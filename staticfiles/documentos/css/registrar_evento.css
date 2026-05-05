@@ -1,0 +1,46 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 800px;
+}
+
+/* Estilo para la sección no editable */
+fieldset.bg-light {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para la sección editable */
+fieldset.border-primary {
+    border-width: 2px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Títulos de sección */
+legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0 10px;
+    width: auto;
+}
+
+/* Botón de enviar */
+button[type="submit"] {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.alert-danger {
+    background-color: #ffdddd;
+    border-left: 5px solid #d9534f;
+    color: #a94442;
+    font-weight: bold;
+    padding: 15px;
+}

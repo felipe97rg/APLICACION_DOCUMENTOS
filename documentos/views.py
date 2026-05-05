@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from documentos.decorators import restringir_eventos
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from .forms import LoginForm, EventoForm
+from .forms import LoginForm, EventoForm, HorasHombreForm 
 from .models import Proyecto, Subproyecto, Documento, Evento, PerfilUsuario
 from django.http import JsonResponse, HttpResponse, FileResponse
 from django.conf import settings
@@ -18,6 +18,7 @@ from django.db.models import Count, Q, Sum, Case, When, FloatField
 from django.db.models.functions import TruncDate
 from django.core.files.storage import default_storage
 from django.urls import path
+from decimal import Decimal
 
 import shutil
 import pandas as pd
@@ -1222,3 +1223,31 @@ def exportar_csv(request, modelo):
         writer.writerow([getattr(obj, field) for field in fields])
 
     return response
+
+
+@login_required
+def control_horas(request):
+    # Usar el formulario que definiste
+    if request.method == 'POST':
+        form = HorasHombreForm(request.POST) 
+        if form.is_valid():
+            # 'commit=False' para asignar el usuario antes de guardar
+            horas_hombre = form.save(commit=False)
+            horas_hombre.usuario = request.user # Asigna el usuario actual
+            horas_hombre.save()
+            # Redirige a una página de confirmación o de listado.
+            # ¡Importante! Reemplaza 'nombre-de-la-vista-de-confirmacion' con la URL real.
+            return redirect('nombre-de-la-vista-de-confirmacion') 
+    else:
+        # Instanciar el formulario vacío para el método GET
+        form = HorasHombreForm() 
+
+    # 'documentos/registro_horas.html' parece ser la ruta correcta.
+    return render(
+        request,
+        'Control_Horas/registro_horas.html',
+        {
+            'form': form,
+            'usuario': request.user,
+        }
+    )
